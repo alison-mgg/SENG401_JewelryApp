@@ -9,31 +9,22 @@ GRANT ALL PRIVILEGES ON `JewelryApp`.* TO 'seng401'@'localhost' WITH GRANT OPTIO
 FLUSH PRIVILEGES;
 
 -- sign up / log in --
-CREATE TABLE GENUSER (
-	Email VARCHAR(320) NOT NULL,
-    Fname VARCHAR(30) NOT NULL,
-    Lname VARCHAR(30) NOT NULL,
-    PRIMARY KEY (Email)
+
+
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL
+    -- password_hash VARCHAR(255) NOT NULL, -- Store hashed passwords
+    
 );
 
-CREATE TABLE RegisteredUser(
-    Email   VARCHAR(320) NOT NULL,
-    Fname  VARCHAR(30) NOT NULL,
-    Lname  VARCHAR(30) NOT NULL,
-    RegPassword VARCHAR(320) NOT NULL,
-    PRIMARY KEY(Email) 
-    -- seprate from gen user email until the table is made, where the genuser table also pulls regUsers
+CREATE TABLE searchHistory(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    userId INT NOT NULL,
+    imageUrl TEXT NOT NULL, -- Store uploaded image reference
+    aiResponse JSON, -- Store AI-generated similar jewelry results
+    searchedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE
 );
 
--- ------ Tables that will only be created through application use: 
-
-INSERT INTO RegisteredUser(Email, Fname, Lname, RegPassword)  VALUES
-('email@email.com', 'Fname', 'Lname', 'password');
-
--- To test generating user, table will actually only be populated through application use
-INSERT INTO GenUser (Email, Fname, Lname) VALUES
-('email1', 'First1', 'Last1'),
-('email2', 'First2', 'Last2'),
-('email3', 'First3', 'Last3'),
-('email4', 'First4', 'Last4');
-INSERT INTO GenUser( SELECT Email, Fname, Lname FROM RegisteredUser);
