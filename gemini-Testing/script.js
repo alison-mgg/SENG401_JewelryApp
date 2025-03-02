@@ -6,6 +6,10 @@ const fs = require("fs");
 const API_KEY = process.env.GEMINI_API_KEY;
 const IMAGE_PATH = "TestImage.jpg";
 
+// Initiate a json output file
+const OUTPUT_JSON = "output.json";
+
+
 // Read image and convert to Base64
 function encodeImageToBase64(imagePath) {
   try {
@@ -41,6 +45,17 @@ async function analyzeImage(base64Image) {
     // Extract and print the description
     const description = response.data.candidates?.[0]?.content?.parts?.[0]?.text;
     console.log("\nImage Description:\n", description || "No description provided.");
+
+    // Create JSON object
+    const result = {
+      image: IMAGE_PATH,
+      description: description,
+      timestamp: new Date().toISOString(),
+    };
+    // Save to output.json
+    fs.writeFileSync(OUTPUT_JSON, JSON.stringify(result, null, 4));
+    console.log(`\nImage description saved to ${OUTPUT_JSON}`);
+
   } catch (error) {
     console.error("Error analyzing image:", error.response?.data || error.message);
   }
