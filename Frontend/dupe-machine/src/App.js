@@ -1,4 +1,4 @@
-import TempLoginPage from './pages/TempLoginPage';
+import TempLoginPage from './pages/LoginPage';
 import MainPage from './pages/MainPage';
 import SignupPage from './pages/SignupPage';
 import ProfilePage from './pages/ProfilePage';

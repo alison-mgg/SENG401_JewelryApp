@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import "../styling/LoginPage.css";
+import "../styling/TempLoginPage.css";
 
-function TempLoginPage() {
+function LoginPage() {
 
   return (
     <div className="login-container">
@@ -18,8 +18,8 @@ function TempLoginPage() {
       <button className="signup-button">Sign Up</button>
       <button className="guest-button">Continue as Guest</button>
     </div>
-  </div>
+    </div>
 );
 }
 
-export default TempLoginPage;
+export default LoginPage;
