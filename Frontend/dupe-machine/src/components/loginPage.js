@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import "../styling/loginPage.css";
+import "../styling/LoginPage.css";
 
-function loginPage() {
+function LoginPage() {
 
   return (
     <div className="login-container">
@@ -22,4 +22,4 @@ function loginPage() {
 );
 }
 
-export default loginPage;
+export default LoginPage;
