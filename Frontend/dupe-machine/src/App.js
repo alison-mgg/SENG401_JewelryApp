@@ -1,4 +1,4 @@
-import TempLoginPage from './pages/LoginPage';
+import LoginPage from './pages/LoginPage';
 import MainPage from './pages/MainPage';
 import SignupPage from './pages/SignupPage';
 import ProfilePage from './pages/ProfilePage';
@@ -9,7 +9,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<TempLoginPage />} />
+        <Route path="/" element={<LoginPage />} />
         <Route path="/main" element={<MainPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/profile" element={<ProfilePage />} />

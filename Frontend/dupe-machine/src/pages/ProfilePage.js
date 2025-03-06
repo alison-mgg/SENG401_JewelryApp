@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import "../styling/SignupPage.css";
+import "../styling/ProfilePage.css";
 
-function SignupPage() {
+function ProfilePage() {
 
   return (
-    <div className="mainpage-container">
-    <h1 className="page-title">Test: SignupPage</h1>
+    <div className="profilepage-container">
+    <h1 className="page-title">Test: ProfilePage</h1>
     </div>
 );
 }
 
-export default SignupPage;
+export default ProfilePage;
