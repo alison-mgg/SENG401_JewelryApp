@@ -20,9 +20,9 @@ JEWELRY_QUESTIONS = {
     ],
     "necklace": [
         "What is the material of this necklace's chain?"
+        "What type of chain does this necklace have?"
+        "What type of pendant does this necklace have, if any?"
         "Choose the most accurate possible necklace length for this image: Tight fit: collar or chocker style, Exact fit: princess style, or Loose fit: manitee, opera, or rope style."
-        
-
     ],
     "bracelet": [
         "What material is the bracelet made of?",
