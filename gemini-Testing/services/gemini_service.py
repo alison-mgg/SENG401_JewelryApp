@@ -4,15 +4,47 @@ from datetime import datetime
 from gemini_config.settings import API_KEY, OUTPUT_JSON
 from services.file_utils import save_to_json
 
-def analyze_image(base64_image):
-    """Send image to Gemini API for analysis and return the description."""
-    API_URL = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={API_KEY}"
+JEWELRY_QUESTIONS = {
+    "watch": [
+        "What is the material of the watch?",
+        "Describe the watch face (shape, color, details).",
+        "What is the width and material of the band?",
+        "Are there any gemstones or embellishments?",
+        "Is there a visible brand logo?"
+    ],
+    "ring": [
+        "What is the ring made of?",
+        "Describe the ring's gemstone (if any) including color, cut, and size.",
+        "Does the ring have any engravings or unique designs?",
+        "What is the ring's general style? (e.g., wedding, casual, antique, modern)"
+    ],
+    "necklace": [
+        "What is the material of this necklace's chain?"
+        "Choose the most accurate possible necklace length for this image: Tight fit: collar or chocker style, Exact fit: princess style, or Loose fit: manitee, opera, or rope style."
+        
 
+    ],
+    "bracelet": [
+        "What material is the bracelet made of?",
+        "Does it have any charms or special attachments?",
+        "Is the bracelet rigid (bangle) or flexible (chain, cord)?"
+    ],
+    "earrings": [
+        "What type of earrings are these? (studs, hoops, dangles, etc.)",
+        "Describe any gemstones or decorations.",
+        "What is the material of the earring?"
+    ]
+}
+
+def ask_gemini(base64_image, question):
+    """Send a single question to Gemini API."""
+    API_URL = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={API_KEY}"
+    
     request_body = {
         "contents": [
             {
                 "parts": [
-                    {"text": "Describe this image in detail."},
+                    {"text": question},
                     {"inline_data": {"mime_type": "image/jpeg", "data": base64_image}},
                 ]
             }
@@ -22,22 +54,55 @@ def analyze_image(base64_image):
     try:
         response = requests.post(API_URL, json=request_body, headers={"Content-Type": "application/json"})
         response_data = response.json()
-        
+
         if not response_data or "candidates" not in response_data:
             print("Error: AI API returned invalid data", response_data)
-            return {"error": "Failed to get a valid AI-generated description."}
+            return None
 
-        # Extract description
-        description = response_data.get("candidates", [{}])[0].get("content", {}).get("parts", [{}])[0].get("text", "No description provided.")
-
-        result = {
-            "description": description,
-            "timestamp": datetime.utcnow().isoformat(),
-        }
-
-        save_to_json(result)
-        return result
+        return response_data.get("candidates", [{}])[0].get("content", {}).get("parts", [{}])[0].get("text", "")
 
     except Exception as e:
-        print("Error analyzing image:", e)
-        return {"error": "Failed to analyze image."}
+        print("Error making request to Gemini:", e)
+        return None
+
+
+def analyze_image(base64_image):
+    """Identify the type of jewelry, then get detailed answers with follow-up questions."""
+    # Step 1: Identify the jewelry type
+    jewelry_type_response = ask_gemini(base64_image, "What type of jewelry is this from the following list, answer in one word: watch, ring, necklace, bracelet, or earrings?")
+    
+    if not jewelry_type_response:
+        return {"error": "Failed to identify the jewelry type."}
+
+    # Extract the jewelry type
+    detected_type = jewelry_type_response.lower().strip()
+    print(f"Detected jewelry type: {detected_type}")
+
+    # Step 2: Ask detailed questions based on the type
+    questions = JEWELRY_QUESTIONS.get(detected_type, [])
+
+    if not questions:
+        print(detected_type) #DEBUG line(troubleshooting)
+        return {
+            "jewelry_type": detected_type,
+            "description": "Jewelry type detected, but no specific questions are configured."
+        }
+
+    detailed_description = []
+
+    for question in questions:
+        answer = ask_gemini(base64_image, question)
+        if answer:
+            detailed_description.append(f"- {question}\n  {answer}")
+
+    # Format the result
+    result = {
+        "jewelry_type": detected_type.capitalize(),
+        "description": "\n".join(detailed_description),
+        "timestamp": datetime.utcnow().isoformat(),
+    }
+
+    # Save to output.json
+    save_to_json(result)
+
+    return result
