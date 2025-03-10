@@ -10,7 +10,7 @@ JEWELRY_QUESTIONS = {
         "Choose the most accurate type of watch dial for this image: Analogue, Digital, Chronograph, or Hybrid?"
         "In one word to two words describe the watch's style."
         "What is the material of the watch?",
-        #"Describe the watch face (shape, color, details).",
+        "What color is the background of the watch face?",
         "What is the width (thick or thin) of the band?",
         "What is the material of the band?",
         "Are there any gemstones or embellishments?",
