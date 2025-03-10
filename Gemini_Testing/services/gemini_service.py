@@ -4,14 +4,17 @@ from datetime import datetime
 from gemini_config.settings import API_KEY, OUTPUT_JSON
 from services.file_utils import save_to_json
 
-#WORKING ON NECKLACE, REST ARE UNTESTED
+#WORKING ON NECKLACE, WATCH, REST ARE UNTESTED
 JEWELRY_QUESTIONS = {
     "watch": [
+        "Choose the most accurate type of watch dial for this image: Analogue, Digital, Chronograph, or Hybrid?"
+        "In one word to two words describe the watch's style."
         "What is the material of the watch?",
-        "Describe the watch face (shape, color, details).",
-        "What is the width and material of the band?",
+        #"Describe the watch face (shape, color, details).",
+        "What is the width (thick or thin) of the band?",
+        "What is the material of the band?",
         "Are there any gemstones or embellishments?",
-        "Is there a visible brand logo?"
+        "If any, what is the visible brand logo?"
     ],
     "ring": [
         "What is the ring made of?",
@@ -22,6 +25,7 @@ JEWELRY_QUESTIONS = {
     "necklace": [
         "What is the material of this necklace's chain?"
         "What type of chain does this necklace have?"
+        "What type or style of necklace is this"
         "What type of pendant does this necklace have, if any?"
         "Choose the most accurate possible necklace length for this image: Tight fit: collar or chocker style, Exact fit: princess style, or Loose fit: manitee, opera, or rope style."
     ],
