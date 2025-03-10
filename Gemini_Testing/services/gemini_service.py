@@ -4,6 +4,7 @@ from datetime import datetime
 from gemini_config.settings import API_KEY, OUTPUT_JSON
 from services.file_utils import save_to_json
 
+#WORKING ON NECKLACE, REST ARE UNTESTED
 JEWELRY_QUESTIONS = {
     "watch": [
         "What is the material of the watch?",
