@@ -16,9 +16,13 @@
   padding-top: 15px;
   padding-left: 50px;
   padding-right: 50px;
+  font-weight: 600;
+  font-size: 14pt;
 }
 
 .nav-link {
   text-decoration: none; 
-  font-size: 24pt;
+}
+.nav-link:hover {
+  cursor: pointer; 
 }

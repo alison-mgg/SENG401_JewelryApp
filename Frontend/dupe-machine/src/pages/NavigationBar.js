@@ -10,13 +10,19 @@ function NavigationBar()  {
     <div className="navbar">
       <div className = "link-container">
       <span 
-        className={`nav-text ${location.pathname}`} 
+        className={`nav-link ${location.pathname}`} 
+        onClick={() => navigate('/')}
+      >
+        Login 
+      </span>
+      <span 
+        className={`nav-link ${location.pathname}`} 
         onClick={() => navigate('/main')}
       >
         Main Page
       </span>
       <span 
-        className={`nav-text ${location.pathname}`} 
+        className={`nav-link ${location.pathname}`} 
         onClick={() => navigate('/profile')}
       >
         Display Name
