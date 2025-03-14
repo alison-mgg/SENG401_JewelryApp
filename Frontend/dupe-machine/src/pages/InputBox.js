@@ -18,7 +18,7 @@ function InputBox() {
   return (
     <div className="Input-Container">
       <div className="input-wrapper">
-        <button className="icon-button" onClick={handleSave}>
+        <button className="icon-buttonIB" onClick={handleSave}>
           &#10084;&#65039; {/* Heart emoji using HTML code */}
         </button>
         <textarea
@@ -27,7 +27,7 @@ function InputBox() {
           onChange={(e) => setInputText(e.target.value)}
           placeholder="Enter your text here..."
         />
-        <button className="icon-button" onClick={handleUpload}>
+        <button className="icon-buttonIB" onClick={handleUpload}>
           &#8593; {/* Up arrow using HTML code */}
         </button>
       </div>

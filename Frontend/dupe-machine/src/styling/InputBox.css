@@ -27,7 +27,7 @@
     min-height: 40px;
   }
   
-  .icon-button {
+  .icon-buttonIB {
     background: none;
     border: none;
     font-size: 20px;
@@ -35,9 +35,7 @@
     transition: color 0.3s ease;
   }
   
-  .icon-button:hover {
-    color: #007bff;
-  }
+
   
   .text-input::placeholder {
     color: #aaa;
