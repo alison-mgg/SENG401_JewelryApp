@@ -1,10 +1,10 @@
-DROP DATABASE IF EXISTS `JewelryApp`;
-CREATE DATABASE `JewelryApp`;
-USE JewelryApp;
+DROP DATABASE IF EXISTS `401_sql_database`;
+CREATE DATABASE `401_sql_database`;
+USE 401_sql_database;
 
 DROP USER IF EXISTS 'seng401'@'localhost';
 CREATE USER 'seng401'@'localhost' IDENTIFIED BY 'seng401';
-GRANT ALL PRIVILEGES ON `JewlryApp`.* TO 'seng401'@'localhost' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON `401_sql_database`.* TO 'seng401'@'localhost' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 
 CREATE TABLE users (
