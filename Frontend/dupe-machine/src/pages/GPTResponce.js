@@ -35,7 +35,6 @@ function GPTResponce() {
 
   return (
     <div className="TextImage-Container">
-      <h1 className="page-titleUTI">Test: GPT Response</h1>
       <div className="scrollable-box">
         {lines.map((line, index) => (
           <p key={index} className={line.align === "left" ? "align-left" : "align-right"}>

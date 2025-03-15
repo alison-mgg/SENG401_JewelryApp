@@ -34,12 +34,12 @@ function UploadImageText() {
   return (
     <div className="TextImage-Container">
       {!isSubmitted ? (
-        <div className="input-wrapper">
+        <div className="input-wrapperUIT">
           <div className="text-image-box">
-            <p>Choose to upload text or an image:</p>
+            <h2>Choose to upload text or an image:</h2>
             <div className="buttons-container">
               <div className="upload-image">
-                <button className="image-button" onClick={triggerFileInput}>&#128247; Add Image</button>
+                <button className="image-button" onClick={triggerFileInput}>&#128247;</button>
                 <input
                   type="file"
                   id="imageUpload"
@@ -54,7 +54,7 @@ function UploadImageText() {
                   onChange={(e) => setInputText(e.target.value)}
                   placeholder="Enter text here..."
                 />
-                <button className="text-button" onClick={handleTextSubmit}>&#8593; Submit Text</button>
+                <button className="text-button" onClick={handleTextSubmit}>&#8593;</button>
               </div>
             </div>
           </div>

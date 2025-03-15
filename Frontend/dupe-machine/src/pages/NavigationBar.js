@@ -25,7 +25,7 @@ function NavigationBar()  {
         className={`nav-link ${location.pathname}`} 
         onClick={() => navigate('/profile')}
       >
-        Display Name
+        Profile
       </span>
       </div>
     </div>
