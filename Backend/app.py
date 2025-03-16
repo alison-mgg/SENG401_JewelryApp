@@ -43,39 +43,38 @@
 # SQLALCHEMY_DATABASE_URI = f"mysql+pymysql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}"
 # SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-
 from flask import Flask
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv
 import os
-from database_connector import get_database
-from controllers.signup_controller import signup_bp
-# from gemini_config.settings import UPLOAD_FOLDER
-# from routes.image_routes import image_routes
-# from routes.description_routes import description_routes
-# ^^ These imports will be integrated once the AI connection branch is ready
 
-# Load environment variables from .env
+# Load environment variables from .env file
 load_dotenv()
 
+# Initialize Flask app
 app = Flask(__name__)
-CORS(app, origins=["http://localhost:3000"], supports_credentials=True)  # Enable CORS
 
-# Set up MySQL Database configuration using environment variables
+# Enable CORS for frontend (React app running on localhost:3000)
+CORS(app, origins=["http://localhost:3000"], supports_credentials=True)
+
+# MySQL Database configuration using environment variables
 app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+pymysql://{os.getenv('MYSQL_USER')}:{os.getenv('MYSQL_PASSWORD')}@{os.getenv('MYSQL_HOST')}/{os.getenv('MYSQL_DB')}"
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # Disable modification tracking to save resources
 
-# Initialize SQLAlchemy (Make sure to install `Flask-SQLAlchemy` and `pymysql`)
+# Initialize SQLAlchemy (used for database ORM)
 db = SQLAlchemy(app)
 
-# For AI integration branch:
-# app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
-
 # Register Blueprints
-# app.register_blueprint(image_routes)
-# app.register_blueprint(description_routes)
+from controllers.signup_controller import signup_bp
 app.register_blueprint(signup_bp)
 
+# For future AI integration, these lines will be useful:
+# from routes.image_routes import image_routes
+# from routes.description_routes import description_routes
+# app.register_blueprint(image_routes)
+# app.register_blueprint(description_routes)
+
+# Main entry point for the app
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
