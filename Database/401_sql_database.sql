@@ -24,5 +24,5 @@ CREATE TABLE chats (
     username VARCHAR(255) REFERENCES users(username),
     img_path TEXT NOT NULL,
     links TEXT NOT NULL,
-    uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
