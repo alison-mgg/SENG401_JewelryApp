@@ -45,8 +45,8 @@ load_dotenv()
 # Initialize Flask app
 app = Flask(__name__)
 
-# Enable CORS for frontend (React app running on localhost:3000)
-CORS(app, origins=["http://localhost:3000"], supports_credentials=True)
+# Enable CORS for frontend (React app hosted on Vercel)
+CORS(app, origins=["https://seng-401-jewelry-app.vercel.app/"], supports_credentials=True)
 
 # MySQL Database configuration using environment variables
 MYSQL_HOST = os.getenv('MYSQL_HOST')
