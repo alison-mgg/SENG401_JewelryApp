@@ -1,4 +1,5 @@
 /* Config.js File
+ *
  * This file contains the configuration for the frontend application, such as the
  * API URL and the environment (development or production). Helps to manage
  * the connections to backend hosted on AWS Elastic Beanstalk, ensuring consistent
