@@ -51,6 +51,7 @@ from dotenv import load_dotenv
 import os
 from database_connector import get_database
 from controllers.signup_controller import signup_bp
+from controllers.login_controller import login_bp
 # from gemini_config.settings import UPLOAD_FOLDER
 # from routes.image_routes import image_routes
 # from routes.description_routes import description_routes
@@ -76,6 +77,7 @@ db = SQLAlchemy(app)
 # app.register_blueprint(image_routes)
 # app.register_blueprint(description_routes)
 app.register_blueprint(signup_bp)
+app.register_blueprint(login_bp)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
