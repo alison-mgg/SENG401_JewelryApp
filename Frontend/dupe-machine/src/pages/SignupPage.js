@@ -2,6 +2,9 @@ import React, { useState }from "react";
 import { Link } from "react-router-dom";
 import "../styling/SignupPage.css";
 
+// AWS Backend URL import
+import config from '../config';
+
 function SignupPage() {
 
   const [username, setUsername] = useState('');
@@ -12,18 +15,24 @@ function SignupPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Check if all fields are filled
     if (username.trim() === '' || password.trim() === '' || email.trim() === '') {
       displayMessage('error', 'All fields are required.');
       return;
     }
 
+    // Check if email is valid
     if (email && email.trim() !== '' && !isValidEmail(email)) {
         displayMessage('error', 'Invalid email format');
         return;
     }
 
+    // Send request to backend
     try {
-      const response = await fetch('http://localhost:5000/api/signup', {
+      // Initial code:                  fetch('http://localhost:5000/api/signup')
+      // Change to use AWS Backend URL: fetch(`${config.apiURL}/api/signup`)      
+      // note: backticks to use template strings, not apostrophes (regular strings) here
+      const response = await fetch(`${config.apiURL}/api/signup`, {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json'
@@ -31,31 +40,34 @@ function SignupPage() {
           body: JSON.stringify({ username, password, email })
       });
     
+      // Check if response is ok
       if (!response.ok) {
         const data = await response.json();
         displayMessage('error', data.error || 'Signup failed.');
         return;
       }
 
+      // If response is ok, display success message
       displayMessage('success', 'Signup successful!');
       console.log('success')
 
+      // Response error
     } catch (error) {
       displayMessage('error', 'Something went wrong. Please try again later.');
     }
   };
 
+  // Function to display messages
   const displayMessage = (type, content) => {
     setMessage({ type, content });
     setTimeout(() => setMessage({ type: '', content: '' }), 50000); // Clear the message after 50 seconds
   };
 
+  // Function to check if email is valid
   const isValidEmail = (email) => {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       return emailRegex.test(email);
   };
-
-
 
   return (
     <div className="login-container">
