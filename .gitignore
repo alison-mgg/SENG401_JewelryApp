@@ -3,3 +3,5 @@ Frontend/dupe-machine/package-lock.json
 /Backend/__pycache__
 /Backend/controllers/__pycache__
 Backend/.env
+/Backend/.venv
+Backend/.ebignore
