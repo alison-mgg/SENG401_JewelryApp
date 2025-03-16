@@ -14,3 +14,7 @@ CREATE TABLE users (
     password VARCHAR(255) NOT NULL,        -- Ideally, password hashed on server side
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
 );
+
+-- Test user:
+INSERT INTO users (username, email, password) 
+VALUES ('a', 'a@a.com', 'a');
