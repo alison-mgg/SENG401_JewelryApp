@@ -25,4 +25,4 @@ CREATE TABLE chats (
     img_path TEXT NOT NULL,
     links TEXT NOT NULL,
     uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-)
+);
