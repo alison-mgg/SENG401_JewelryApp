@@ -71,6 +71,10 @@ def test_db_connection():
         db = get_db_connection()
         cursor = db.cursor()
         cursor.execute("SELECT 1")
+        
+        # Ensure that the result is consumed
+        cursor.fetchall()  # Consume the result
+        
         cursor.close()
         db.close()
         return 'Database connection successful!'
@@ -83,10 +87,15 @@ def get_users():
     db = get_db_connection()
     cursor = db.cursor(dictionary=True)
     cursor.execute('SELECT * FROM users')
+    
+    # Fetch all the results
     users = cursor.fetchall()
+    
     cursor.close()
     db.close()
+    
     return jsonify(users)
+
 
 # Register Blueprints (e.g., signup controller)
 from controllers.signup_controller import signup_bp
@@ -94,4 +103,4 @@ app.register_blueprint(signup_bp)
 
 # Main entry point for the app
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=8080, debug=True)
