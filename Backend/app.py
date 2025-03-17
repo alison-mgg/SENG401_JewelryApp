@@ -101,9 +101,9 @@ def get_users():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# Register Blueprints (e.g., signup controller)
+# Register Blueprints
 from controllers.signup_controller import signup_bp
-app.register_blueprint(signup_bp)
+app.register_blueprint(signup_bp, url_prefix='/signup')
 
 # Main entry point for the app
 if __name__ == '__main__':
