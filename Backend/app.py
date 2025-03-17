@@ -44,6 +44,7 @@ load_dotenv()
 
 # Initialize Flask app
 app = Flask(__name__)
+application = app
 
 # Enable CORS for frontend (React app hosted on Vercel)
 CORS(app, origins=["https://seng-401-jewelry-app.vercel.app/"], supports_credentials=True)
