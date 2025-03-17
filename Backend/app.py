@@ -12,7 +12,7 @@ load_dotenv()
 app = Flask(__name__)
 
 # Enable CORS for frontend - Change link depending on which Vercel link is being used
-CORS(app, origins=["https://seng-401-jewelry-app-git-development-alison-gartners-projects.vercel.app"], supports_credentials=True) 
+CORS(app, origins=["https://seng-401-jewelry-app-git-development-alison-gartners-projects.vercel.app"], supports_credentials=True)
 
 # MySQL Database configuration using environment variables
 MYSQL_HOST = os.getenv('MYSQL_HOST')
