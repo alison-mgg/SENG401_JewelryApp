@@ -1,36 +1,41 @@
-// import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import "../styling/MainPage.css";
-
-import NavBar from "./NavigationBar.js";
-
 import React, { useState } from "react";
+import "../styling/MainPage.css";
+import NavBar from "./NavigationBar.js";
 
 function ImageDescription() {
   const [description, setDescription] = useState("Upload an image and click analyze.");
   const [selectedFile, setSelectedFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [similarProducts, setSimilarProducts] = useState("");  // New state for similar products
+  const [isHeartClicked, setIsHeartClicked] = useState(false);
+  const [loading, setLoading] = useState(false);  // New state for loading
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
       setSelectedFile(file);
       setImagePreview(URL.createObjectURL(file)); // Show preview of uploaded image
+      uploadAndAnalyzeImage(file); // Automatically trigger analysis after file is selected
+      setIsHeartClicked(false);
     }
   };
 
-  const uploadAndAnalyzeImage = async () => {
-    if (!selectedFile) {
+  const handleHeartClick = () => {
+    setIsHeartClicked(true);
+  };
+
+  const uploadAndAnalyzeImage = async (file) => {
+    if (!file) {
       setDescription("Please select an image first.");
       return;
     }
 
+    setLoading(true);  // Set loading to true when the upload process starts
     const formData = new FormData();
-    formData.append("image", selectedFile);
+    formData.append("image", file);
 
     try {
-      const response = await fetch("http://localhost:5000/upload", {
+      const response = await fetch("http://localhost:5001/upload", {
         method: "POST",
         body: formData,
       });
@@ -44,10 +49,14 @@ function ImageDescription() {
       }
     } catch (error) {
       setDescription("Failed to upload image. Error: " + error.message);
+    } finally {
+      setLoading(false);  // Set loading to false after the request completes
     }
   };
 
   const handleGetSimilarProducts = async () => {
+    setLoading(true);  // Set loading to true when fetching similar products
+
     try {
       const response = await fetch("http://localhost:5000/similar-products", {
         method: "POST",
@@ -68,25 +77,79 @@ function ImageDescription() {
       }
     } catch (error) {
       setSimilarProducts("Failed to get similar products. Error: " + error.message);
+    } finally {
+      setLoading(false);  // Set loading to false after the request completes
     }
   };
 
+  const handleRegenerateClick = () => {
+    setLoading(true);  // Set loading to true when regenerating description
+    uploadAndAnalyzeImage(selectedFile); // Trigger analysis again for regeneration
+    setIsHeartClicked(false);
+  };
+
   return (
-    <div style={{ textAlign: "center", marginTop: "50px", fontFamily: "Arial, sans-serif" }}>
+    <div className="container">
       <NavBar />
-      <h1>AI Image Description</h1>
-      <input type="file" accept="image/*" onChange={handleFileChange} />
-      <br />
-      {imagePreview && <img src={imagePreview} alt="Preview" style={{ maxWidth: "300px", marginTop: "10px" }} />}
-      <br />
-      <button onClick={uploadAndAnalyzeImage} style={{ padding: "10px 20px", fontSize: "16px", cursor: "pointer", marginTop: "10px" }}>
-        Analyze Image
-      </button>
-      <p style={{ marginTop: "20px", fontSize: "18px" }}>{description}</p>
-      <button onClick={handleGetSimilarProducts} style={{ padding: "10px 20px", fontSize: "16px", cursor: "pointer", marginTop: "10px" }}>
+      <h1>Start By Uploading an Image</h1>
+
+      {/* Image selection section */}
+      <div className="image-upload-wrapper">
+        <div className="image-upload-box">
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange}
+            id="file-input"
+          />
+          {imagePreview && <img src={imagePreview} alt="Selected" className="uploaded-image" />}
+        </div>
+        
+        {/* Button below the image */}
+        <button
+          onClick={() => document.getElementById('file-input').click()}
+          className="choose-image-button"
+        >
+          Choose an image
+        </button>
+      </div>
+
+      <div className="description-box">
+        <h2>Image Description</h2>
+        
+        {/* Only show loading message or description */}
+        {loading ? (
+          <p>Loading... Please wait.</p>
+        ) : (
+          <p>{description}</p>
+        )}
+
+        {/* Regenerate Button in top-right */}
+        <button 
+          className="regenerate-button"
+          onClick={handleRegenerateClick} // Trigger analysis again on button click
+        >
+          <span className="material-icons">&#8635;</span> {/* Circle with arrow icon */}
+        </button>
+      </div>
+
+      <button onClick={handleGetSimilarProducts} className="similar-products-button">
         Get Similar Products
       </button>
-      <p>{similarProducts}</p>  {/* Display similar products here */}
+
+      <div className="similar-products-box">
+        <h2>Similar Products</h2>
+        <p>{similarProducts}</p>
+        
+        {/* Heart Icon */}
+        <span
+          className="heart-icon"
+          onClick={handleHeartClick}
+          style={{ color: isHeartClicked ? 'red' : '#d2bfc7', cursor: 'pointer' }}
+        >
+          &#9829; {/* Heart icon */}
+        </span>
+      </div>
     </div>
   );
 }
