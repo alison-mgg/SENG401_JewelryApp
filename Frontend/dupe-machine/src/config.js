@@ -6,8 +6,8 @@
  * setup across all components of the application for API calls.
  */
 const config = {
-    apiURL: 'http://jewelry-app-env.eba-r9q3svxm.ca-central-1.elasticbeanstalk.com',
-    environment: 'development'  // Change depending on whether development or production
+    apiURL: 'https://jewelry-dupe-flask-app.onrender.com',
+    environment: 'production'  // Change depending on whether development or production
 };
 
 export default config;
