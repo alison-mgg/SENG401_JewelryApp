@@ -1,5 +1,5 @@
 import React, { useState }from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate  } from "react-router-dom";
 import "../styling/SignupPage.css";
 
 function SignupPage() {
@@ -8,6 +8,7 @@ function SignupPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState({ type: '', content: '' });
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,6 +40,7 @@ function SignupPage() {
 
       displayMessage('success', 'Signup successful!');
       console.log('success')
+      navigate('/main');
 
     } catch (error) {
       displayMessage('error', 'Something went wrong. Please try again later.');
