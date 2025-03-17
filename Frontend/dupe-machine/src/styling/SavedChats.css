@@ -1,0 +1,41 @@
+.saved-chats-wrapper {
+    position: relative;
+  }
+  
+  .saved-chats-container {
+    margin-left: 10%;
+    margin-right: 10%;
+    width: 80%;
+    height: 600px;
+    overflow-y: auto;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .saved-chats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    width: 100%;
+  }
+  
+  .scrollable {
+    overflow-y: auto;
+    max-height: 600px;
+  }
+  
+  .chat-image {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  .chat-image:hover {
+    cursor: pointer;
+  }
+  
+  .saved-chats-container.dimmed {
+    opacity: 0.3;
+    pointer-events: none;
+  }
+  
