@@ -2,6 +2,8 @@
 import { Link } from "react-router-dom";
 import "../styling/MainPage.css";
 
+import NavBar from "./NavigationBar.js";
+
 import React, { useState } from "react";
 
 function ImageDescription() {
@@ -71,6 +73,7 @@ function ImageDescription() {
 
   return (
     <div style={{ textAlign: "center", marginTop: "50px", fontFamily: "Arial, sans-serif" }}>
+      <NavBar />
       <h1>AI Image Description</h1>
       <input type="file" accept="image/*" onChange={handleFileChange} />
       <br />
