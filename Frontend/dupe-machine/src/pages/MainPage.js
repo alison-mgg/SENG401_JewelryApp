@@ -114,24 +114,24 @@ function ImageDescription() {
         </button>
       </div>
 
-      <div className="description-box">
-        <h2>Image Description</h2>
+      {/* <div className="description-box">
+        <h2>Image Description</h2> */}
         
         {/* Only show loading message or description */}
-        {loading ? (
+        {/* {loading ? (
           <p>Loading... Please wait.</p>
         ) : (
           <p>{description}</p>
-        )}
+        )} */}
 
         {/* Regenerate Button in top-right */}
-        <button 
+        {/* <button 
           className="regenerate-button"
           onClick={handleRegenerateClick} // Trigger analysis again on button click
         >
           <span className="material-icons">&#8635;</span> {/* Circle with arrow icon */}
-        </button>
-      </div>
+        {/* </button>
+      </div> */} 
 
       <button onClick={handleGetSimilarProducts} className="similar-products-button">
         Get Similar Products
