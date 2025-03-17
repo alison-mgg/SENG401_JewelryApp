@@ -73,15 +73,8 @@ from controllers.signup_controller import signup_bp
 app.register_blueprint(signup_bp, url_prefix='/signup')
 
 # Signup route
-@app.route('/api/signup', methods=['POST', 'OPTIONS'])
+@app.route('/signup', methods=['POST'])
 def signup():
-    if request.method == 'OPTIONS':
-        response = make_response()
-        response.headers.add("Access-Control-Allow-Origin", "https://seng-401-jewelry-app-git-development-alison-gartners-projects.vercel.app")
-        response.headers.add("Access-Control-Allow-Headers", "Content-Type")
-        response.headers.add("Access-Control-Allow-Methods", "POST, OPTIONS")
-        return response
-
     connection = get_db_connection()
     cursor = connection.cursor()
     data = request.get_json()
