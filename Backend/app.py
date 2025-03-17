@@ -64,43 +64,47 @@ def get_db_connection():
     )
     return connection
 
-# Test database connection
-@app.route('/test_db_connection')
+# Test route to confirm Heroku deployment
+@app.route('/')
+def home():
+    return jsonify({"message": "Jewelry Dupe Finder backend running successfully!"})
+
+# Route to test DB connection
+@app.route('/test-db-connection')
 def test_db_connection():
     try:
         db = get_db_connection()
         cursor = db.cursor()
         cursor.execute("SELECT 1")
-        
-        # Ensure that the result is consumed
-        cursor.fetchall()  # Consume the result
-        
+        result = cursor.fetchone()
         cursor.close()
         db.close()
-        return 'Database connection successful!'
+        return jsonify({"database_status": "connected", "test_query_result": result})
     except Exception as e:
-        return f'Database connection failed: {e}'
+        return jsonify({"database_status": "error", "error": str(e)}), 500
 
 # Test API endpoint
 @app.route('/users')
 def get_users():
-    db = get_db_connection()
-    cursor = db.cursor(dictionary=True)
-    cursor.execute('SELECT * FROM users')
-    
-    # Fetch all the results
-    users = cursor.fetchall()
-    
-    cursor.close()
-    db.close()
-    
-    return jsonify(users)
-
+    try:
+        db = get_db_connection()
+        cursor = db.cursor(dictionary=True)
+        cursor.execute('SELECT * FROM users')
+        
+        # Fetch all the results
+        users = cursor.fetchall()
+        
+        cursor.close()
+        db.close()
+        
+        return jsonify(users)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 # Register Blueprints (e.g., signup controller)
 from controllers.signup_controller import signup_bp
 app.register_blueprint(signup_bp)
 
 # Main entry point for the app
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8080, debug=True)
+if __name__ == '__main__':
+    app.run(debug=True)
