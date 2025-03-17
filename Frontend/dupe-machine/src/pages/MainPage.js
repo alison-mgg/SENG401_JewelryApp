@@ -9,6 +9,7 @@ function ImageDescription() {
   const [similarProducts, setSimilarProducts] = useState("");  // New state for similar products
   const [isHeartClicked, setIsHeartClicked] = useState(false);
   const [loading, setLoading] = useState(false);  // New state for loading
+  const [text, setText] = useState("");
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -82,6 +83,11 @@ function ImageDescription() {
     }
   };
 
+    const handleChange = (e) => {
+      setText(e.target.value);
+    };
+  
+
   const handleRegenerateClick = () => {
     setLoading(true);  // Set loading to true when regenerating description
     uploadAndAnalyzeImage(selectedFile); // Trigger analysis again for regeneration
@@ -94,6 +100,7 @@ function ImageDescription() {
       <h1>Start By Uploading an Image</h1>
 
       {/* Image selection section */}
+      <div className ="upload-container">
       <div className="image-upload-wrapper">
         <div className="image-upload-box">
           <input
@@ -103,8 +110,7 @@ function ImageDescription() {
             id="file-input"
           />
           {imagePreview && <img src={imagePreview} alt="Selected" className="uploaded-image" />}
-        </div>
-        
+        </div>   
         {/* Button below the image */}
         <button
           onClick={() => document.getElementById('file-input').click()}
@@ -112,6 +118,21 @@ function ImageDescription() {
         >
           Choose an image
         </button>
+        </div>
+        <div className="input-txt">
+      <textarea
+        className="text-input"
+        value={text}
+        onChange={handleChange}
+        placeholder="Enter your text here..."
+      />
+     {/* Submit text to AI button */}
+     <button
+          className="submit-text-button"
+        >
+          Submit Text
+        </button>
+        </div>
       </div>
 
       {/* <div className="description-box">

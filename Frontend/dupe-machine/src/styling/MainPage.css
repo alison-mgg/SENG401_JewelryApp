@@ -18,15 +18,24 @@
   cursor: pointer;
   margin-top: 10px;
 }
+.upload-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
 
 .image-upload-wrapper {
   display: flex;
   flex-direction: column;  /* Arrange items vertically */
-  align-items: center;     /* Center the items horizontally */
-  margin: 20px auto;
 }
 
-.choose-image-button, .similar-products-button {
+.input-txt {
+  display: flex;
+  flex-direction: column; 
+}
+
+.choose-image-button, .similar-products-button, .submit-text-button {
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
@@ -37,7 +46,7 @@
   border-radius: 10px;
   transition: background-color 0.3s ease;
 }
-.choose-image-button:hover, .similar-products-button:hover {
+.choose-image-button:hover, .submit-text-button:hover, .similar-products-button:hover {
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
@@ -62,14 +71,22 @@
 .image-upload-box::before {
   content: ''; /* Empty content for pseudo-element */
   position: absolute;
-  top: -10px;
-  left: -10px;
-  right: -10px;
-  bottom: -10px;
-  border-radius: 10px;  /* Optional: for rounded corners */
   background: rgba(0, 0, 0, 0.3);  /* Dark background for the faded effect */
   filter: blur(10px);  /* Applies the blur effect */
   z-index: -1;  /* Ensures the pseudo-element stays behind the image */
+}
+.input-text {
+  width: 250px;
+  height: 250px;
+}
+.text-input{
+  overflow-y: auto;
+  border: 2px solid #d2bfc7;  /* Keeps the solid border */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Adds a shadow around the box */
+  border-radius: 20px;
+  background-color: #fff;
+  height: 100%;
+  width: 100%;
 }
 
 .uploaded-image {
@@ -134,7 +151,7 @@
 
 .similar-products-box {
   width: 80%;
-  height: 100px;
+  height: 30vh;
   overflow-y: auto;
   border: 2px solid #d2bfc7;
   border-radius: 20px;
