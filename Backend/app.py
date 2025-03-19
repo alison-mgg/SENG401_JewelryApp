@@ -109,8 +109,15 @@ def get_users():
         return jsonify({"error": str(e)}), 500
     
 # Signup route
-@app.route('/signup', methods=['POST'])
+@app.route('/signup', methods=['POST', 'OPTIONS'])
 def signup():
+    if request.method == 'OPTIONS':
+        response = jsonify({"message": "CORS preflight"})
+        response.headers.add("Access-Control-Allow-Origin", "https://seng-401-jewelry-app-git-render-d73f1b-alison-gartners-projects.vercel.app")
+        response.headers.add("Access-Control-Allow-Headers", "Content-Type")
+        response.headers.add("Access-Control-Allow-Methods", "POST, OPTIONS")
+        return response
+
     connection = get_db_connection()
     cursor = connection.cursor()
     data = request.get_json()
