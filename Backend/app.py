@@ -109,7 +109,10 @@ def get_users():
         return jsonify(users)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-    
+
+# MARKER - frontend, backend, db all connected and working on Vercel deployment and
+# Render deployment with AWS RDS - vpc security group set to allow all traffic from 0.0.0.0
+
 # Signup route
 @app.route('/signup', methods=['POST', 'OPTIONS'])
 def signup():
