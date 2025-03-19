@@ -35,7 +35,7 @@ def login():
                 # Set secure flag based on request scheme (http or https)
                 secure_flag = request.scheme == 'https'
 
-                resp.set_cookie('username', username, httponly=True, secure=secure_flag, samesite="None")
+                resp.set_cookie('username', username, httponly=True, secure=secure_flag)
                 return resp, 200
             else:
                 return jsonify({"message": "Invalid credentials"}), 401
@@ -56,7 +56,7 @@ def getCookie():
             return jsonify({"message": "Username is required"}), 400
         
         resp = jsonify({"message": f"Cookie set for {username}"})  # Use jsonify instead of output
-        resp.set_cookie('username', username, httponly=True, secure=(request.scheme == 'https'), samesite="None")
+        resp.set_cookie('username', username, httponly=True, secure=(request.scheme == 'https'))
         return resp
     elif request.method == 'GET':
         username = request.cookies.get('username')  # Retrieve the cookie value
