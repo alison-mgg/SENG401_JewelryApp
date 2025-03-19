@@ -30,7 +30,7 @@ function ImageDescription() {
       alert("No file selected");
       return;
     }
-
+  
     try {
       const response = await fetch("http://localhost:5000/save-to-database", {
         method: "POST",
@@ -38,9 +38,9 @@ function ImageDescription() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          username: "a", // need to replace with actual username
-          imagePath: selectedFile,
-          description: description,
+          username: "a", // Replace with actual username
+          imagePath: selectedFile, // The renamed filename
+          similarProducts: similarProducts, // Include similar products
         }),
       });
   

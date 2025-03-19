@@ -12,9 +12,9 @@ def save_to_database():
     data = request.get_json()
     username = data.get("username")
     image_path = data.get("imagePath")
-    description = data.get("description")
+    similar_products = data.get("similarProducts")  # Get similar products from the request
 
-    if not username or not image_path or not description:
+    if not username or not image_path or not similar_products:
         return jsonify({"error": "Missing required data."}), 400
 
     upload_folder = os.path.join(os.getcwd(), "uploads")
@@ -26,15 +26,18 @@ def save_to_database():
 
     source_path = os.path.join(upload_folder, image_path)
     destination_path = os.path.join(database_images_folder, image_path)
-    print("source:", source_path)
-    print("dest: ", destination_path)
+
+    print("Source Path:", source_path)
+    print("Destination Path:", destination_path)
+
     if not os.path.exists(source_path):
         return jsonify({"error": f"Source file does not exist: {source_path}"}), 400
+
     try:
         shutil.move(source_path, destination_path)
     except Exception as e:
         return jsonify({"error": f"Failed to move image: {str(e)}"}), 500
-    
+
     try:
         conn = get_database()
         cursor = conn.cursor()
@@ -43,7 +46,7 @@ def save_to_database():
         INSERT INTO chats (username, img_path, links)
         VALUES (%s, %s, %s)
         """
-        cursor.execute(sql, (username, destination_path, description))
+        cursor.execute(sql, (username, destination_path, similar_products))  # Save similar products
         conn.commit()
         cursor.close()
         conn.close()
