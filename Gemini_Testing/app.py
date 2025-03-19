@@ -14,7 +14,6 @@ sys.path.insert(0, os.path.join(ProjectRoot, 'Backend'))  # Ensures Backend is r
 
 from Backend.controllers.signup_controller import signup_bp
 from Backend.controllers.login_controller import login_bp
-from Backend.controllers.chat_controller import save_chat_bp
 from Backend.database_connector import get_database
 
 from flask import Flask, g
@@ -27,6 +26,7 @@ from gemini_config.settings import UPLOAD_FOLDER
 from routes.image_routes import image_routes
 from routes.description_routes import description_routes
 from routes.similar_product_routes import similar_product_routes
+from routes.image_routes import save_chat_bp
 
 
 
