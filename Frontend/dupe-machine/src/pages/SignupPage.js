@@ -29,10 +29,7 @@ function SignupPage() {
 
     // Send request to backend
     try {
-      // Initial code:                  fetch('http://localhost:5000/api/signup')
-      // Change to use AWS Backend URL: fetch(`${config.apiURL}/signup`)      
-      // note: backticks to use template strings, not apostrophes (regular strings) here
-      const response = await fetch(`${config.apiURL}/signup`, {
+      const response = await fetch(`${config.corsProxyURL}${config.apiURL}/signup`, {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json'
@@ -56,6 +53,51 @@ function SignupPage() {
       displayMessage('error', 'Something went wrong. Please try again later.');
     }
   };
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   // Check if all fields are filled
+  //   if (username.trim() === '' || password.trim() === '' || email.trim() === '') {
+  //     displayMessage('error', 'All fields are required.');
+  //     return;
+  //   }
+
+  //   // Check if email is valid
+  //   if (email && email.trim() !== '' && !isValidEmail(email)) {
+  //       displayMessage('error', 'Invalid email format');
+  //       return;
+  //   }
+
+  //   // Send request to backend
+  //   try {
+  //     // Initial code:                  fetch('http://localhost:5000/api/signup')
+  //     // Change to use AWS Backend URL: fetch(`${config.apiURL}/signup`)      
+  //     // note: backticks to use template strings, not apostrophes (regular strings) here
+  //     const response = await fetch(`${config.apiURL}/signup`, {
+  //         method: 'POST',
+  //         headers: {
+  //             'Content-Type': 'application/json'
+  //         },
+  //         body: JSON.stringify({ username, password, email })
+  //     });
+    
+  //     // Check if response is ok
+  //     if (!response.ok) {
+  //       const data = await response.json();
+  //       displayMessage('error', data.error || 'Signup failed.');
+  //       return;
+  //     }
+
+  //     // If response is ok, display success message
+  //     displayMessage('success', 'Signup successful!');
+  //     console.log('success')
+
+  //     // Response error
+  //   } catch (error) {
+  //     displayMessage('error', 'Something went wrong. Please try again later.');
+  //   }
+  // };
 
   // Function to display messages
   const displayMessage = (type, content) => {
