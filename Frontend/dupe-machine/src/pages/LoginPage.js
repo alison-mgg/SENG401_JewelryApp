@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 //import { useAuthContext } from '../App.js';
 import "../styling/LoginPage.css";
@@ -9,6 +9,30 @@ function LoginPage() {
   const [message, setMessage] = useState({ type: '', content: '' }); // State to manage the message
   //const { setAuthenticated } = useAuthContext(); // Access setAuthenticated function from context
   const navigate = useNavigate();
+
+  useEffect(() => {
+    fetchCookie();
+  }, []);
+
+  //function for cookies
+  const fetchCookie = async () => {
+    try {
+        const response = await fetch('http://localhost:5000/api/cookie', {
+            method: 'GET',
+            credentials: 'include'  // Ensure cookies are sent with the request
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            console.log('Logged-in user:', data.username);
+            setUsername(data.username);  // Set username in state
+        } else {
+            console.log('No cookie found');
+        }
+    } catch (error) {
+        console.error('Error fetching cookie:', error);
+    }
+  };
 
   const handleSubmit = async (e) =>{
     e.preventDefault()
@@ -25,10 +49,12 @@ function LoginPage() {
               'Content-Type': 'application/json',
           },
           body: JSON.stringify({ username, password }),
+          credentials: 'include' 
       });
       if (response.ok) {
         setMessage({ type: 'success', content: 'Authentication successful' });
         console.log('success')
+        fetchCookie();
         //setAuthenticated(true);
         navigate('/main'); // Redirect to main page after successful authentication
       } else {
@@ -45,6 +71,8 @@ function LoginPage() {
     setMessage({ type, content });
     setTimeout(() => setMessage({ type: '', content: '' }), 50000); // Clear the message after 50 seconds
   };  
+
+
 
 
   return (
