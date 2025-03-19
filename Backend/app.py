@@ -64,7 +64,7 @@ def get_db_connection():
     )
     return connection
 
-# Test route to confirm Heroku deployment
+# Test route to confirm Render deployment
 @app.route('/')
 def home():
     return jsonify({"message": "Jewelry Dupe Finder backend running successfully!"})

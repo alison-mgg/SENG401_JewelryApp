@@ -4,14 +4,14 @@ from database_connector import get_database
 
 signup_bp = Blueprint('signup', __name__)
 
-signup_bp = Blueprint('signup_bp', __name__)
+# signup_bp = Blueprint('signup_bp', __name__)
 
 # Route to test if the signup route is working
 @signup_bp.route('/', methods=['GET'])
 def signup_home():
     return jsonify({"message": "Signup route is working!"})
 
-@signup_bp.route('/api/signup', methods=['POST', 'OPTIONS']) #OPTIONS IS FOR DEBUG CODE
+@signup_bp.route('signup', methods=['POST', 'OPTIONS']) #OPTIONS IS FOR DEBUG CODE
 def signup():
     if request.method == 'OPTIONS': #DEBUG CODE
         return '', 200              #DEBUG CODE
