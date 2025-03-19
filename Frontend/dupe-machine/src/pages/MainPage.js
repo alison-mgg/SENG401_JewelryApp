@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../styling/MainPage.css";
 import NavBar from "./NavigationBar.js";
+import { Form } from "react-router-dom";
 
 function ImageDescription() {
   const [description, setDescription] = useState("Upload an image and click analyze.");
@@ -10,6 +11,7 @@ function ImageDescription() {
   const [isHeartClicked, setIsHeartClicked] = useState(false);
   const [loading, setLoading] = useState(false);  // New state for loading
   const [text, setText] = useState("");
+  //const [imageName, setImageName] = useState("");
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -21,9 +23,93 @@ function ImageDescription() {
     }
   };
 
-  const handleHeartClick = () => {
-    setIsHeartClicked(true);
+  const handleHeartClick = async () => {
+    if (!selectedFile) {
+      alert("No image uploaded.");
+      return;
+    }
+
+    const requestBody = {
+      username: "a",  // Replace with actual username
+      image_name: selectedFile,
+      response: description
+    };
+
+    try {
+      const response = await fetch("http://localhost:5000/save-chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(requestBody)
+      });
+
+      if (response.ok) {
+        setIsHeartClicked(true);
+        alert("Chat saved successfully!");
+      } else {
+        const data = await response.json();
+        alert(`Failed to save chat: ${data.error}`);
+      }
+    } catch (error) {
+      console.error("Error saving chat:", error);
+      alert("Error saving chat.");
+    }
   };
+
+//   const handleHeartClick = async () => {
+//     if (!selectedFile) {
+//         alert("No image selected.");
+//         return;
+//     }
+
+//     const imageName = `uploaded_${selectedFile.name}`;
+//     const chatData = {
+//       image_name: imageName,
+//       username: 'a',
+//       response: description
+//     };
+
+//     try {
+//       const response = await fetch("http://localhost:5000/save-chat", {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/json"
+//         },
+//         body: JSON.stringify(chatData)
+//       });
+
+//       if (response.ok) {
+//         setIsHeartClicked(true);
+//         alert("saved");
+//       } else {
+//         const errorData = await response.json()
+//       }
+//     } catch (error) {
+//       console.error("error:", error);
+//     }
+//     // const formData = new FormData();
+//     // formData.append("image", selectedFile);
+//     // formData.append("username", "a");  // Replace with actual username from context or auth
+//     // formData.append("response", description); // The LLM's response
+
+//     // try {
+//     //     const response = await fetch("http://localhost:5000/save-chat", {
+//     //         method: "POST",
+//     //         body: formData
+//     //     });
+
+//     //     if (response.ok) {
+//     //         setIsHeartClicked(true);
+//     //         alert("Chat saved successfully!");
+//     //     } else {
+//     //         alert("Failed to save chat.");
+//     //     }
+//     // } catch (error) {
+//     //     console.error("Error saving chat:", error);
+//     //     alert("Error saving chat.");
+//     // }
+// };
 
   const uploadAndAnalyzeImage = async (file) => {
     if (!file) {

@@ -14,6 +14,7 @@ sys.path.insert(0, os.path.join(ProjectRoot, 'Backend'))  # Ensures Backend is r
 
 from Backend.controllers.signup_controller import signup_bp
 from Backend.controllers.login_controller import login_bp
+from Backend.controllers.chat_controller import save_chat_bp
 from Backend.database_connector import get_database
 
 from flask import Flask, g
@@ -49,6 +50,7 @@ app.register_blueprint(description_routes)
 app.register_blueprint(similar_product_routes)
 app.register_blueprint(signup_bp)
 app.register_blueprint(login_bp)
+app.register_blueprint(save_chat_bp)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
