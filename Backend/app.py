@@ -122,15 +122,21 @@ def signup():
     cursor = connection.cursor()
     data = request.get_json()
     username = data['username']
+    email = data['email']
     password = data['password']
-    query = "INSERT INTO users (username, password) VALUES (%s, %s)"
+    query = "INSERT INTO users (username, email, password) VALUES (%s, %s, %s)"
     try:
-        cursor.execute(query, (username, password))
+        cursor.execute(query, (username, email, password))
         connection.commit()
         return jsonify({"message": "User signed up successfully"}), 200
+    except IntegrityError as e:
+        if e.errno == 1062:  # Duplicate entry error code
+            return jsonify({"message": "Email already exists"}), 400
+        else:
+            return jsonify({"message": f"Error signing up: {str(e)}"}), 500
     except Error as e:
         print(f"The error '{e}' occurred")
-        return jsonify({"message": "Error signing up"}), 500
+        return jsonify({"message": f"Error signing up: {str(e)}"}), 500
     finally:
         cursor.close()
         connection.close()
