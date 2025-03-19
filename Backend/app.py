@@ -79,6 +79,11 @@ def home():
 # def get_users():
 #     return jsonify({"users": "test"})
 
+
+# MARKER - test-db-connection and test-users routes are working from Render deployment
+# with AWS RDS - vpc security group set to allow all traffic from 0.0.0.0 MySQL/Aurora
+# Change this after testing done to make more secure
+
 # Test route for DB connection
 @app.route('/test-db-connection')
 def test_db_connection():
