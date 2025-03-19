@@ -33,11 +33,12 @@
 # if __name__ == "__main__":
 #     app.run(host="0.0.0.0", port=5000, debug=True)
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request, make_response
 from flask_cors import CORS
 from dotenv import load_dotenv
 import os
 import mysql.connector
+from mysql.connector import Error
 
 # Load environment variables from .env file
 load_dotenv()
@@ -106,6 +107,33 @@ def get_users():
         return jsonify(users)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+# Signup route
+@app.route('/signup', methods=['POST', 'OPTIONS'])
+def signup():
+    if request.method == 'OPTIONS':
+        response = make_response()
+        response.headers.add("Access-Control-Allow-Origin", "https://seng-401-jewelry-app-git-development-alison-gartners-projects.vercel.app")
+        response.headers.add("Access-Control-Allow-Headers", "Content-Type")
+        response.headers.add("Access-Control-Allow-Methods", "POST, OPTIONS")
+        return response
+
+    connection = get_db_connection()
+    cursor = connection.cursor()
+    data = request.get_json()
+    username = data['username']
+    password = data['password']
+    query = "INSERT INTO users (username, password) VALUES (%s, %s)"
+    try:
+        cursor.execute(query, (username, password))
+        connection.commit()
+        return jsonify({"message": "User signed up successfully"}), 200
+    except Error as e:
+        print(f"The error '{e}' occurred")
+        return jsonify({"message": "Error signing up"}), 500
+    finally:
+        cursor.close()
+        connection.close()
 
 # Register Blueprints
 from controllers.signup_controller import signup_bp

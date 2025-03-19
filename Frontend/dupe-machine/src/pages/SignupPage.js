@@ -2,7 +2,7 @@ import React, { useState }from "react";
 import { Link } from "react-router-dom";
 import "../styling/SignupPage.css";
 
-// AWS Backend URL import
+// Import config file
 import config from '../config';
 
 function SignupPage() {
@@ -30,9 +30,9 @@ function SignupPage() {
     // Send request to backend
     try {
       // Initial code:                  fetch('http://localhost:5000/api/signup')
-      // Change to use AWS Backend URL: fetch(`${config.apiURL}/api/signup`)      
+      // Change to use AWS Backend URL: fetch(`${config.apiURL}/signup`)      
       // note: backticks to use template strings, not apostrophes (regular strings) here
-      const response = await fetch(`${config.apiURL}/api/signup`, {
+      const response = await fetch(`${config.apiURL}/signup`, {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json'
