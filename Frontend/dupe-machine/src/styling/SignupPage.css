@@ -1,55 +1,117 @@
+.loginImage {
+  width: 40vw;
+  background: url('../images/BoxImage.jpg') no-repeat center center;
+  background-size: cover;
+  border-radius: 0px 10px 10px 0px; 
+
+}
+
+.loginArea {
+  width: 80vw;
+  height: 75vh;
+  display: flex;
+  flex-direction: row;
+  background: white; /* Ensure the background stands out */
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3); /* Soft shadow effect */
+  border-radius: 10px; /* Slight rounding for a modern look */
+}
+
+
 .login-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-color: #f8f9fa;
-  }
-  
-  .login-title {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  .login-box {
-    background-color: #d2bfc7;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .input-field {
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    width: 200px;
-  }
-  
-  .login-button {
-    padding: 10px;
-    background-color: #5d1b2e;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .options {
-    margin-top: 15px;
-    display: flex;
-    gap: 10px;
-  }
-  
-  .signup-button,
-  .guest-button {
-    background: none;
-    border: none;
-    color: #272a34;
-    cursor: pointer;
-    font-size: 14px;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #ded6cb;
+}
+
+h1, h2, h3 {
+  text-align: center;
+  color: #edeceb;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+}
+h1{
+  margin-top: 50px;
+}
+h2{
+  margin-top: 30px;
+}
+
+
+.login-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.login-box {
+  background-color: #444c3c;
+  width: 40vw;
+  padding: 20px;
+  box-shadow: 2px 0px 4px rgba(0, 0, 0, 0.1); /* Tiny shadow on the right */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  border-radius: 10px 0px 0 10px; 
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.input-group {
+  margin-top: 15px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.input-field {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  width: 60%;
+  background-color: #edeceb;
+}
+
+.login-button {
+  padding: 10px;
+  margin-top: 20px;
+  background-color: #311d11;
+  border: 2px solid #311d11;
+  font-size: 16px;
+  color: #edeceb;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 55%;
+  transition: background-color 0.5s ease-in-out;
+}
+
+.login-button:hover {
+  background-color:#edeceb;
+  color: #311d11;
+}
+
+.options {
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.signup-button, .guest-button {
+  background: none;
+  border: none;
+  color: #edeceb;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.message-box{
+  color: #edeceb;
+}
