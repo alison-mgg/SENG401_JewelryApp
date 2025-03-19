@@ -38,7 +38,7 @@ from flask_cors import CORS
 from dotenv import load_dotenv
 import os
 import mysql.connector
-from mysql.connector import Error
+from mysql.connector import Error, IntegrityError
 
 # Load environment variables from .env file
 load_dotenv()
@@ -46,9 +46,11 @@ load_dotenv()
 # Initialize Flask app
 app = Flask(__name__)
 
+# Get the origin URL from environment variables
+ORIGIN_URL = os.getenv('ORIGIN_URL')
+
 # Enable CORS for frontend (React app hosted on Vercel)
-# CORS(app, origins=["https://seng-401-jewelry-app.vercel.app/"], supports_credentials=True)
-CORS(app, origins=["https://seng-401-jewelry-app-git-development-alison-gartners-projects.vercel.app"], supports_credentials=True)
+CORS(app, origins=[ORIGIN_URL], supports_credentials=True)
 # Vercel branch render-backend-deployment (change to main branch Vercel link after)
 
 # MySQL Database configuration using environment variables
@@ -113,7 +115,7 @@ def get_users():
 def signup():
     if request.method == 'OPTIONS':
         response = jsonify({"message": "CORS preflight"})
-        response.headers.add("Access-Control-Allow-Origin", "https://seng-401-jewelry-app-git-render-d73f1b-alison-gartners-projects.vercel.app")
+        response.headers.add("Access-Control-Allow-Origin", ORIGIN_URL)
         response.headers.add("Access-Control-Allow-Headers", "Content-Type")
         response.headers.add("Access-Control-Allow-Methods", "POST, OPTIONS")
         return response
