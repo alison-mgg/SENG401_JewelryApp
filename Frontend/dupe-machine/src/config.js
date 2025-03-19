@@ -12,8 +12,8 @@
 //   export default config;
 
 const config = {
-apiURL: 'https://jewelry-dupe-app.onrender.com',
-corsProxyURL: 'https://cors-anywhere-6vpc.onrender.com/'
+    apiURL: 'https://jewelry-dupe-app.onrender.com',
+    corsProxyURL: 'https://cors-anywhere-6vpc.onrender.com/'
 };
 
 export default config;

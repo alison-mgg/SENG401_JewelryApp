@@ -29,7 +29,9 @@ function SignupPage() {
 
     // Send request to backend
     try {
-      const response = await fetch(`${config.corsProxyURL}${config.apiURL}/signup`, {
+      const proxyUrl = config.corsProxyURL;
+      const apiUrl = `${config.apiURL}/signup`;
+      const response = await fetch(proxyUrl + apiUrl, {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json'
