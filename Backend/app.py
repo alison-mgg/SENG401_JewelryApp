@@ -48,7 +48,7 @@ app = Flask(__name__)
 
 # Enable CORS for frontend (React app hosted on Vercel)
 # CORS(app, origins=["https://seng-401-jewelry-app.vercel.app/"], supports_credentials=True)
-CORS(app, origins=["https://seng-401-jewelry-app-git-render-d73f1b-alison-gartners-projects.vercel.app/"], supports_credentials=True)
+CORS(app, origins=["https://*.seng-401-jewelry-app.vercel.app"], supports_credentials=True)
 # Vercel branch render-backend-deployment (change to main branch Vercel link after)
 
 # MySQL Database configuration using environment variables
@@ -109,15 +109,8 @@ def get_users():
         return jsonify({"error": str(e)}), 500
     
 # Signup route
-@app.route('/signup', methods=['POST', 'OPTIONS'])
+@app.route('/signup', methods=['POST'])
 def signup():
-    if request.method == 'OPTIONS':
-        response = make_response()
-        response.headers.add("Access-Control-Allow-Origin", "https://seng-401-jewelry-app-git-development-alison-gartners-projects.vercel.app")
-        response.headers.add("Access-Control-Allow-Headers", "Content-Type")
-        response.headers.add("Access-Control-Allow-Methods", "POST, OPTIONS")
-        return response
-
     connection = get_db_connection()
     cursor = connection.cursor()
     data = request.get_json()
