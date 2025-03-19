@@ -69,47 +69,47 @@ def get_db_connection():
 def home():
     return jsonify({"message": "Jewelry Dupe Finder backend running successfully!"})
 
-# Test route for DB connection
-@app.route('/test-db-connection')
-def test_db_connection():
-    return jsonify({"database_status": "test"})
-
-# Test API endpoint
-@app.route('/test-users')
-def get_users():
-    return jsonify({"users": "test"})
-
 # # Test route for DB connection
 # @app.route('/test-db-connection')
 # def test_db_connection():
-#     try:
-#         db = get_db_connection()
-#         cursor = db.cursor()
-#         cursor.execute("SELECT 1")
-#         result = cursor.fetchone()
-#         cursor.close()
-#         db.close()
-#         return jsonify({"database_status": "connected", "test_query_result": result})
-#     except Exception as e:
-#         return jsonify({"database_status": "error", "error": str(e)}), 500
+#     return jsonify({"database_status": "test"})
 
 # # Test API endpoint
 # @app.route('/test-users')
 # def get_users():
-#     try:
-#         db = get_db_connection()
-#         cursor = db.cursor(dictionary=True)
-#         cursor.execute('SELECT * FROM users')
+#     return jsonify({"users": "test"})
+
+# Test route for DB connection
+@app.route('/test-db-connection')
+def test_db_connection():
+    try:
+        db = get_db_connection()
+        cursor = db.cursor()
+        cursor.execute("SELECT 1")
+        result = cursor.fetchone()
+        cursor.close()
+        db.close()
+        return jsonify({"database_status": "connected", "test_query_result": result})
+    except Exception as e:
+        return jsonify({"database_status": "error", "error": str(e)}), 500
+
+# Test API endpoint
+@app.route('/test-users')
+def get_users():
+    try:
+        db = get_db_connection()
+        cursor = db.cursor(dictionary=True)
+        cursor.execute('SELECT * FROM users')
         
-#         # Fetch all the results
-#         users = cursor.fetchall()
+        # Fetch all the results
+        users = cursor.fetchall()
         
-#         cursor.close()
-#         db.close()
+        cursor.close()
+        db.close()
         
-#         return jsonify(users)
-#     except Exception as e:
-#         return jsonify({"error": str(e)}), 500
+        return jsonify(users)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 # Register Blueprints
 from controllers.signup_controller import signup_bp
