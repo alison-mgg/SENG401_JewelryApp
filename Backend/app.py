@@ -69,7 +69,7 @@ def get_db_connection():
 def home():
     return jsonify({"message": "Jewelry Dupe Finder backend running successfully!"})
 
-# Route to test DB connection
+# Test route for DB connection
 @app.route('/test-db-connection')
 def test_db_connection():
     try:
@@ -84,7 +84,7 @@ def test_db_connection():
         return jsonify({"database_status": "error", "error": str(e)}), 500
 
 # Test API endpoint
-@app.route('/users')
+@app.route('/test-users')
 def get_users():
     try:
         db = get_db_connection()
