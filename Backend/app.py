@@ -48,7 +48,7 @@ app = Flask(__name__)
 
 # Enable CORS for frontend (React app hosted on Vercel)
 # CORS(app, origins=["https://seng-401-jewelry-app.vercel.app/"], supports_credentials=True)
-CORS(app, origins=["https://*.seng-401-jewelry-app.vercel.app"], supports_credentials=True)
+CORS(app, origins=["https://seng-401-jewelry-app-git-development-alison-gartners-projects.vercel.app"], supports_credentials=True)
 # Vercel branch render-backend-deployment (change to main branch Vercel link after)
 
 # MySQL Database configuration using environment variables
