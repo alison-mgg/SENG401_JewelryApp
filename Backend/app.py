@@ -46,7 +46,9 @@ load_dotenv()
 app = Flask(__name__)
 
 # Enable CORS for frontend (React app hosted on Vercel)
-CORS(app, origins=["https://seng-401-jewelry-app.vercel.app/"], supports_credentials=True)
+# CORS(app, origins=["https://seng-401-jewelry-app.vercel.app/"], supports_credentials=True)
+CORS(app, origins=["https://seng-401-jewelry-app-git-render-d73f1b-alison-gartners-projects.vercel.app/"], supports_credentials=True)
+# Vercel branch render-backend-deployment (change to main branch Vercel link after)
 
 # MySQL Database configuration using environment variables
 MYSQL_HOST = os.getenv('MYSQL_HOST')
@@ -68,17 +70,6 @@ def get_db_connection():
 @app.route('/')
 def home():
     return jsonify({"message": "Jewelry Dupe Finder backend running successfully!"})
-
-# # Test route for DB connection
-# @app.route('/test-db-connection')
-# def test_db_connection():
-#     return jsonify({"database_status": "test"})
-
-# # Test API endpoint
-# @app.route('/test-users')
-# def get_users():
-#     return jsonify({"users": "test"})
-
 
 # MARKER - test-db-connection and test-users routes are working from Render deployment
 # with AWS RDS - vpc security group set to allow all traffic from 0.0.0.0 MySQL/Aurora
