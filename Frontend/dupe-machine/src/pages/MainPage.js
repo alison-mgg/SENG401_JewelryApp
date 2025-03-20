@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../styling/MainPage.css";
 import NavBar from "./NavigationBar.js";
+import { useAuth } from '../AuthContext';
 import { Form } from "react-router-dom";
 
 function ImageDescription() {
@@ -11,6 +12,8 @@ function ImageDescription() {
   const [isHeartClicked, setIsHeartClicked] = useState(false);
   const [loading, setLoading] = useState(false);  // New state for loading
   const [text, setText] = useState("");
+  const [showLoginMessage, setShowLoginMessage] = useState(false); // State for login message popup
+  const { isAuthenticated, username } = useAuth(); // Use isAuthenticated and username from AuthContext
   //const [imageName, setImageName] = useState("");
 
   const handleFileChange = (event) => {
@@ -24,6 +27,10 @@ function ImageDescription() {
   };
 
   const handleHeartClick = async () => {
+    if (!isAuthenticated) {
+      setShowLoginMessage(true); // Show login message popup
+      return;
+    }
     setIsHeartClicked(true);
   
     if (!selectedFile) {
@@ -38,7 +45,7 @@ function ImageDescription() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          username: "a", // Replace with actual username
+          username: username, // Use the username from AuthContext
           imagePath: selectedFile, // The renamed filename
           similarProducts: similarProducts, // Include similar products
         }),
@@ -131,6 +138,14 @@ function ImageDescription() {
     <div className="container">
       <NavBar />
       <h1>Start By Uploading an Image</h1>
+
+      {/* Login message popup */}
+      {showLoginMessage && (
+        <div className="login-message-popup">
+          <p>This feature is only available to logged-in users.</p>
+          <button onClick={() => setShowLoginMessage(false)}>Close</button>
+        </div>
+      )}
 
       {/* Image selection section */}
       <div className ="upload-container">
