@@ -49,7 +49,7 @@ function SignupPage() {
       // TODO:
       // Redirects to main page after successful signup
       // Should this send to login page instead?
-      navigate('/main');
+      // navigate('/main');
 
     } catch (error) {
       displayMessage('error', 'Something went wrong. Please try again later.');
