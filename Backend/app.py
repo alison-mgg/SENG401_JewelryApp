@@ -38,14 +38,14 @@ app.config['MYSQL_PASSWORD'] = os.getenv('MYSQL_PASSWORD')
 app.config['MYSQL_DB'] = os.getenv('MYSQL_DB')
 
 # Function to get database connection
-# def get_db_connection():
-#     connection = mysql.connector.connect(
-#         host=MYSQL_HOST,
-#         user=MYSQL_USER,
-#         password=MYSQL_PASSWORD,
-#         database=MYSQL_DB
-#     )
-#     return connection
+def get_db_connection():
+    connection = mysql.connector.connect(
+        host=MYSQL_HOST,
+        user=MYSQL_USER,
+        password=MYSQL_PASSWORD,
+        database=MYSQL_DB
+    )
+    return connection
 
 # Test route to confirm Render deployment
 @app.route('/')
@@ -91,38 +91,38 @@ def get_users():
 # MARKER - frontend, backend, db all connected and working on Vercel deployment and
 # Render deployment with AWS RDS - vpc security group set to allow all traffic from 0.0.0.0
 
-# Signup route
-@app.route('/signup', methods=['POST', 'OPTIONS'])
-def signup():
-    if request.method == 'OPTIONS':
-        response = jsonify({"message": "CORS preflight"})
-        response.headers.add("Access-Control-Allow-Origin", ORIGIN_URL)
-        response.headers.add("Access-Control-Allow-Headers", "Content-Type")
-        response.headers.add("Access-Control-Allow-Methods", "POST, OPTIONS")
-        return response
+# # Signup route
+# @app.route('/signup', methods=['POST', 'OPTIONS'])
+# def signup():
+#     if request.method == 'OPTIONS':
+#         response = jsonify({"message": "CORS preflight"})
+#         response.headers.add("Access-Control-Allow-Origin", ORIGIN_URL)
+#         response.headers.add("Access-Control-Allow-Headers", "Content-Type")
+#         response.headers.add("Access-Control-Allow-Methods", "POST, OPTIONS")
+#         return response
 
-    connection = get_db_connection()
-    cursor = connection.cursor()
-    data = request.get_json()
-    username = data['username']
-    email = data['email']
-    password = data['password']
-    query = "INSERT INTO users (username, email, password) VALUES (%s, %s, %s)"
-    try:
-        cursor.execute(query, (username, email, password))
-        connection.commit()
-        return jsonify({"message": "User signed up successfully"}), 200
-    except IntegrityError as e:
-        if e.errno == 1062:  # Duplicate entry error code
-            return jsonify({"message": "Email already exists"}), 400
-        else:
-            return jsonify({"message": f"Error signing up: {str(e)}"}), 500
-    except Error as e:
-        print(f"The error '{e}' occurred")
-        return jsonify({"message": f"Error signing up: {str(e)}"}), 500
-    finally:
-        cursor.close()
-        connection.close()
+#     connection = get_db_connection()
+#     cursor = connection.cursor()
+#     data = request.get_json()
+#     username = data['username']
+#     email = data['email']
+#     password = data['password']
+#     query = "INSERT INTO users (username, email, password) VALUES (%s, %s, %s)"
+#     try:
+#         cursor.execute(query, (username, email, password))
+#         connection.commit()
+#         return jsonify({"message": "User signed up successfully"}), 200
+#     except IntegrityError as e:
+#         if e.errno == 1062:  # Duplicate entry error code
+#             return jsonify({"message": "Email already exists"}), 400
+#         else:
+#             return jsonify({"message": f"Error signing up: {str(e)}"}), 500
+#     except Error as e:
+#         print(f"The error '{e}' occurred")
+#         return jsonify({"message": f"Error signing up: {str(e)}"}), 500
+#     finally:
+#         cursor.close()
+#         connection.close()
 
 # Register Blueprints
 app.register_blueprint(signup_bp, url_prefix='/signup')
