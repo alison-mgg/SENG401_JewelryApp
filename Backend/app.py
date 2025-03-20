@@ -2,9 +2,10 @@
 import os
 
 # Third-party imports
-from flask import Flask, jsonify, request, make_response
+from flask import Flask, jsonify, g, request, make_response
 from flask_cors import CORS
 from dotenv import load_dotenv
+from Gemini_Testing.routes import similar_product_routes
 import mysql.connector
 from mysql.connector import Error, IntegrityError
 
@@ -12,10 +13,14 @@ from mysql.connector import Error, IntegrityError
 from database_connector import get_database
 from controllers.signup_controller import signup_bp
 from controllers.login_controller import login_bp
-#from gemini_config.settings import UPLOAD_FOLDER
-#from routes.image_routes import image_routes
-#from routes.description_routes import description_routes
-#^^These imports will be integrated once the ai connection branch is ready
+from controllers.chat_controller import save_chat_bp
+
+from database_connector import get_database
+
+from Gemini_Testing.gemini_config.settings import UPLOAD_FOLDER
+from Gemini_Testing.routes.image_routes import image_routes
+from Gemini_Testing.routes.description_routes import description_routes
+# ^^These imports will be integrated once the ai connection branch is ready
 
 # Load environment variables from .env file
 load_dotenv()
@@ -29,21 +34,17 @@ ORIGIN_URL = os.getenv('ORIGIN_URL')
 # Enable CORS for frontend (React app hosted on Vercel)
 CORS(app, origins=[ORIGIN_URL], supports_credentials=True)
 
-# MySQL Database configuration using environment variables
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+
 app.config['MYSQL_HOST'] = os.getenv('MYSQL_HOST')
 app.config['MYSQL_USER'] = os.getenv('MYSQL_USER')
 app.config['MYSQL_PASSWORD'] = os.getenv('MYSQL_PASSWORD')
 app.config['MYSQL_DB'] = os.getenv('MYSQL_DB')
 
-# Function to get database connection
-def get_db_connection():
-    connection = mysql.connector.connect(
-        host=app.config['MYSQL_HOST'],
-        user=app.config['MYSQL_USER'],
-        password=app.config['MYSQL_PASSWORD'],
-        database=app.config['MYSQL_DB']
-    )
-    return connection
+# for Cookies:
+app.config['SESSION_COOKIE_SECURE'] = False  # Set to True in production with HTTPS
+app.config['SESSION_COOKIE_HTTPONLY'] = False  # Prevent JS access - CHANGED TO TRUE
+app.config['SESSION_COOKIE_SAMESITE'] = 'None'  # Allow cross-origin
 
 # Test route to confirm Render deployment
 @app.route('/')
@@ -101,13 +102,20 @@ def get_chats():
         return jsonify({"error": str(e)}), 500
 
 # Register Blueprints
-app.register_blueprint(signup_bp, url_prefix='/signup')
+app.register_blueprint(image_routes)
+app.register_blueprint(description_routes)
+app.register_blueprint(similar_product_routes)
+app.register_blueprint(signup_bp)
 app.register_blueprint(login_bp)
+app.register_blueprint(save_chat_bp)
 
-# Future integrations (commented out for now)
-#app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER # For ai integration branch
-#app.register_blueprint(image_routes)
-#app.register_blueprint(description_routes)
+# Teardown function to close the database connection after each request
+@app.teardown_appcontext
+def close_database(error):
+    """Closes the database connection after each request"""
+    database = getattr(g, 'database', None)
+    if database is not None:
+        database.close()
 
 # Main entry point for the app
 if __name__ == '__main__':
