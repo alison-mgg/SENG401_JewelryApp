@@ -3,7 +3,7 @@ from database_connector import get_database
 
 login_bp = Blueprint('login', __name__)
 
-
+# MARKER - Login route is working from Render deployment
 @login_bp.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
