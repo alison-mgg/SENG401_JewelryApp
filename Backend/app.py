@@ -13,11 +13,6 @@ from database_connector import get_database
 from controllers.signup_controller import signup_bp
 from controllers.login_controller import login_bp
 from controllers.chat_controller import save_chat_bp
-# from Gemini_Testing.gemini_config.settings import UPLOAD_FOLDER
-# from Gemini_Testing.routes.similar_product_routes import similar_product_routes
-# from Gemini_Testing.routes.image_routes import image_routes
-# from Gemini_Testing.routes.description_routes import description_routes
-# # ^^These imports will be integrated once the ai connection branch is ready
 
 # Load environment variables from .env file
 load_dotenv()
