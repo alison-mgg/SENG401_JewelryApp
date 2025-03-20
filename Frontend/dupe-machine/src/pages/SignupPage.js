@@ -4,96 +4,54 @@ import "../styling/SignupPage.css";
 import config from '../config';
 
 function SignupPage() {
-  console.log("SignupPage rendered");
-
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState({ type: '', content: '' });
   const navigate = useNavigate();
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  //   if (username.trim() === '' || password.trim() === '' || email.trim() === '') {
-  //     displayMessage('error', 'All fields are required.');
-  //     return;
-  //   }
+    if (username.trim() === '' || password.trim() === '' || email.trim() === '') {
+      displayMessage('error', 'All fields are required.');
+      return;
+    }
 
-  //   if (email && email.trim() !== '' && !isValidEmail(email)) {
-  //     displayMessage('error', 'Invalid email format');
-  //     return;
-  //   }
+    if (email && email.trim() !== '' && !isValidEmail(email)) {
+      displayMessage('error', 'Invalid email format');
+      return;
+    }
 
-  //   try {
-  //     const proxyUrl = config.corsProxyURL;
-  //     const apiUrl = `${config.apiURL}/signup`;
-  //     const response = await fetch(proxyUrl + apiUrl, {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json'
-  //       },
-  //       body: JSON.stringify({ username, password, email })
-  //     });
+    try {
+      const apiUrl = new URL('/signup', config.apiURL).toString();
+      console.log("apiUrl:", apiUrl);
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, password, email })
+      });
 
-  //     if (!response.ok) {
-  //       const data = await response.json();
-  //       displayMessage('error', data.error || 'Signup failed.');
-  //       return;
-  //     }
-
-  //     displayMessage('success', 'Signup successful!');
-  //     console.log('success')
-  //     navigate('/main');
-
-  //   } catch (error) {
-  //     displayMessage('error', 'Something went wrong. Please try again later.');
-  //   }
-  // };
-
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-
-      if (username.trim() === '' || password.trim() === '' || email.trim() === '') {
-          displayMessage('error', 'All fields are required.');
-          return;
+      if (!response.ok) {
+        const data = await response.json();
+        displayMessage('error', data.error || 'Signup failed.');
+        return;
       }
 
-      if (email && email.trim() !== '' && !isValidEmail(email)) {
-          displayMessage('error', 'Invalid email format');
-          return;
-      }
+      displayMessage('success', 'Signup successful!');
+      console.log('success');
+      navigate('/main');
 
-      try {
-          const proxyUrl = config.corsProxyURL;
-          const apiUrl = new URL('/signup', config.apiURL).toString(); // Use URL constructor
-          console.log("apiUrl:", apiUrl); // Check the constructed URL
-          const response = await fetch(apiUrl, { //Remove proxyUrl +
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({ username, password, email })
-          });
-
-          if (!response.ok) {
-              const data = await response.json();
-              displayMessage('error', data.error || 'Signup failed.');
-              return;
-          }
-
-          displayMessage('success', 'Signup successful!');
-          console.log('success');
-          navigate('/main');
-
-      } catch (error) {
-          displayMessage('error', 'Something went wrong. Please try again later.');
-      }
+    } catch (error) {
+      displayMessage('error', 'Something went wrong. Please try again later.');
+    }
   };
 
   const displayMessage = (type, content) => {
     setMessage({ type, content });
-    setTimeout(() => setMessage({ type: '', content: '' }), 50000);
+    setTimeout(() => setMessage({ type: '', content: '' }), 5000);
   };
 
   const isValidEmail = (email) => {
@@ -120,11 +78,8 @@ function SignupPage() {
                 type="text"
                 placeholder="Username"
                 className="input-field"
-                value={username}                
-                onChange={(e) => {
-                  setUsername(e.target.value);
-                  console.log('Username:', e.target.value);
-              }}
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
               />
             </div>
             <div className="input-group">

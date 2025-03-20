@@ -41,10 +41,10 @@ app.config['MYSQL_DB'] = os.getenv('MYSQL_DB')
 # Function to get database connection
 def get_db_connection():
     connection = mysql.connector.connect(
-        host=MYSQL_HOST,
-        user=MYSQL_USER,
-        password=MYSQL_PASSWORD,
-        database=MYSQL_DB
+        host=app.config['MYSQL_HOST'],
+        user=app.config['MYSQL_USER'],
+        password=app.config['MYSQL_PASSWORD'],
+        database=app.config['MYSQL_DB']
     )
     return connection
 
@@ -137,8 +137,3 @@ app.register_blueprint(login_bp)
 # Main entry point for the app
 if __name__ == '__main__':
     app.run(debug=True)
-
-
-# # Main entry point for the app
-# if __name__ == "__main__":
-#     app.run(host="0.0.0.0", port=5000, debug=True)
