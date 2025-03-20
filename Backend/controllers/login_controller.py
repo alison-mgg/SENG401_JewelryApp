@@ -48,7 +48,7 @@ def login():
     finally:
         cursor.close()        
 
-@login_bp.route('/api/cookie', methods=['GET', 'POST'])
+@login_bp.route('/cookie', methods=['GET', 'POST'])
 def getCookie():
     if request.method == 'POST':
         name = request.form.get('username')  # Use .get() to avoid errors if key is missing

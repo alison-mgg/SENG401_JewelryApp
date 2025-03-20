@@ -43,7 +43,7 @@ function LoginPage() {
     }
 
     try {
-      const apiUrl = `${config.apiURL}/api/login`;
+      const apiUrl = `${config.apiURL}/login`;
       console.log("apiUrl:", apiUrl);
       const response = await fetch(apiUrl, {
         method: 'POST',
