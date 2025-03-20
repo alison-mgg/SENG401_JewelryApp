@@ -45,6 +45,10 @@ function SignupPage() {
 
       displayMessage('success', 'Signup successful!');
       console.log('success');
+
+      // TODO:
+      // Redirects to main page after successful signup
+      // Should this send to login page instead?
       navigate('/main');
 
     } catch (error) {
