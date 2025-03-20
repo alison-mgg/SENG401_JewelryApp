@@ -16,8 +16,7 @@ function LoginPage() {
   //function for cookies
   const fetchCookie = async () => {
     try {
-        const apiUrl = `${config.apiURL}/cookie`; // Updated to use remote API URL and correct endpoint
-        const response = await fetch(apiUrl, {
+        const response = await fetch('http://localhost:5000/api/cookie', {
             method: 'GET',
             credentials: 'include'  // Ensure cookies are sent with the request
         });
@@ -43,7 +42,7 @@ function LoginPage() {
     }
 
     try {
-      const apiUrl = `${config.apiURL}/login`;
+      const apiUrl = `${config.apiURL}/api/login`;
       console.log("apiUrl:", apiUrl);
       const response = await fetch(apiUrl, {
         method: 'POST',
