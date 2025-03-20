@@ -16,7 +16,7 @@ function LoginPage() {
   //function for cookies
   const fetchCookie = async () => {
     try {
-        const response = await fetch('http://localhost:5000/api/cookie', {
+        const response = await fetch(`${config.apiURL}/cookie`, {
             method: 'GET',
             credentials: 'include'  // Ensure cookies are sent with the request
         });
@@ -33,6 +33,7 @@ function LoginPage() {
     }
   };
 
+  // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -42,7 +43,7 @@ function LoginPage() {
     }
 
     try {
-      const apiUrl = `${config.apiURL}/api/login`;
+      const apiUrl = `${config.apiURL}/login`;
       console.log("apiUrl:", apiUrl);
       const response = await fetch(apiUrl, {
         method: 'POST',
@@ -58,7 +59,7 @@ function LoginPage() {
       if (response.ok) {
         setMessage({ type: 'success', content: 'Authentication successful' });
         console.log('success');
-        // fetchCookie(); // Uncomment if you have a function to fetch cookies
+        fetchCookie();
         // setAuthenticated(true); // Uncomment if you have an authentication state
         navigate('/main'); // Redirect to main page after successful authentication
       } else {
