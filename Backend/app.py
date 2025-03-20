@@ -1,13 +1,14 @@
+# Std library import
+import os
+
 # Third-party imports
 from flask import Flask, jsonify, request, make_response
 from flask_cors import CORS
 from dotenv import load_dotenv
-
-# Std library import
-import os
+import mysql.connector
+from mysql.connector import Error, IntegrityError
 
 # Local imports
-from mysql.connector import Error, IntegrityError
 from database_connector import get_database
 from controllers.signup_controller import signup_bp
 from controllers.login_controller import login_bp
