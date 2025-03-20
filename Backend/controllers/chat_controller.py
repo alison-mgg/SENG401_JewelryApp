@@ -54,3 +54,22 @@ def save_to_database():
         return jsonify({"error": f"Failed to save to database: {str(e)}"}), 500
 
     return jsonify({"message": "Successfully saved to database."})
+
+
+@save_chat_bp.route('/api/user/<username>', methods=['GET'])
+def get_user(username):
+    database = get_database()
+    cursor = database.cursor(dictionary=True)
+
+    try:
+        cursor.execute("SELECT username, email FROM users WHERE username = %s", (username,))
+        user = cursor.fetchone()
+
+        if user:
+            return jsonify(user), 200
+        else:
+            return jsonify({"error": "User not found"}), 404
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    finally:
+        cursor.close()

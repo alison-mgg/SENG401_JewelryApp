@@ -5,3 +5,13 @@ Frontend/dupe-machine/package-lock.json
 Backend/.env
 /Backend/.venv
 Backend/.ebignore
+/gemini_config/__pycache__/settings.cpython-39.pyc
+/gemini_config/__pycache__/settings.cpython-311.pyc
+/gemini_config/__pycache__/settings.cpython-312.pyc
+/gemini_config/__pycache__/settings.cpython-313.pyc
+/routes/__pycache__/description_routes.cpython-39.pyc
+/routes/__pycache__/similar_product_routes.cpython-39.pyc
+/routes/__pycache__/image_routes.cpython-39.pyc
+/services/__pycache__/file_utils.cpython-39.pyc
+/services/__pycache__/gemini_request_links.cpython-39.pyc
+/services/__pycache__/gemini_service.cpython-39.pyc
