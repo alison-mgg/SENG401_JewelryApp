@@ -32,7 +32,7 @@ app.config['MYSQL_PASSWORD'] = os.getenv('MYSQL_PASSWORD')
 app.config['MYSQL_DB'] = os.getenv('MYSQL_DB')
 
 # for Cookies:
-app.config['SESSION_COOKIE_SECURE'] = False  # Set to True in production with HTTPS
+app.config['SESSION_COOKIE_SECURE'] = True  # Set to True in production with HTTPS
 app.config['SESSION_COOKIE_HTTPONLY'] = False  # Prevent JS access - CHANGED TO TRUE
 app.config['SESSION_COOKIE_SAMESITE'] = 'None'  # Allow cross-origin
 
