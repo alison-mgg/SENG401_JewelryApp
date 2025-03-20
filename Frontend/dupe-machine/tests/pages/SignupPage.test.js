@@ -54,7 +54,7 @@ describe('SignUpPage', () => {
     fireEvent.click(screen.getByText('Sign Up'));
 
     expect(fetch).toHaveBeenCalledWith(`${config.apiURL}/signup`, expect.any(Object));
-    expect(await screen.findByText('Sign-up successful!')).toBeInTheDocument();
+    expect(await screen.findByText('Signup successful!')).toBeInTheDocument();
   });
 
   // Test that an error message is displayed when sign-up fails
