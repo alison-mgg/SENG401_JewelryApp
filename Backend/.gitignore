@@ -1,3 +1,5 @@
+# Ignore vs code settings
+.vscode/*
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
