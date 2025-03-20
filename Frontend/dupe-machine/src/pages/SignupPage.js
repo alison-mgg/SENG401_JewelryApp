@@ -12,43 +12,83 @@ function SignupPage() {
   const [message, setMessage] = useState({ type: '', content: '' });
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
 
-    if (username.trim() === '' || password.trim() === '' || email.trim() === '') {
-      displayMessage('error', 'All fields are required.');
-      return;
-    }
+  //   if (username.trim() === '' || password.trim() === '' || email.trim() === '') {
+  //     displayMessage('error', 'All fields are required.');
+  //     return;
+  //   }
 
-    if (email && email.trim() !== '' && !isValidEmail(email)) {
-      displayMessage('error', 'Invalid email format');
-      return;
-    }
+  //   if (email && email.trim() !== '' && !isValidEmail(email)) {
+  //     displayMessage('error', 'Invalid email format');
+  //     return;
+  //   }
 
-    try {
-      const proxyUrl = config.corsProxyURL;
-      const apiUrl = `${config.apiURL}/signup`;
-      const response = await fetch(proxyUrl + apiUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ username, password, email })
-      });
+  //   try {
+  //     const proxyUrl = config.corsProxyURL;
+  //     const apiUrl = `${config.apiURL}/signup`;
+  //     const response = await fetch(proxyUrl + apiUrl, {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json'
+  //       },
+  //       body: JSON.stringify({ username, password, email })
+  //     });
 
-      if (!response.ok) {
-        const data = await response.json();
-        displayMessage('error', data.error || 'Signup failed.');
-        return;
+  //     if (!response.ok) {
+  //       const data = await response.json();
+  //       displayMessage('error', data.error || 'Signup failed.');
+  //       return;
+  //     }
+
+  //     displayMessage('success', 'Signup successful!');
+  //     console.log('success')
+  //     navigate('/main');
+
+  //   } catch (error) {
+  //     displayMessage('error', 'Something went wrong. Please try again later.');
+  //   }
+  // };
+
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+
+      if (username.trim() === '' || password.trim() === '' || email.trim() === '') {
+          displayMessage('error', 'All fields are required.');
+          return;
       }
 
-      displayMessage('success', 'Signup successful!');
-      console.log('success')
-      navigate('/main');
+      if (email && email.trim() !== '' && !isValidEmail(email)) {
+          displayMessage('error', 'Invalid email format');
+          return;
+      }
 
-    } catch (error) {
-      displayMessage('error', 'Something went wrong. Please try again later.');
-    }
+      try {
+          const proxyUrl = config.corsProxyURL;
+          const apiUrl = new URL('/signup', config.apiURL).toString(); // Use URL constructor
+          console.log("apiUrl:", apiUrl); // Check the constructed URL
+          const response = await fetch(apiUrl, { //Remove proxyUrl +
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ username, password, email })
+          });
+
+          if (!response.ok) {
+              const data = await response.json();
+              displayMessage('error', data.error || 'Signup failed.');
+              return;
+          }
+
+          displayMessage('success', 'Signup successful!');
+          console.log('success');
+          navigate('/main');
+
+      } catch (error) {
+          displayMessage('error', 'Something went wrong. Please try again later.');
+      }
   };
 
   const displayMessage = (type, content) => {

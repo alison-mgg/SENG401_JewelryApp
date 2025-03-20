@@ -20,18 +20,15 @@
 
 // export default config;
 
-const environment = process.env.NODE_ENV; // 'development' or 'production'
+const useLocalApi = false; // Set to true for local, false for remote
+
+const localApiUrl = "http://localhost:5000";
+const remoteApiUrl = "https://jewelry-dupe-app.onrender.com";
+const corsProxyUrl = "https://cors-anywhere-6vpc.onrender.com";
 
 const config = {
-  apiURL: environment === 'production'
-    ? process.env.REACT_APP_BACKEND_URL_PRODUCTION
-    : process.env.REACT_APP_BACKEND_URL_LOCAL,
-  corsProxyURL: process.env.REACT_APP_CORS_PROXY_URL,
+  apiURL: useLocalApi ? localApiUrl : `${corsProxyUrl}/${remoteApiUrl}`,
+  corsProxyURL: corsProxyUrl, // Keep this for potential future use
 };
-
-// Check if a CORS proxy is being used AND we are in development
-if (config.corsProxyURL && environment === 'development') {
-  config.apiURL = `${config.corsProxyURL}/${config.apiURL}`;
-}
 
 export default config;
