@@ -63,3 +63,9 @@ def getCookie():
         if username:
             return jsonify({"message": f"Cookie found for {username}", "username": username}), 200
         return jsonify({"message": "No cookie found"}), 404
+    
+@login_bp.route('/api/logout', methods=['POST'])
+def logout():
+    resp = jsonify({"message": "Logout successful!"})
+    resp.set_cookie('username', '', expires=0)  # Clear the username cookie
+    return resp, 200
