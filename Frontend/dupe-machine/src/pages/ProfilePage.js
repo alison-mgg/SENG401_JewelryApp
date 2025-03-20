@@ -3,17 +3,22 @@ import "../styling/ProfilePage.css";
 import NavBar from "./NavigationBar.js";
 import UserDetails from "./UserDisplay.js";
 import Chats from "./SavedChats.js";
-import { useAuth } from '../AuthContext'; // Import useAuth to get the current user
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
+import { useAuth } from '../AuthContext'; 
+import { useNavigate } from 'react-router-dom'; 
 
 function ProfilePage() {
   const [userData, setUserData] = useState({ username: "", email: "" });
-  const { isAuthenticated, username, logout } = useAuth(); // Get the current username and logout function from AuthContext
-  const navigate = useNavigate(); // Initialize useNavigate
+  const { isAuthenticated, username, logout } = useAuth(); 
+  const navigate = useNavigate(); 
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate('/signup'); // Redirect to the signup page if not authenticated
+    }
+  }, [isAuthenticated, navigate]);
 
   useEffect(() => {
     if (isAuthenticated && username) {
-      // Fetch user data from the backend
       const fetchUserData = async () => {
         try {
           const response = await fetch(`http://localhost:5000/api/user/${username}`);
@@ -50,14 +55,14 @@ function ProfilePage() {
     }
   };
 
-  return (
+  return isAuthenticated ? (
     <div className="profilepage-container">
       <NavBar />
       <UserDetails username={userData.username} email={userData.email} />
       <Chats />
       <button onClick={handleLogout} className="logout-button">Logout</button>
     </div>
-  );
+  ) : null;
 }
 
 export default ProfilePage;
