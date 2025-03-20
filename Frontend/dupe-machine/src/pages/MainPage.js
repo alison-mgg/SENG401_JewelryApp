@@ -56,65 +56,108 @@ function ImageDescription() {
     }
   };
 
+  // const uploadAndAnalyzeImage = async (file) => {
+  //   if (!file) {
+  //     setDescription("Please select an image first.");
+  //     return;
+  //   }
+
+  //   setLoading(true);  // Set loading to true when the upload process starts
+  //   const formData = new FormData();
+  //   formData.append("image", file);
+
+  //   try {
+  //     const response = await fetch("http://localhost:5000/upload", {
+  //       method: "POST",
+  //       body: formData,
+  //     });
+
+  //     const data = await response.json();
+
+  //     if (data.error) {
+  //       setDescription("Error: " + data.error);
+  //     } else {
+  //       setDescription("Description: " + data.description);
+  //       // Store the renamed filename returned from the backend
+  //       setSelectedFile(data.filename); // Assuming the backend returns the renamed filename
+  //     }
+  //   } catch (error) {
+  //     setDescription("Failed to upload image. Error: " + error.message);
+  //   } finally {
+  //     setLoading(false);  // Set loading to false after the request completes
+  //   }
+  // };
+
   const uploadAndAnalyzeImage = async (file) => {
     if (!file) {
-      setDescription("Please select an image first.");
-      return;
+        setDescription("Please select an image first.");
+        return;
     }
 
-    setLoading(true);  // Set loading to true when the upload process starts
+    setLoading(true); // Show loading state
     const formData = new FormData();
     formData.append("image", file);
 
     try {
-      const response = await fetch("http://localhost:5000/upload", {
-        method: "POST",
-        body: formData,
-      });
+        const response = await fetch("http://localhost:5000/upload", {
+            method: "POST",
+            body: formData,
+        });
 
-      const data = await response.json();
+        const data = await response.json();
 
-      if (data.error) {
-        setDescription("Error: " + data.error);
-      } else {
-        setDescription("Description: " + data.description);
-        // Store the renamed filename returned from the backend
-        setSelectedFile(data.filename); // Assuming the backend returns the renamed filename
-      }
+        if (data.error) {
+            setDescription("Error: " + data.error);
+        } else {
+            setDescription(data.description); // Set the extracted description
+            setSelectedFile(data.filename);  // Store the renamed filename from backend
+            
+            // ✅ Automatically fetch similar products once the description is received
+            handleGetSimilarProducts(data.description);
+        }
     } catch (error) {
-      setDescription("Failed to upload image. Error: " + error.message);
+        setDescription("Failed to upload image. Error: " + error.message);
     } finally {
-      setLoading(false);  // Set loading to false after the request completes
+        setLoading(false); // Hide loading state
     }
-  };
+};
 
-  const handleGetSimilarProducts = async () => {
-    setLoading(true);  // Set loading to true when fetching similar products
+const handleGetSimilarProducts = async (latestDescription) => {  
+  if (typeof latestDescription !== "string") {
+      console.error(" Invalid description:", latestDescription);
+      return;
+  }
 
-    try {
+  setLoading(true);
+
+  try {
       const response = await fetch("http://localhost:5000/similar-products", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          description: description,  // Send the description extracted from the image
-        }),
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+              description: latestDescription.trim(),  // Ensure it's a valid string
+          }),
       });
 
       const data = await response.json();
+      console.log(" Similar Products Response:", data);
 
       if (data.error) {
-        setSimilarProducts("Error: " + data.error);
+          setSimilarProducts("Error: " + data.error);
       } else {
-        setSimilarProducts("Similar Products: " + data.similar_products);
+          setSimilarProducts(""); // Reset first
+          setTimeout(() => {
+              setSimilarProducts("Similar Products: " + data.similar_products);
+          }, 50);
       }
-    } catch (error) {
+  } catch (error) {
       setSimilarProducts("Failed to get similar products. Error: " + error.message);
-    } finally {
-      setLoading(false);  // Set loading to false after the request completes
-    }
-  };
+  } finally {
+      setLoading(false);
+  }
+};
 
     const handleChange = (e) => {
       setText(e.target.value);
@@ -188,7 +231,7 @@ function ImageDescription() {
       </div> */} 
 
       <button onClick={handleGetSimilarProducts} className="similar-products-button">
-        Get Similar Products
+        Refresh Results
       </button>
 
       <div className="similar-products-box">
