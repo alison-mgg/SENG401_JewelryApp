@@ -67,7 +67,7 @@ def test_db_connection():
     except Exception as e:
         return jsonify({"database_status": "error", "error": str(e)}), 500
 
-# Test API endpoint
+# Test API endpoint for users
 @app.route('/test-users')
 def get_users():
     try:
@@ -82,6 +82,24 @@ def get_users():
         db.close()
         
         return jsonify(users)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+# Test API endpoint for chats
+@app.route('/test-chats')
+def get_chats():
+    try:
+        db = get_db_connection()
+        cursor = db.cursor(dictionary=True)
+        cursor.execute('SELECT * FROM chats')
+        
+        # Fetch all the results
+        chats = cursor.fetchall()
+        
+        cursor.close()
+        db.close()
+        
+        return jsonify(chats)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
