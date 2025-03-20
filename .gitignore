@@ -10,6 +10,8 @@ Backend/.ebignore
 /Backend/controllers/__pycache__
 /Backend/controllers/__pycache__
 /Gemini_Testing/node_modules
+/Gemini_Testing/venv
+/Gemini_Testing/.venv
 /Backend/controllers/__pycache__
 Backend/controllers/__pycache__/signup_controller.cpython-311.pyc
 Backend/controllers/__pycache__/signup_controller.cpython-311.pyc

@@ -17,7 +17,7 @@ from Backend.controllers.login_controller import login_bp
 from Backend.controllers.chat_controller import save_chat_bp
 from Backend.database_connector import get_database
 
-from flask import Flask, g
+from flask import Flask, g, jsonify
 from flask_cors import CORS
 from dotenv import load_dotenv
 import mysql.connector
