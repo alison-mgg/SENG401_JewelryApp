@@ -1,7 +1,11 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, make_response
 from database_connector import get_database
+import os
 
 login_bp = Blueprint('login', __name__)
+
+# Get the origin URL from environment variables
+ORIGIN_URL = os.getenv('ORIGIN_URL')
 
 # MARKER - Login route is working from Render deployment
 @login_bp.route('/login', methods=['POST'])
@@ -12,12 +16,14 @@ def login():
     password = data.get('password')
 
     if not username or not password:
-        return jsonify({"message": "Username and password are required!"}), 400
+        response = jsonify({"message": "Username and password are required!"})
+        response.headers.add('Access-Control-Allow-Origin', ORIGIN_URL)
+        response.headers.add('Access-Control-Allow-Credentials', 'true')
+        return response, 400
 
     database = get_database()
     cursor = database.cursor(dictionary=True)
 
-    
     try:
         cursor.execute("SELECT * FROM users WHERE username = %s", (username,))
         user = cursor.fetchone()
@@ -36,30 +42,52 @@ def login():
                 secure_flag = request.scheme == 'https'
 
                 resp.set_cookie('username', username, httponly=True, secure=secure_flag)
+                resp.headers.add('Access-Control-Allow-Origin', ORIGIN_URL)
+                resp.headers.add('Access-Control-Allow-Credentials', 'true')
                 return resp, 200
             else:
-                return jsonify({"message": "Invalid credentials"}), 401
+                response = jsonify({"message": "Invalid credentials"})
+                response.headers.add('Access-Control-Allow-Origin', ORIGIN_URL)
+                response.headers.add('Access-Control-Allow-Credentials', 'true')
+                return response, 401
         else:
-            return jsonify({"message": "User not found"}), 404
+            response = jsonify({"message": "User not found"})
+            response.headers.add('Access-Control-Allow-Origin', ORIGIN_URL)
+            response.headers.add('Access-Control-Allow-Credentials', 'true')
+            return response, 404
 
     except Exception as e:
-        return jsonify({"message": str(e)}), 500
+        response = jsonify({"message": str(e)})
+        response.headers.add('Access-Control-Allow-Origin', ORIGIN_URL)
+        response.headers.add('Access-Control-Allow-Credentials', 'true')
+        return response, 500
 
     finally:
-        cursor.close()        
+        cursor.close()
 
 @login_bp.route('/cookie', methods=['GET', 'POST'])
 def getCookie():
     if request.method == 'POST':
         name = request.form.get('username')  # Use .get() to avoid errors if key is missing
         if not name:
-            return jsonify({"message": "Username is required"}), 400
+            response = jsonify({"message": "Username is required"})
+            response.headers.add('Access-Control-Allow-Origin', ORIGIN_URL)
+            response.headers.add('Access-Control-Allow-Credentials', 'true')
+            return response, 400
         
         resp = jsonify({"message": f"Cookie set for {username}"})  # Use jsonify instead of output
         resp.set_cookie('username', username, httponly=True, secure=(request.scheme == 'https'))
+        resp.headers.add('Access-Control-Allow-Origin', ORIGIN_URL)
+        resp.headers.add('Access-Control-Allow-Credentials', 'true')
         return resp
     elif request.method == 'GET':
         username = request.cookies.get('username')  # Retrieve the cookie value
         if username:
-            return jsonify({"message": f"Cookie found for {username}", "username": username}), 200
-        return jsonify({"message": "No cookie found"}), 404
+            resp = jsonify({"message": f"Cookie found for {username}", "username": username})
+            resp.headers.add('Access-Control-Allow-Origin', ORIGIN_URL)
+            resp.headers.add('Access-Control-Allow-Credentials', 'true')
+            return resp, 200
+        resp = jsonify({"message": "No cookie found"})
+        resp.headers.add('Access-Control-Allow-Origin', ORIGIN_URL)
+        resp.headers.add('Access-Control-Allow-Credentials', 'true')
+        return resp, 404
