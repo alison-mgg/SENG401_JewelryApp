@@ -4,62 +4,67 @@ import "../styling/ChatFormatProfile.css";
 import { useAuth } from '../AuthContext';
 
 const SavedChats = () => {
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [userImages, setUserImages] = useState([]);
+  const [selectedChat, setSelectedChat] = useState(null); // Store the selected chat (image + description)
+  const [userChats, setUserChats] = useState([]); // Store all chats (image + description)
   const { username } = useAuth();
 
   useEffect(() => {
-    const fetchUserImages = async () => {
+    const fetchUserChats = async () => {
       try {
         const response = await fetch(`http://localhost:5000/api/user/${username}/images`);
         if (response.ok) {
           const data = await response.json();
-          setUserImages(data.map(img => img.img_path));
+          setUserChats(data); // Store the chats (image + description)
         } else {
-          console.error("Failed to fetch user images");
+          console.error("Failed to fetch user chats");
         }
       } catch (error) {
-        console.error("Error fetching user images:", error);
+        console.error("Error fetching user chats:", error);
       }
     };
 
     if (username) {
-      fetchUserImages();
+      fetchUserChats();
     }
   }, [username]);
 
   return (
     <div className="saved-chats-wrapper">
-      <div className={`saved-chats-container ${selectedImage ? "dimmed" : ""}`}>
+      <div className={`saved-chats-container ${selectedChat ? "dimmed" : ""}`}>
         <div className="saved-chats scrollable">
-          {userImages.map((src, index) => (
-            <img
-              key={index}
-              src={`http://localhost:5000${src}`}  // Use the full URL returned by the backend
-              alt={`Chat ${index}`}
-              className="chat-image"
-              onClick={() => setSelectedImage(src)}
-            />
+          {userChats.map((chat, index) => (
+            <div key={index} className="chat-item">
+              <img
+                src={`http://localhost:5000${chat.img_path}`} // Use the full URL returned by the backend
+                alt={`Chat ${index}`}
+                className="chat-image"
+                onClick={() => setSelectedChat(chat)} // Pass the entire chat object (image + description)
+              />
+            </div>
           ))}
         </div>
       </div>
-      {selectedImage && (
+      {selectedChat && (
         <ChatFormatProfile
-          image={selectedImage}
-          onClose={() => setSelectedImage(null)}
+          image={selectedChat.img_path}
+          description={selectedChat.response} // Pass the description to ChatFormatProfile
+          onClose={() => setSelectedChat(null)}
         />
       )}
     </div>
   );
 };
 
-const ChatFormatProfile = ({ image, onClose }) => {
+const ChatFormatProfile = ({ image, description, onClose }) => {
   return (
     <div className="chat-format-overlay">
       <button className="close-button" onClick={onClose}>X</button>
       <div className="chat-format-content">
         <img src={`http://localhost:5000${image}`} alt="Selected Chat" className="enlarged-image" />
-        <div className="chat-textbox">Sample text displayed here</div>
+        <div className="chat-textbox">
+          <h3>Description:</h3>
+          <p>{description}</p> {/* Display the description */}
+        </div>
       </div>
     </div>
   );
