@@ -1,0 +1,23 @@
+/* UserDisplay.css */
+.user-display-container {
+    text-align: center;
+    margin-top: 100px;
+  }
+  
+  .user-display-content {
+    display: flex;
+    margin-left: 50px;
+    gap: 100px; /* Space between the text elements */
+  }
+  
+  .custom-line {
+    width: 75%; /* Adjust width as needed */
+    height: 5px; /* Height to make it look like a rectangle */
+    background-color: #d2bfc7; /* Customize the color */
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 3px;
+  }
+   .saved-heading{
+    margin-top: 50px;
+   }
