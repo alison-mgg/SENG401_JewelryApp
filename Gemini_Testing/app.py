@@ -33,6 +33,9 @@ from routes.similar_product_routes import similar_product_routes
 
 app = Flask(__name__)
 
+app.static_url_path = '/static'
+app.static_folder = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'Database', 'images')
+
 # Explicitly define allowed origins (for local development, it's common to allow localhost:3000)
 CORS(app, origins=["http://localhost:3000"], methods=["GET", "POST", "OPTIONS"], supports_credentials=True)  # Allow React frontend to communicate with Flask
 

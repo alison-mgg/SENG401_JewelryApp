@@ -23,3 +23,23 @@ def get_user(username):
         return jsonify({"error": str(e)}), 500
     finally:
         cursor.close()
+
+@profile_bp.route('/api/user/<username>/images', methods=['GET'])
+def get_user_images(username):
+    database = get_database()
+    cursor = database.cursor(dictionary=True)
+
+    try:
+        cursor.execute("SELECT img_path FROM chats WHERE username = %s", (username,))
+        images = cursor.fetchall()
+
+        if images:
+            # Prepend the static URL to the image paths
+            images_with_urls = [{"img_path": f"/static/{img['img_path']}"} for img in images]
+            return jsonify(images_with_urls), 200
+        else:
+            return jsonify({"error": "No images found for this user"}), 404
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    finally:
+        cursor.close()
