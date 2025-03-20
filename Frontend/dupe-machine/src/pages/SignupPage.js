@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import "../styling/SignupPage.css";
 import config from '../config';
 
+// MARKER: SignupPage is functional if user is valid, ie. not a existing user
+// MARKER: SignupPage is goes to 500 Internal Server Error if user is invalid, ie. existing user
 function SignupPage() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
