@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-//import { useAuthContext } from '../App.js';
+import { useAuth } from '../AuthContext';
 import "../styling/LoginPage.css";
 
 function LoginPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState({ type: '', content: '' }); // State to manage the message
-  //const { setAuthenticated } = useAuthContext(); // Access setAuthenticated function from context
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,6 +26,8 @@ function LoginPage() {
             const data = await response.json();
             console.log('Logged-in user:', data.username);
             setUsername(data.username);  // Set username in state
+            login(data.username); // Update authentication state
+            console.log('isAuthenticated set to true'); // DEBUG CODE Log the state change
         } else {
             console.log('No cookie found');
         }
