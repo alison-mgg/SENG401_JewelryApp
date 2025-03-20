@@ -16,7 +16,8 @@ function LoginPage() {
   //function for cookies
   const fetchCookie = async () => {
     try {
-        const response = await fetch('http://localhost:5000/api/cookie', {
+        const apiUrl = `${config.apiURL}/cookie`; // Updated to use remote API URL and correct endpoint
+        const response = await fetch(apiUrl, {
             method: 'GET',
             credentials: 'include'  // Ensure cookies are sent with the request
         });
