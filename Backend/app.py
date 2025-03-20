@@ -29,9 +29,6 @@ ORIGIN_URL = os.getenv('ORIGIN_URL')
 # Enable CORS for frontend (React app hosted on Vercel)
 CORS(app, origins=[ORIGIN_URL], supports_credentials=True)
 
-# # Vercel branch render-backend-deployment (change to main branch Vercel link after)
-# CORS(app, origins=["http://localhost:3000"], supports_credentials=True)
-
 # MySQL Database configuration using environment variables
 app.config['MYSQL_HOST'] = os.getenv('MYSQL_HOST')
 app.config['MYSQL_USER'] = os.getenv('MYSQL_USER')
