@@ -32,8 +32,11 @@ from routes.similar_product_routes import similar_product_routes
 
 app = Flask(__name__)
 
-# Explicitly define allowed origins (for local development, it's common to allow localhost:3000)
-CORS(app, origins=["http://localhost:3000"], methods=["GET", "POST", "OPTIONS"], supports_credentials=True)  # Allow React frontend to communicate with Flask
+# Get the frontend origin URL from environment variables
+ORIGIN_URL = os.getenv('ORIGIN_URL')
+
+# Enable CORS for frontend (React app hosted on Vercel)
+CORS(app, origins=[ORIGIN_URL], supports_credentials=True)
 
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 load_dotenv()
@@ -47,6 +50,34 @@ app.config['SESSION_COOKIE_SECURE'] = True  # Set to True in production with HTT
 app.config['SESSION_COOKIE_HTTPONLY'] = True  # Prevent JS access
 app.config['SESSION_COOKIE_SAMESITE'] = 'None'  # Allow cross-origin
 
+# Test route to confirm Render deployment
+@app.route('/', methods=['GET'])
+def test_app():
+    """Test route to verify the app is running and database connection works."""
+    try:
+        # Attempt to connect to the database
+        db = get_database()
+        cursor = db.cursor()
+        cursor.execute("SELECT 1")  # Simple query to test the connection
+        result = cursor.fetchone()
+        cursor.close()
+        db.close()
+
+        # Return success response
+        return jsonify({
+            "status": "success",
+            "message": "Gemini Testing app is running!",
+            "database_status": "connected",
+            "test_query_result": result
+        }), 200
+    except Exception as e:
+        # Return error response if something goes wrong
+        return jsonify({
+            "status": "error",
+            "message": "Gemini Testing app encountered an issue.",
+            "error": str(e)
+        }), 500
+    
 # Register Blueprints
 app.register_blueprint(image_routes)
 app.register_blueprint(description_routes)
