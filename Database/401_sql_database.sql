@@ -1,13 +1,8 @@
-DROP DATABASE IF EXISTS `401_sql_database`;
-CREATE DATABASE `401_sql_database`;
-USE 401_sql_database;
+-- Use the new AWS database
+USE `new-jewelry-dupe-db`;
 
-DROP USER IF EXISTS 'seng401'@'localhost';
-CREATE USER 'seng401'@'localhost' IDENTIFIED BY 'seng401';
-GRANT ALL PRIVILEGES ON `401_sql_database`.* TO 'seng401'@'localhost' WITH GRANT OPTION;
-FLUSH PRIVILEGES;
-
-CREATE TABLE users (
+-- Create Users table
+CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,    
     username VARCHAR(255) NOT NULL,       
     email VARCHAR(255) NOT NULL UNIQUE,    
@@ -20,7 +15,7 @@ INSERT INTO users (username, email, password)
 VALUES ('a', 'a@a.com', 'a');
 
 -- Create chats table
-CREATE TABLE chats (
+CREATE TABLE IF NOT EXISTS chats (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(255) REFERENCES users(username),
     img_path TEXT NOT NULL,
@@ -28,29 +23,38 @@ CREATE TABLE chats (
     uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Drop the local database and user if they exist
+DROP DATABASE IF EXISTS `401_sql_database`;
+DROP USER IF EXISTS 'seng401'@'localhost';
 
--- Use the new AWS database
--- USE new-jewelry-dupe-db;
+-- Create the local database and user for local development
+CREATE DATABASE `401_sql_database`;
+CREATE USER 'seng401'@'localhost' IDENTIFIED BY 'seng401';
+GRANT ALL PRIVILEGES ON `401_sql_database`.* TO 'seng401'@'localhost' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
 
--- Create Users table
--- CREATE TABLE users (
---     id INT AUTO_INCREMENT PRIMARY KEY,    
---     username VARCHAR(255) NOT NULL,       
---     email VARCHAR(255) NOT NULL UNIQUE,    
---     password VARCHAR(255) NOT NULL,        -- Ideally, password hashed on server side
---     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
--- );
+-- Use the local database
+USE `401_sql_database`;
 
--- -- Insert a test user:
--- INSERT INTO users (username, email, password) 
--- VALUES ('a', 'a@a.com', 'a');
+-- Create Users table for local development
+CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,    
+    username VARCHAR(255) NOT NULL,       
+    email VARCHAR(255) NOT NULL UNIQUE,    
+    password VARCHAR(255) NOT NULL,        -- Ideally, password hashed on server side
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
+);
 
--- -- Create chats table
--- CREATE TABLE chats (
---     id INT AUTO_INCREMENT PRIMARY KEY,
---     username VARCHAR(255) REFERENCES users(username),
---     img_path TEXT NOT NULL,
---     links TEXT NOT NULL,
---     uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
--- );
+-- Insert a test user for local development
+INSERT INTO users (username, email, password) 
+VALUES ('a', 'a@a.com', 'a');
+
+-- Create chats table for local development
+CREATE TABLE IF NOT EXISTS chats (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) REFERENCES users(username),
+    img_path TEXT NOT NULL,
+    response TEXT NOT NULL,
+    uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
