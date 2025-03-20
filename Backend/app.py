@@ -9,7 +9,7 @@ import mysql.connector
 from mysql.connector import Error, IntegrityError
 
 # Local imports
-from database_connector import get_database
+# from database_connector import get_database
 from controllers.signup_controller import signup_bp
 from controllers.login_controller import login_bp
 from controllers.chat_controller import save_chat_bp
@@ -31,6 +31,16 @@ app.config['MYSQL_USER'] = os.getenv('MYSQL_USER')
 app.config['MYSQL_PASSWORD'] = os.getenv('MYSQL_PASSWORD')
 app.config['MYSQL_DB'] = os.getenv('MYSQL_DB')
 
+# Function to get database connection
+def get_db_connection():
+    connection = mysql.connector.connect(
+        host=app.config.MYSQL_HOST,
+        user=app.config.MYSQL_USER,
+        password=app.config.MYSQL_PASSWORD,
+        database=app.config.MYSQL_DB
+    )
+    return connection
+
 # for Cookies:
 app.config['SESSION_COOKIE_SECURE'] = True  # Set to True in production with HTTPS
 app.config['SESSION_COOKIE_HTTPONLY'] = True  # Prevent JS access - CHANGED TO TRUE
@@ -46,7 +56,7 @@ def home():
 def test_db_connection():
     try:
         # Attempt to connect to the database
-        db = get_database()
+        db = get_db_connection()
         cursor = db.cursor()
         cursor.execute("SELECT 1")  # Simple query to test the connection
         result = cursor.fetchone()
@@ -70,7 +80,7 @@ def test_db_connection():
 @app.route('/test-users')
 def get_users():
     try:
-        db = get_database()
+        db = get_db_connection()
         cursor = db.cursor(dictionary=True)
         cursor.execute('SELECT * FROM users')
         
@@ -88,7 +98,7 @@ def get_users():
 @app.route('/test-chats')
 def get_chats():
     try:
-        db = get_database()
+        db = get_db_connection()
         cursor = db.cursor(dictionary=True)
         cursor.execute('SELECT * FROM chats')
         
