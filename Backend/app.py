@@ -81,7 +81,7 @@ def get_users():
         cursor.close()
         db.close()
         
-        return jsonify(users)
+        return jsonify({"message": "Successfully connected to the users table", "users": users})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -99,7 +99,7 @@ def get_chats():
         cursor.close()
         db.close()
         
-        return jsonify(chats)
+        return jsonify({"message": "Successfully connected to the chats table", "chats": chats})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
