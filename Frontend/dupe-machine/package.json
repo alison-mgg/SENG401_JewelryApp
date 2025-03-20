@@ -10,7 +10,7 @@
     "axios": "^1.8.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-router-dom": "^7.2.0",
+    "react-router-dom": "^6.30.0",
     "react-scripts": "^5.0.1",
     "web-vitals": "^2.1.4",
     "yocto-queue": "^1.2.0"
@@ -18,7 +18,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --verbose",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -37,6 +37,12 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
+    ]
+  },
+  "jest": {
+    "testMatch": [
+      "**/src/**/*.test.js",
+      "**/tests/**/*.test.js"
     ]
   },
   "devDependencies": {

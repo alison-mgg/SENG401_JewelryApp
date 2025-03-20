@@ -1,11 +1,10 @@
-import React, { useState }from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "../styling/SignupPage.css";
-
-// Import config file
 import config from '../config';
 
 function SignupPage() {
+  console.log("SignupPage rendered");
 
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
@@ -15,153 +14,108 @@ function SignupPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Check if all fields are filled
     if (username.trim() === '' || password.trim() === '' || email.trim() === '') {
       displayMessage('error', 'All fields are required.');
       return;
     }
 
-    // Check if email is valid
     if (email && email.trim() !== '' && !isValidEmail(email)) {
-        displayMessage('error', 'Invalid email format');
-        return;
+      displayMessage('error', 'Invalid email format');
+      return;
     }
 
-    // Send request to backend
     try {
       const proxyUrl = config.corsProxyURL;
       const apiUrl = `${config.apiURL}/signup`;
       const response = await fetch(proxyUrl + apiUrl, {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ username, password, email })
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, password, email })
       });
-    
-      // Check if response is ok
+
       if (!response.ok) {
         const data = await response.json();
         displayMessage('error', data.error || 'Signup failed.');
         return;
       }
 
-      // If response is ok, display success message
       displayMessage('success', 'Signup successful!');
-      console.log('success')
+      console.log('success');
 
-      // Response error
     } catch (error) {
       displayMessage('error', 'Something went wrong. Please try again later.');
     }
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   // Check if all fields are filled
-  //   if (username.trim() === '' || password.trim() === '' || email.trim() === '') {
-  //     displayMessage('error', 'All fields are required.');
-  //     return;
-  //   }
-
-  //   // Check if email is valid
-  //   if (email && email.trim() !== '' && !isValidEmail(email)) {
-  //       displayMessage('error', 'Invalid email format');
-  //       return;
-  //   }
-
-  //   // Send request to backend
-  //   try {
-  //     // Initial code:                  fetch('http://localhost:5000/signup')
-  //     // Change to use AWS Backend URL: fetch(`${config.apiURL}/signup`)      
-  //     // note: backticks to use template strings, not apostrophes (regular strings) here
-  //     const response = await fetch(`${config.apiURL}/signup`, {
-  //         method: 'POST',
-  //         headers: {
-  //             'Content-Type': 'application/json'
-  //         },
-  //         body: JSON.stringify({ username, password, email })
-  //     });
-    
-  //     // Check if response is ok
-  //     if (!response.ok) {
-  //       const data = await response.json();
-  //       displayMessage('error', data.error || 'Signup failed.');
-  //       return;
-  //     }
-
-  //     // If response is ok, display success message
-  //     displayMessage('success', 'Signup successful!');
-  //     console.log('success')
-
-  //     // Response error
-  //   } catch (error) {
-  //     displayMessage('error', 'Something went wrong. Please try again later.');
-  //   }
-  // };
-
-  // Function to display messages
   const displayMessage = (type, content) => {
     setMessage({ type, content });
-    setTimeout(() => setMessage({ type: '', content: '' }), 50000); // Clear the message after 50 seconds
+    setTimeout(() => setMessage({ type: '', content: '' }), 50000);
   };
 
-  // Function to check if email is valid
   const isValidEmail = (email) => {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      return emailRegex.test(email);
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
   };
 
   return (
     <div className="login-container">
       <div className="loginArea">
-      <div className="login-box">
-      <h1 className="page-title">Welcome to The Dupe Machine</h1>
-      <h2 className="login-title">Sign Up</h2>
+        <div className="login-box">
+          <h1 className="page-title">Welcome to The Dupe Machine</h1>
+          <h2 className="login-title">Sign Up</h2>
 
-      {/* Display message if it exists */}
-      {message.content && (
-                <div className={`message-box ${message.type}`}>
-                    <p>{message.content}</p>
-                </div>
-            )}
+          {message.content && (
+            <div className={`message-box ${message.type}`}>
+              <p>{message.content}</p>
+            </div>
+          )}
 
-      <form className="login-form">
-      <div className="input-group">
-        <input type="text" 
-              placeholder="Username" 
-              className="input-field" 
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}/>
-              </div>
-              <div className="input-group">
-        <input type="email" 
-              placeholder="Email" 
-              className="input-field" 
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}/>
-              </div>
-              <div className="input-group">
-        <input type="password" 
-              placeholder="Password" 
-              className="input-field" 
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}/>
-              </div>
-        <button className="login-button"onClick={handleSubmit}>Sign Up</button>
-      </form>
-      <h3 className="no-account-title">Already have an account?</h3>
-      <div className="options">
-        <Link to="/">
-          <button className="signup-button">Login</button>
-        </Link>
-        <Link to= "/main">
-        <button className="guest-button">Continue as Guest</button>
-        </Link>
-      </div>
-      </div>
-      <div className="loginImage"></div>
+          <form className="login-form">
+            <div className="input-group">
+              <input
+                type="text"
+                placeholder="Username"
+                className="input-field"
+                value={username}                
+                onChange={(e) => {
+                  setUsername(e.target.value);
+                  console.log('Username:', e.target.value);
+              }}
+              />
+            </div>
+            <div className="input-group">
+              <input
+                type="email"
+                placeholder="Email"
+                className="input-field"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            <div className="input-group">
+              <input
+                type="password"
+                placeholder="Password"
+                className="input-field"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+            <button className="login-button" onClick={handleSubmit}>Sign Up</button>
+          </form>
+          <h3 className="no-account-title">Already have an account?</h3>
+          <div className="options">
+            <Link to="/">
+              <button className="signup-button">Login</button>
+            </Link>
+            <Link to="/main">
+              <button className="guest-button">Continue as Guest</button>
+            </Link>
+          </div>
+        </div>
+        <div className="loginImage"></div>
       </div>
     </div>
   );
