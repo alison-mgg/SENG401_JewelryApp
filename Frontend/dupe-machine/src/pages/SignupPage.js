@@ -73,7 +73,7 @@ function SignupPage() {
 
   //   // Send request to backend
   //   try {
-  //     // Initial code:                  fetch('http://localhost:5000/api/signup')
+  //     // Initial code:                  fetch('http://localhost:5000/signup')
   //     // Change to use AWS Backend URL: fetch(`${config.apiURL}/signup`)      
   //     // note: backticks to use template strings, not apostrophes (regular strings) here
   //     const response = await fetch(`${config.apiURL}/signup`, {
