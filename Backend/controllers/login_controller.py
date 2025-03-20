@@ -4,7 +4,7 @@ from database_connector import get_database
 login_bp = Blueprint('login', __name__)
 
 
-@login_bp.route('/api/login', methods=['POST'])
+@login_bp.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
     
