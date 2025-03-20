@@ -42,18 +42,29 @@ def home():
     return jsonify({"message": "Jewelry Dupe Finder backend running successfully!"})
 
 # Test route for DB connection
-@app.route('/test-db-connection')
+@app.route('/test-db-connection', methods=['GET'])
 def test_db_connection():
     try:
+        # Attempt to connect to the database
         db = get_database()
         cursor = db.cursor()
-        cursor.execute("SELECT 1")
+        cursor.execute("SELECT 1")  # Simple query to test the connection
         result = cursor.fetchone()
         cursor.close()
         db.close()
-        return jsonify({"database_status": "connected", "test_query_result": result})
+
+        # Return success response
+        return jsonify({
+            "database_status": "connected",
+            "test_query_result": result
+        }), 200
     except Exception as e:
-        return jsonify({"database_status": "error", "error": str(e)}), 500
+        # Log the error for debugging
+        print(f"Database connection error: {str(e)}")
+        return jsonify({
+            "database_status": "error",
+            "error": str(e)
+        }), 500
 
 # Test API endpoint for users
 @app.route('/test-users')

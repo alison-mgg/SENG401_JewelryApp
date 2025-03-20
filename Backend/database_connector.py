@@ -8,10 +8,10 @@ def get_database():
     if not hasattr(current_app, 'database'):
         # Initialize the connection if it's not already set
         current_app.database = mysql.connector.connect(
-            host=os.getenv("MYSQL_HOST"),
-            user=os.getenv("MYSQL_USER"),
-            password=os.getenv("MYSQL_PASSWORD"),
-            database=os.getenv("MYSQL_DB")
+            host=current_app.config['MYSQL_HOST'],
+            user=current_app.config['MYSQL_USER'],
+            password=current_app.config['MYSQL_PASSWORD'],
+            database=current_app.config['MYSQL_DB']
         )
     return current_app.database
 
