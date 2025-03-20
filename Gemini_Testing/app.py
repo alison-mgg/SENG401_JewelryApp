@@ -14,6 +14,7 @@ sys.path.insert(0, os.path.join(ProjectRoot, 'Backend'))  # Ensures Backend is r
 
 from Backend.controllers.signup_controller import signup_bp
 from Backend.controllers.login_controller import login_bp
+from Backend.controllers.chat_controller import save_chat_bp
 from Backend.database_connector import get_database
 
 from flask import Flask, g
@@ -41,7 +42,10 @@ app.config['MYSQL_USER'] = os.getenv('MYSQL_USER')
 app.config['MYSQL_PASSWORD'] = os.getenv('MYSQL_PASSWORD')
 app.config['MYSQL_DB'] = os.getenv('MYSQL_DB')
 
-
+# for Cookies:
+app.config['SESSION_COOKIE_SECURE'] = False  # Set to True in production with HTTPS
+app.config['SESSION_COOKIE_HTTPONLY'] = True  # Prevent JS access
+app.config['SESSION_COOKIE_SAMESITE'] = 'None'  # Allow cross-origin
 
 # Register Blueprints
 app.register_blueprint(image_routes)
@@ -49,7 +53,17 @@ app.register_blueprint(description_routes)
 app.register_blueprint(similar_product_routes)
 app.register_blueprint(signup_bp)
 app.register_blueprint(login_bp)
+app.register_blueprint(save_chat_bp)
 
+
+@app.teardown_appcontext
+def close_database(error):
+    """Closes the database connection after each request"""
+    database = getattr(g, 'database', None)
+    if database is not None:
+        database.close()
+
+        
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
 

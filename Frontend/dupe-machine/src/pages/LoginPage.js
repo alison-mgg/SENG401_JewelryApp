@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../styling/LoginPage.css";
 import config from '../config';
@@ -9,16 +9,40 @@ function LoginPage() {
   const [message, setMessage] = useState({ type: '', content: '' });
   const navigate = useNavigate();
 
+  useEffect(() => {
+    fetchCookie();
+  }, []);
+
+  //function for cookies
+  const fetchCookie = async () => {
+    try {
+        const response = await fetch('http://localhost:5000/api/cookie', {
+            method: 'GET',
+            credentials: 'include'  // Ensure cookies are sent with the request
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            console.log('Logged-in user:', data.username);
+            setUsername(data.username);  // Set username in state
+        } else {
+            console.log('No cookie found');
+        }
+    } catch (error) {
+        console.error('Error fetching cookie:', error);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (username.trim() === '' || password.trim() === '') {
-      displayMessage('error', 'All fields are required.');
+      setMessage({ type: 'error', content: 'All fields are required.' });
       return;
     }
 
     try {
-      const apiUrl = `${config.apiURL}/login`;
+      const apiUrl = `${config.apiURL}/api/login`;
       console.log("apiUrl:", apiUrl);
       const response = await fetch(apiUrl, {
         method: 'POST',
@@ -27,27 +51,23 @@ function LoginPage() {
           'Origin': window.location.origin, // Add the Origin header
           'X-Requested-With': 'XMLHttpRequest' // Add the X-Requested-With header
         },
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify({ username, password }),
+        credentials: 'include' // Include credentials if needed
       });
 
-      if (!response.ok) {
-        const data = await response.json();
-        displayMessage('error', data.error || 'Authentication failed.');
-        return;
+      if (response.ok) {
+        setMessage({ type: 'success', content: 'Authentication successful' });
+        console.log('success');
+        // fetchCookie(); // Uncomment if you have a function to fetch cookies
+        // setAuthenticated(true); // Uncomment if you have an authentication state
+        navigate('/main'); // Redirect to main page after successful authentication
+      } else {
+        setMessage({ type: 'error', content: 'Authentication failed. Incorrect username or password.' });
       }
-
-      displayMessage('success', 'Login successful!');
-      console.log('success');
-      navigate('/main');
-
     } catch (error) {
-      displayMessage('error', 'Something went wrong. Please try again later.');
+      console.error('Error occurred during authentication:', error);
+      setMessage({ type: 'error', content: 'Authentication failed. Please try again.' });
     }
-  };
-
-  const displayMessage = (type, content) => {
-    setMessage({ type, content });
-    setTimeout(() => setMessage({ type: '', content: '' }), 5000);
   };
 
   return (

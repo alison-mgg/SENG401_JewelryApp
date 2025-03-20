@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../styling/MainPage.css";
 import NavBar from "./NavigationBar.js";
+import { Form } from "react-router-dom";
 
 function ImageDescription() {
   const [description, setDescription] = useState("Upload an image and click analyze.");
@@ -10,6 +11,7 @@ function ImageDescription() {
   const [isHeartClicked, setIsHeartClicked] = useState(false);
   const [loading, setLoading] = useState(false);  // New state for loading
   const [text, setText] = useState("");
+  //const [imageName, setImageName] = useState("");
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -21,8 +23,37 @@ function ImageDescription() {
     }
   };
 
-  const handleHeartClick = () => {
+  const handleHeartClick = async () => {
     setIsHeartClicked(true);
+  
+    if (!selectedFile) {
+      alert("No file selected");
+      return;
+    }
+  
+    try {
+      const response = await fetch("http://localhost:5000/save-to-database", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: "a", // Replace with actual username
+          imagePath: selectedFile, // The renamed filename
+          similarProducts: similarProducts, // Include similar products
+        }),
+      });
+  
+      const data = await response.json();
+  
+      if (data.error) {
+        console.error("Error saving to database:", data.error);
+      } else {
+        console.log("Successfully saved to database:", data.message);
+      }
+    } catch (error) {
+      console.error("Failed to save to database:", error.message);
+    }
   };
 
   const uploadAndAnalyzeImage = async (file) => {
@@ -47,6 +78,8 @@ function ImageDescription() {
         setDescription("Error: " + data.error);
       } else {
         setDescription("Description: " + data.description);
+        // Store the renamed filename returned from the backend
+        setSelectedFile(data.filename); // Assuming the backend returns the renamed filename
       }
     } catch (error) {
       setDescription("Failed to upload image. Error: " + error.message);

@@ -2,8 +2,11 @@ import os
 from flask import Blueprint, request, jsonify
 from werkzeug.utils import secure_filename
 from gemini_config.settings import UPLOAD_FOLDER
+from datetime import datetime
+import shutil
 from services.file_utils import encode_image_to_base64, delete_file, allowed_file
 from services.gemini_service import analyze_image
+from Backend.database_connector import get_database
 
 image_routes = Blueprint("image_routes", __name__)
 
@@ -19,7 +22,8 @@ def upload_file():
         return jsonify({"error": "Invalid file type."}), 400
 
     filename = secure_filename(file.filename)
-    image_path = os.path.join(UPLOAD_FOLDER, f"uploaded_{filename}")
+    renamed_filename = f"uploaded_{filename}"
+    image_path = os.path.join(UPLOAD_FOLDER, renamed_filename)
     file.save(image_path)
 
     print("File received:", image_path)
@@ -34,6 +38,9 @@ def upload_file():
     if not result or "description" not in result:
         return jsonify({"error": "Invalid response from AI analysis."}), 500
 
-    delete_file(image_path)
-
-    return jsonify(result)
+    # Return the renamed filename to the frontend
+    return jsonify({
+        **result,
+        "filename": renamed_filename,  # Include the renamed filename in the response
+    })
+    # return jsonify(result)
