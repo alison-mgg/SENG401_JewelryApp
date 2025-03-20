@@ -13,6 +13,7 @@ function ImageDescription() {
   const [loading, setLoading] = useState(false);  // New state for loading
   const [text, setText] = useState("");
   const [showLoginMessage, setShowLoginMessage] = useState(false); // State for login message popup
+  const [showNoFileMessage, setShowNoFileMessage] = useState(false); // State for no file message popup
   const { isAuthenticated, username } = useAuth(); // Use isAuthenticated and username from AuthContext
   //const [imageName, setImageName] = useState("");
 
@@ -31,12 +32,13 @@ function ImageDescription() {
       setShowLoginMessage(true); // Show login message popup
       return;
     }
-    setIsHeartClicked(true);
   
     if (!selectedFile) {
-      alert("No file selected");
+      setShowNoFileMessage(true); // Show no file selected popup
       return;
     }
+  
+    setIsHeartClicked(true);
   
     try {
       const response = await fetch("http://localhost:5000/save-to-database", {
@@ -138,7 +140,7 @@ function ImageDescription() {
     <div className="container">
       <NavBar />
       <h1>Start By Uploading an Image</h1>
-
+  
       {/* Login message popup */}
       {showLoginMessage && (
         <div className="login-message-popup">
@@ -146,70 +148,59 @@ function ImageDescription() {
           <button onClick={() => setShowLoginMessage(false)}>Close</button>
         </div>
       )}
-
+  
+      {/* No file selected message popup */}
+      {showNoFileMessage && (
+        <div className="login-message-popup">
+          <p>Please select an image first.</p>
+          <button onClick={() => setShowNoFileMessage(false)}>Close</button>
+        </div>
+      )}
+  
       {/* Image selection section */}
-      <div className ="upload-container">
-      <div className="image-upload-wrapper">
-        <div className="image-upload-box">
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleFileChange}
-            id="file-input"
-          />
-          {imagePreview && <img src={imagePreview} alt="Selected" className="uploaded-image" />}
-        </div>   
-        {/* Button below the image */}
-        <button
-          onClick={() => document.getElementById('file-input').click()}
-          className="choose-image-button"
-        >
-          Choose an image
-        </button>
+      <div className="upload-container">
+        <div className="image-upload-wrapper">
+          <div className="image-upload-box">
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+              id="file-input"
+            />
+            {imagePreview && <img src={imagePreview} alt="Selected" className="uploaded-image" />}
+          </div>
+          {/* Button below the image */}
+          <button
+            onClick={() => document.getElementById('file-input').click()}
+            className="choose-image-button"
+          >
+            Choose an image
+          </button>
         </div>
         <div className="input-txt">
-      <textarea
-        className="text-input"
-        value={text}
-        onChange={handleChange}
-        placeholder="Enter your text here..."
-      />
-     {/* Submit text to AI button */}
-     <button
-          className="submit-text-button"
-        >
-          Submit Text
-        </button>
+          <textarea
+            className="text-input"
+            value={text}
+            onChange={handleChange}
+            placeholder="Enter your text here..."
+          />
+          {/* Submit text to AI button */}
+          <button
+            className="submit-text-button"
+          >
+            Submit Text
+          </button>
         </div>
       </div>
-
-      {/* <div className="description-box">
-        <h2>Image Description</h2> */}
-        
-        {/* Only show loading message or description */}
-        {/* {loading ? (
-          <p>Loading... Please wait.</p>
-        ) : (
-          <p>{description}</p>
-        )} */}
-
-        {/* Regenerate Button in top-right */}
-        {/* <button 
-          className="regenerate-button"
-          onClick={handleRegenerateClick} // Trigger analysis again on button click
-        >
-          <span className="material-icons">&#8635;</span> {/* Circle with arrow icon */}
-        {/* </button>
-      </div> */} 
-
+  
       <button onClick={handleGetSimilarProducts} className="similar-products-button">
         Get Similar Products
       </button>
-
+  
       <div className="similar-products-box">
         <h2>Similar Products</h2>
         <p>{similarProducts}</p>
-        
+  
         {/* Heart Icon */}
         <span
           className="heart-icon"

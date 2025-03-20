@@ -12,36 +12,37 @@ function SignupPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     if (username.trim() === '' || password.trim() === '' || email.trim() === '') {
       displayMessage('error', 'All fields are required.');
       return;
     }
-
+  
     if (email && email.trim() !== '' && !isValidEmail(email)) {
-        displayMessage('error', 'Invalid email format');
-        return;
+      displayMessage('error', 'Invalid email format');
+      return;
     }
-
+  
     try {
       const response = await fetch('http://localhost:5000/api/signup', {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ username, password, email })
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password, email }),
       });
-    
+  
       if (!response.ok) {
         const data = await response.json();
         displayMessage('error', data.error || 'Signup failed.');
         return;
       }
-
-      displayMessage('success', 'Signup successful!');
-      console.log('success')
-      navigate('/main');
-
+  
+      displayMessage('success', 'Signup successful! Redirecting to login...');
+      setTimeout(() => {
+        navigate('/'); // Redirect to the login page after a short delay
+      }, 2000); // Redirect after 2 seconds
+  
     } catch (error) {
       displayMessage('error', 'Something went wrong. Please try again later.');
     }
