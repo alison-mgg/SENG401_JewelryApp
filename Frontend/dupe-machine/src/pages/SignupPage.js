@@ -24,12 +24,15 @@ function SignupPage() {
     }
 
     try {
-      const apiUrl = new URL('/signup', config.apiURL).toString();
+      const proxyUrl = 'https://cors-anywhere-6vpc.onrender.com/';
+      const apiUrl = `${proxyUrl}${config.apiURL}/signup`;
       console.log("apiUrl:", apiUrl);
       const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Origin': window.location.origin, // Add the Origin header
+          'X-Requested-With': 'XMLHttpRequest' // Add the X-Requested-With header
         },
         body: JSON.stringify({ username, password, email })
       });
