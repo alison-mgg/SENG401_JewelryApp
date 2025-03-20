@@ -43,7 +43,7 @@ def save_to_database():
         cursor = conn.cursor()
 
         sql = """
-        INSERT INTO chats (username, img_path, links)
+        INSERT INTO chats (username, img_path, response)
         VALUES (%s, %s, %s)
         """
         cursor.execute(sql, (username, destination_path, similar_products))  # Save similar products
