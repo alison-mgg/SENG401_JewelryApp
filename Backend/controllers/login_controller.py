@@ -18,7 +18,7 @@ def login():
         response = jsonify({"message": "Preflight request successful"})
         response.headers.add('Access-Control-Allow-Origin', "cors-anywhere-6vpc.onrender.com/jewelry-dupe-app.onrender.com")
         response.headers.add('Access-Control-Allow-Methods', 'POST')
-        response.headers.add('Access-Control-Allow-Headers', 'Content-Type, X-Requested-With')
+        response.headers.add('Access-Control-Allow-Headers', 'Content-Type, X-Requested-With, Authorization')
         response.headers.add('Access-Control-Allow-Credentials', 'true')
         return response
 
