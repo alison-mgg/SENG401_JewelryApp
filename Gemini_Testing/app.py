@@ -34,7 +34,7 @@ with app.app_context():
 ORIGIN_URL = os.getenv('ORIGIN_URL')
 
 # Enable CORS for frontend (React app hosted on Vercel)
-CORS(app, origins=[ORIGIN_URL], supports_credentials=True)
+CORS(app, origins=[ORIGIN_URL],methods=["GET", "POST", "OPTIONS"], supports_credentials=True)
 
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 load_dotenv()
