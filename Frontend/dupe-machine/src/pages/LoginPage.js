@@ -80,6 +80,8 @@ function LoginPage() {
 
   return (
     <div className="login-container">
+        <div className="loginArea">
+        <div className="login-box">
       <h1 className="page-title">Welcome to The Dupe Machine</h1>
       <h2 className="login-title">Login</h2>
       {/* Display message if it exists */}
@@ -88,7 +90,8 @@ function LoginPage() {
           <p>{message.content}</p>
         </div>
       )}
-      <form className="login-box">
+      <form className="login-form">
+      <div className="input-group">
         <input
           type="text"
           placeholder="Username"
@@ -96,6 +99,8 @@ function LoginPage() {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
+        </div>
+        <div className="input-group">
         <input
           type="password"
           placeholder="Password"
@@ -103,6 +108,7 @@ function LoginPage() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
+        </div>
         <button className="login-button" onClick={handleSubmit}>Login</button>
       </form>
       <h3 className="no-account-title">Don't have an account?</h3>
@@ -113,6 +119,9 @@ function LoginPage() {
         <Link to="/main">
           <button className="guest-button">Continue as Guest</button>
         </Link>
+      </div>
+    </div>
+    <div className="loginImage"></div>
       </div>
     </div>
   );
