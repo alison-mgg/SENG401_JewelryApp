@@ -9,10 +9,10 @@
     "routes": [
             {
               "src": "/(.*)",
-              "dest": "./app.js",
+              "dest": "https://seng-401-jewelry-app-git-full-s-093d74-alison-gartners-projects.vercel.app/",
               "methods": ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
               "headers": {
-                "Access-Control-Allow-Origin": "*"
+                "Access-Control-Allow-Origin": "cors-anywhere-6vpc.onrender.com/jewelry-dupe-app.onrender.com/login"
               }
             }
           ]
