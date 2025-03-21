@@ -48,8 +48,8 @@ function ImageDescription() {
         },
         body: JSON.stringify({
           username: username,
-          imagePath: selectedFile.name, // Ensure this is the correct filename
-          similarProducts: Array.isArray(similarProducts) ? similarProducts.join(", ") : similarProducts, // Convert array to string if necessary
+          imagePath: selectedFile, // Use the filename returned from the backend
+          similarProducts: Array.isArray(similarProducts) ? similarProducts.join(", ") : similarProducts,
         }),
       });
   

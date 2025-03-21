@@ -14,6 +14,8 @@ def save_to_database():
     image_path = data.get("imagePath")
     similar_products = data.get("similarProducts")  # Get similar products from the request
 
+    print("Received data:", data)  # Log the received data
+
     if not username or not image_path or not similar_products:
         return jsonify({"error": "Missing required data."}), 400
 
