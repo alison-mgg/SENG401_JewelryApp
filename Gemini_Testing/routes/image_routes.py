@@ -6,7 +6,7 @@ from datetime import datetime
 import shutil
 from services.file_utils import encode_image_to_base64, delete_file, allowed_file
 from services.gemini_service import analyze_image
-from Backend.database_connector import get_database
+from database_connector import get_database
 
 image_routes = Blueprint("image_routes", __name__)
 

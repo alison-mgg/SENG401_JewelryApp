@@ -9,7 +9,6 @@ import mysql.connector
 from mysql.connector import Error, IntegrityError
 
 # Local imports
-# from database_connector import get_database
 from controllers.signup_controller import signup_bp
 from controllers.login_controller import login_bp
 from controllers.chat_controller import save_chat_bp

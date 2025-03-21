@@ -23,7 +23,6 @@ from routes.image_routes import image_routes
 from routes.description_routes import description_routes
 from routes.similar_product_routes import similar_product_routes
 
-from Gemini_Testing.database_connector import get_database
 from database_connector import get_database, close_database
 
 app = Flask(__name__)
