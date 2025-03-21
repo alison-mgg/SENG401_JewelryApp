@@ -50,6 +50,8 @@ app.config['SESSION_COOKIE_SECURE'] = True  # Set to True in production with HTT
 app.config['SESSION_COOKIE_HTTPONLY'] = True  # Prevent JS access
 app.config['SESSION_COOKIE_SAMESITE'] = 'None'  # Allow cross-origin
 
+
+
 # Test route to confirm Render deployment
 @app.route('/', methods=['GET'])
 def test_app():
