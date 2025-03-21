@@ -1,0 +1,9 @@
+
+{
+    "rewrites": [
+        { "source": "/api(.*)",
+         "destination": "https://seng-401-jewelry-app-git-full-s-093d74-alison-gartners-projects.vercel.app/" },
+
+        { "source": "/(.*)",
+         "destination": "/index.html" }]
+}
