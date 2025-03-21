@@ -12,25 +12,24 @@ sys.path.insert(0, os.path.join(ProjectRoot, 'Backend'))  # Ensures Backend is r
 #sys.path.append(os.path.abspath(BackendPath))
 #sys.path.append(GeminiPath)
 
-from Backend.controllers.signup_controller import signup_bp
-from Backend.controllers.login_controller import login_bp
-from Backend.controllers.chat_controller import save_chat_bp
-from Backend.database_connector import get_database
-
 from flask import Flask, g, jsonify
 from flask_cors import CORS
 from dotenv import load_dotenv
 import mysql.connector
-
+from flask import current_app
 
 from gemini_config.settings import UPLOAD_FOLDER
 from routes.image_routes import image_routes
 from routes.description_routes import description_routes
 from routes.similar_product_routes import similar_product_routes
 
-
+from Gemini_Testing.database_connector import get_database
+from database_connector import get_database, close_database
 
 app = Flask(__name__)
+
+with app.app_context():
+    db = get_database()
 
 # Get the frontend origin URL from environment variables
 ORIGIN_URL = os.getenv('ORIGIN_URL')
@@ -49,8 +48,6 @@ app.config['MYSQL_DB'] = os.getenv('MYSQL_DB')
 app.config['SESSION_COOKIE_SECURE'] = True  # Set to True in production with HTTPS
 app.config['SESSION_COOKIE_HTTPONLY'] = True  # Prevent JS access
 app.config['SESSION_COOKIE_SAMESITE'] = 'None'  # Allow cross-origin
-
-
 
 # Test route to confirm Render deployment
 @app.route('/', methods=['GET'])
@@ -79,14 +76,33 @@ def test_app():
             "message": "Gemini Testing app encountered an issue.",
             "error": str(e)
         }), 500
+
+# Test env var
+@app.route('/test-env', methods=['GET'])
+def test_env():
+    return jsonify({
+        "MYSQL_HOST": app.config['MYSQL_HOST'],
+        "MYSQL_USER": app.config['MYSQL_USER'],
+        "MYSQL_PASSWORD": app.config['MYSQL_PASSWORD'],
+        "MYSQL_DB": app.config['MYSQL_DB']
+    })
+
+@app.route('/test-db-connection', methods=['GET'])
+def test_db():
+    try:
+        db = get_database()
+        cursor = db.cursor()
+        cursor.execute("SELECT 1")  # Simple query to test the connection
+        result = cursor.fetchone()
+        cursor.close()
+        return jsonify({"db connection status": "success", "result": result}), 200
+    except Exception as e:
+        return jsonify({"db connection status": "error", "error": str(e)}), 500
     
 # Register Blueprints
 app.register_blueprint(image_routes)
 app.register_blueprint(description_routes)
 app.register_blueprint(similar_product_routes)
-app.register_blueprint(signup_bp)
-app.register_blueprint(login_bp)
-app.register_blueprint(save_chat_bp)
 
 
 @app.teardown_appcontext
@@ -96,8 +112,12 @@ def close_database(error):
     if database is not None:
         database.close()
 
-        
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+@app.teardown_appcontext
+def teardown_db(exception):
+    close_database(exception)
+
+# Main entry point for the Gemini_Testing app
+if __name__ == '__main__':
+    app.run(debug=True)
 
 
