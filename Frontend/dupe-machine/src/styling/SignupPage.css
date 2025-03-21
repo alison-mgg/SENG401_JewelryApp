@@ -49,7 +49,8 @@ h2{
   background-color: #444c3c;
   width: 40vw;
   padding: 20px;
-  box-shadow: 2px 0px 4px rgba(0, 0, 0, 0.1); /* Tiny shadow on the right */
+  
+  background: linear-gradient(to right, #444c3c 99.8%, #2f342a 99.8%);
   display: flex;
   flex-direction: column;
   align-items: center;
