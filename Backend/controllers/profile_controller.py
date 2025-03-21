@@ -24,29 +24,53 @@ def get_user(username):
     finally:
         cursor.close()
 
-# profile_controller.py
-
 @profile_bp.route('/api/user/<username>/images', methods=['GET'])
 def get_user_images(username):
     database = get_database()
     cursor = database.cursor(dictionary=True)
 
     try:
-        cursor.execute("SELECT img_path, response FROM chats WHERE username = %s", (username,))
+        cursor.execute("SELECT response, uploaded_at FROM chats WHERE username = %s", (username,))
         chats = cursor.fetchall()
 
         if chats:
-            chats_with_urls = [
+            chats_with_dates = [
                 {
-                    "img_path": f"/static/{chat['img_path']}",
-                    "response": chat["response"]
+                    "response": chat["response"],
+                    # Format the date as "Month Day, Year at Time"
+                    "uploaded_at": chat["uploaded_at"].strftime("%B %d, %Y at %I:%M %p")
                 }
                 for chat in chats
             ]
-            return jsonify(chats_with_urls), 200
+            return jsonify(chats_with_dates), 200
         else:
-            return jsonify({"error": "No images found for this user"}), 404
+            return jsonify({"error": "No chats found for this user"}), 404
     except Exception as e:
         return jsonify({"error": str(e)}), 500
     finally:
         cursor.close()
+
+# @profile_bp.route('/api/user/<username>/images', methods=['GET'])
+# def get_user_images(username):
+#     database = get_database()
+#     cursor = database.cursor(dictionary=True)
+
+#     try:
+#         cursor.execute("SELECT img_path, response FROM chats WHERE username = %s", (username,))
+#         chats = cursor.fetchall()
+
+#         if chats:
+#             chats_with_urls = [
+#                 {
+#                     "img_path": f"{chat['img_path']}",
+#                     "response": chat["response"]
+#                 }
+#                 for chat in chats
+#             ]
+#             return jsonify(chats_with_urls), 200
+#         else:
+#             return jsonify({"error": "No images found for this user"}), 404
+#     except Exception as e:
+#         return jsonify({"error": str(e)}), 500
+#     finally:
+#         cursor.close()
