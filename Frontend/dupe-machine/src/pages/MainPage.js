@@ -173,8 +173,9 @@ const handleGetSimilarProducts = async (latestDescription) => {
   };
 
   return (
-    <div className="container">
+    <div>
       <NavBar />
+      <div className="container">
       <h1>Start by uploading an image of a product you wish to find an alternative for </h1>
   
       {/* Login message popup */}
@@ -247,6 +248,7 @@ const handleGetSimilarProducts = async (latestDescription) => {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
   
