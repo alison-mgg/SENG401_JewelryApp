@@ -1,12 +1,12 @@
 .navbar {
   position: fixed;
   top: 0;
-  background-image: linear-gradient(0deg, #5d1b2e,  #661d32);
+  background-image: linear-gradient(0deg, #311d11,  #352012);
   width: 100vw;
   height: 50px;
   z-index: 500;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-  color: #f8f9fa;
+  color: #edeceb;
 }
 
 .link-container {

@@ -1,7 +1,7 @@
 /* UserDisplay.css */
 .user-display-container {
     text-align: center;
-    margin-top: 100px;
+    padding-top: 100px;
   }
   
   .user-display-content {
@@ -9,11 +9,14 @@
     margin-left: 50px;
     gap: 100px; /* Space between the text elements */
   }
+  .user-display-content h2 {
+    color: #311d11;
+  }
   
   .custom-line {
     width: 75%; /* Adjust width as needed */
     height: 5px; /* Height to make it look like a rectangle */
-    background-color: #d2bfc7; /* Customize the color */
+    background-color: #444c3c; /* Customize the color */
     margin-top: 10px;
     margin-bottom: 10px;
     border-radius: 3px;
@@ -21,3 +24,7 @@
    .saved-heading{
     margin-top: 50px;
    }
+
+  .saved-heading h2{
+    color: #311d11;
+  }
