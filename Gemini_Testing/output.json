@@ -1,5 +1,17 @@
 {
     "jewelry_type": "Bracelet",
-    "description": "- What material is the bracelet made of?\n  That's a lovely bracelet!  The image shows a gold-toned bracelet with clear stones.  However, the *material* isn't specified in the image.  It could be:\n\n* **Gold-plated:** This is a common and affordable option.  A base metal (like brass or sterling silver) is coated with a thin layer of gold.\n* **Sterling Silver:**  A higher-quality option, but might be rhodium-plated to give it a brighter, more durable gold-like finish.\n* **Solid Gold:** This would be the most expensive option.  It would be made entirely of gold.\n\nTo know for certain, you'd need to check the product description where you found the image or the accompanying information that came with the bracelet itself (if you own it).  Look for terms like \"14k gold,\" \"18k gold,\" \"gold-plated,\" \"sterling silver,\" or similar.\n\n- Does it have any charms or special attachments?\n  That's a pretty bracelet!  It has small cubic zirconia stones (simulated diamonds) as its main charms.  The chain itself also has small beads, which could be considered a decorative element, but the stones are the main \"charms\" or decorative attachments.\n\n- Is the bracelet rigid (bangle) or flexible (chain, cord)?\n  That's a flexible bracelet.  It's a chain or cord style, not a rigid bangle.\n",
-    "timestamp": "2025-03-21T01:06:32.064181"
+    "description": "- What material is the bracelet made of?\n  That's a bracelet that appears to be made of **gold-plated metal** with **cubic zirconia** stones.\n\nThe chain and clasp look like they're made of a base metal (likely brass or silver) that has been gold-plated to give it a gold appearance. The clear stones are almost certainly cubic zirconia, a common and affordable alternative to diamonds.  There's no way to be 100% certain from the image alone, but that's the most likely composition.\n\n- Does it have any charms or special attachments?\n  That's a pretty bracelet!  It has several small, clear cubic zirconia stones set in what appear to be square or cushion-cut settings along the chain.  The chain itself is adorned with small beads.  There are also two small, dangling stones near the clasp.\n\nSo, the \"charms\" are the cubic zirconia stones.  The small beads on the chain could also be considered a decorative element.  There aren't any separately attachable charms or pendants.\n\n- Is the bracelet rigid (bangle) or flexible (chain, cord)?\n  That's a flexible bracelet.  It's a chain or cord type, not a rigid bangle.\n\n- If any, what is the visible brand logo?\n  That's a bracelet from the brand **Zales**.  The logo, a stylized \"Z,\" is visible on the clasp.\n",
+    "product_suggestions": [
+        {
+            "title": "That's a bracelet from the brand **Zales**.  The logo, a stylized \"Z,\" is visible on the clasp.\n bracelet - Option 1",
+            "price": "$100-$200",
+            "source": "Example Store"
+        },
+        {
+            "title": "That's a bracelet from the brand **Zales**.  The logo, a stylized \"Z,\" is visible on the clasp.\n bracelet - Option 2",
+            "price": "$200-$300",
+            "source": "Example Store"
+        }
+    ],
+    "timestamp": "2025-03-21T10:07:49.876013"
 }

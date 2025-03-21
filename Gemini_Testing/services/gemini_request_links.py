@@ -39,4 +39,3 @@ def get_similar_products(description):
     except Exception as e:
         print("Error making request to Gemini:", e)
         return None
-

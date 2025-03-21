@@ -29,12 +29,12 @@ function ImageDescription() {
 
   const handleHeartClick = async () => {
     if (!isAuthenticated) {
-      setShowLoginMessage(true); // Show login message popup
+      setShowLoginMessage(true);
       return;
     }
   
     if (!selectedFile) {
-      setShowNoFileMessage(true); // Show no file selected popup
+      setShowNoFileMessage(true);
       return;
     }
   
@@ -47,9 +47,9 @@ function ImageDescription() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          username: username, // Use the username from AuthContext
-          imagePath: selectedFile, // The renamed filename
-          similarProducts: similarProducts, // Include similar products
+          username: username,
+          imagePath: selectedFile.name, // Ensure this is the correct filename
+          similarProducts: Array.isArray(similarProducts) ? similarProducts.join(", ") : similarProducts, // Convert array to string if necessary
         }),
       });
   
@@ -64,66 +64,102 @@ function ImageDescription() {
       console.error("Failed to save to database:", error.message);
     }
   };
-
+  
+  
   const uploadAndAnalyzeImage = async (file) => {
     if (!file) {
-      setDescription("Please select an image first.");
-      return;
+        setDescription("Please select an image first.");
+        return;
     }
 
-    setLoading(true);  // Set loading to true when the upload process starts
+    setLoading(true); // Show loading state
     const formData = new FormData();
     formData.append("image", file);
 
     try {
-      const response = await fetch("http://localhost:5000/upload", {
-        method: "POST",
-        body: formData,
-      });
+        const response = await fetch("http://localhost:5000/upload", {
+            method: "POST",
+            body: formData,
+        });
 
-      const data = await response.json();
+        const data = await response.json();
 
-      if (data.error) {
-        setDescription("Error: " + data.error);
+        if (data.error) {
+          setDescription("Error: " + data.error);
       } else {
-        setDescription("Description: " + data.description);
-        // Store the renamed filename returned from the backend
-        setSelectedFile(data.filename); // Assuming the backend returns the renamed filename
+          setDescription(data.description); // Set the extracted description
+          setSelectedFile(data.filename);  // Store the renamed filename from backend
+      
+          // Ensure `data.description` is valid before calling `handleGetSimilarProducts`
+          if (typeof data.description === "string" && data.description.trim() !== "") {
+              handleGetSimilarProducts(data.description);
+          } else {
+              console.error("Invalid description received:", data.description);
+          }
       }
     } catch (error) {
-      setDescription("Failed to upload image. Error: " + error.message);
+        setDescription("Failed to upload image. Error: " + error.message);
     } finally {
-      setLoading(false);  // Set loading to false after the request completes
+        setLoading(false); // Hide loading state
     }
-  };
+};
 
-  const handleGetSimilarProducts = async () => {
-    setLoading(true);  // Set loading to true when fetching similar products
+const handleGetSimilarProducts = async (latestDescription) => {  
+  if (typeof latestDescription !== "string") {
+      console.error("Invalid description:", latestDescription);
+      return;
+  }
 
-    try {
+  setLoading(true);
+
+  try {
       const response = await fetch("http://localhost:5000/similar-products", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          description: description,  // Send the description extracted from the image
-        }),
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+              description: latestDescription.trim(),
+          }),
       });
 
       const data = await response.json();
+      console.log("Similar Products Response:", data);
 
       if (data.error) {
-        setSimilarProducts("Error: " + data.error);
+          setSimilarProducts(["Error: " + data.error]);
       } else {
-        setSimilarProducts("Similar Products: " + data.similar_products);
+          if (data.similar_products) {
+              if (typeof data.similar_products === "string") {
+                  let parsedProducts = data.similar_products
+                      .split("\n")
+                      .map(item => item.replace(/^\*\s*/g, "").trim()) // Remove leading * and spaces
+                      .filter(item => 
+                          !item.startsWith("Brand:") &&
+                          !item.startsWith("Model:") &&
+                          !item.startsWith("Similar Products") &&
+                          !item.startsWith("Note:")
+                      ) // Remove unwanted lines
+                      .filter(item => item !== ""); // Remove empty lines
+
+                  setSimilarProducts(parsedProducts);
+              } else if (Array.isArray(data.similar_products)) {
+                  setSimilarProducts(data.similar_products.map(item => item.replace(/^\*\s*/g, "").trim()));
+              } else {
+                  console.error("Unexpected format:", data.similar_products);
+                  setSimilarProducts([]);
+              }
+          } else {
+              setSimilarProducts([]);
+          }
       }
-    } catch (error) {
-      setSimilarProducts("Failed to get similar products. Error: " + error.message);
-    } finally {
-      setLoading(false);  // Set loading to false after the request completes
-    }
-  };
+  } catch (error) {
+      setSimilarProducts(["Failed to get similar products. Error: " + error.message]);
+  } finally {
+      setLoading(false);
+  }
+};
+
 
     const handleChange = (e) => {
       setText(e.target.value);
@@ -198,8 +234,17 @@ function ImageDescription() {
       </button>
   
       <div className="similar-products-box">
-        <h2>Similar Products</h2>
-        <p>{similarProducts}</p>
+  <h2>Similar Products</h2>
+  
+  {similarProducts.length > 0 ? (
+    <ul>
+      {similarProducts.map((product, index) => (
+        <li key={index}>{product}</li>
+      ))}
+    </ul>
+  ) : (
+    <p>No similar products found.</p>
+  )}
   
         {/* Heart Icon */}
         <span
