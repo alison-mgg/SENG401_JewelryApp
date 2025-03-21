@@ -7,8 +7,8 @@ from flask import Blueprint, request, jsonify
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
 from Gemini_Testing.database_connector import get_database
 
-ORIGIN_URL = os.getenv('ORIGIN_URL')
-
+# ORIGIN_URL = os.getenv('ORIGIN_URL')
+ORIGIN_URL =  "cors-anywhere-6vpc.onrender.com/jewelry-dupe-app.onrender.com"
 login_bp = Blueprint('login', __name__)
 
 # MARKER - Login route is working from Render deployment
