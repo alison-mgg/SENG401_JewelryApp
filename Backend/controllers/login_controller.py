@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from database_connector import get_database
+from Gemini_Testing.database_connector import get_database
 
 login_bp = Blueprint('login', __name__)
 

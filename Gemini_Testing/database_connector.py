@@ -27,3 +27,5 @@ def close_database(exception):
     if database is not None:
         database.close()
 
+
+
