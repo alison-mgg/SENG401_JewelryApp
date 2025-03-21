@@ -20,8 +20,7 @@ load_dotenv()
 app = Flask(__name__)
 
 # Get the origin URL from environment variables
-# ORIGIN_URL = os.getenv('ORIGIN_URL')
-ORIGIN_URL = 'https://seng-401-jewelry-app-git-full-s-093d74-alison-gartners-projects.vercel.app/'
+ORIGIN_URL = os.getenv('ORIGIN_URL')
 
 # Enable CORS for frontend (React app hosted on Vercel)
 CORS(app, origins=[ORIGIN_URL], supports_credentials=True,
@@ -113,6 +112,14 @@ def get_chats():
         return jsonify({"message": "Successfully connected to the chats table", "chats": chats})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+@app.after_request
+def apply_cors(response):
+    response.headers["Access-Control-Allow-Origin"] = ORIGIN_URL  
+    response.headers["Access-Control-Allow-Credentials"] = "true"  # Allow credentials (cookies)
+    response.headers["Access-Control-Allow-Methods"] = "POST, GET, OPTIONS"
+    response.headers["Access-Control-Allow-Headers"] = "Content-Type, X-Requested-With"
+    return response
 
 # Register Blueprints
 app.register_blueprint(signup_bp, url_prefix='/signup')
