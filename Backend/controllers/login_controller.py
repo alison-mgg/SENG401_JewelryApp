@@ -62,7 +62,7 @@ def getCookie():
             return jsonify({"message": "Username is required"}), 400
         
         resp = jsonify({"message": f"Cookie set for {username}"})  # Use jsonify instead of output
-        resp.set_cookie('username', secure=True, httponly=False, samesite='None')
+        resp.set_cookie('username', username, secure=True, httponly=False, samesite='None')
         return resp
     elif request.method == 'GET':
         username = request.cookies.get('username')  # Retrieve the cookie value
