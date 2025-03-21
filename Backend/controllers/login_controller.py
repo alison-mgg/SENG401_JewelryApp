@@ -7,52 +7,63 @@ from flask import Blueprint, request, jsonify
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
 from Gemini_Testing.database_connector import get_database
 
+ORIGIN_URL = os.getenv('ORIGIN_URL')
+
 login_bp = Blueprint('login', __name__)
 
 # MARKER - Login route is working from Render deployment
-@login_bp.route('/', methods=['POST'])
+@login_bp.route('/', methods=['POST', 'OPTIONS'])
 def login():
-    data = request.get_json()
-    
-    username = data.get('username')
-    password = data.get('password')
+    if request.method == 'OPTIONS':
+        response = jsonify({"message": "Preflight request successful"})
+        response.headers.add('Access-Control-Allow-Origin', ORIGIN_URL)
+        response.headers.add('Access-Control-Allow-Methods', 'POST')
+        response.headers.add('Access-Control-Allow-Headers', 'Content-Type, X-Requested-With')
+        response.headers.add('Access-Control-Allow-Credentials', 'true')
+        return response
 
-    if not username or not password:
-        return jsonify({"message": "Username and password are required!"}), 400
+    else:
+        data = request.get_json()
+        
+        username = data.get('username')
+        password = data.get('password')
 
-    database = get_database()
-    cursor = database.cursor(dictionary=True)
+        if not username or not password:
+            return jsonify({"message": "Username and password are required!"}), 400
 
-    
-    try:
-        cursor.execute("SELECT * FROM users WHERE username = %s", (username,))
-        user = cursor.fetchone()
+        database = get_database()
+        cursor = database.cursor(dictionary=True)
 
-        if user:
-            stored_password = user['password']
-            
-            # Compare plain text passwords
-            if password == stored_password:
-                resp = jsonify({
-                    "message": "Login successful!",
-                    "user": {"id": user["id"], "username": user["username"], "email": user["email"]}
-                })
+        
+        try:
+            cursor.execute("SELECT * FROM users WHERE username = %s", (username,))
+            user = cursor.fetchone()
 
-                # Set secure flag based on request scheme (http or https)
-                secure_flag = request.scheme == 'https'
+            if user:
+                stored_password = user['password']
+                
+                # Compare plain text passwords
+                if password == stored_password:
+                    resp = jsonify({
+                        "message": "Login successful!",
+                        "user": {"id": user["id"], "username": user["username"], "email": user["email"]}
+                    })
 
-                resp.set_cookie('username', username, secure=True, httponly=False, samesite='None')
-                return resp, 200
+                    # Set secure flag based on request scheme (http or https)
+                    secure_flag = request.scheme == 'https'
+
+                    resp.set_cookie('username', username, secure=True, httponly=False, samesite='None')
+                    return resp, 200
+                else:
+                    return jsonify({"message": "Invalid credentials"}), 401
             else:
-                return jsonify({"message": "Invalid credentials"}), 401
-        else:
-            return jsonify({"message": "User not found"}), 404
+                return jsonify({"message": "User not found"}), 404
 
-    except Exception as e:
-        return jsonify({"message": str(e)}), 500
+        except Exception as e:
+            return jsonify({"message": str(e)}), 500
 
-    finally:
-        cursor.close()        
+        finally:
+            cursor.close()        
 
 @login_bp.route('/cookie', methods=['GET', 'POST'])
 def getCookie():
