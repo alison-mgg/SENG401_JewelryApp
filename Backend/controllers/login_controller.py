@@ -1,10 +1,10 @@
-from flask import Blueprint, request, jsonify
-
 import sys
 import os
+from flask import Blueprint, request, jsonify
+
 
 # Add the root directory of the project to the Python module search path
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../..')))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
 from Gemini_Testing.database_connector import get_database
 
 login_bp = Blueprint('login', __name__)
