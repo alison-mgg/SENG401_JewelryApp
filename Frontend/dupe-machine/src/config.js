@@ -13,7 +13,7 @@ const remoteApiUrl = "https://jewelry-dupe-app.onrender.com";
 const corsProxyUrl = "https://cors-anywhere-6vpc.onrender.com";
 
 const config = {
-  apiURL: useLocalApi ? localApiUrl : `${corsProxyUrl}/${remoteApiUrl}`,
+  apiURL: useLocalApi ? localApiUrl : `${corsProxyUrl}/${remoteApiUrl.replace(/^https?:\/\//, '')}`,
   corsProxyURL: corsProxyUrl, // Keep this for potential future use
 };
 
