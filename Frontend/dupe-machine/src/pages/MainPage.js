@@ -173,6 +173,7 @@ function ImageDescription() {
 //   }
 // };
 
+// this one is the latest one
 const handleGetSimilarProducts = async (latestDescription) => {  
   if (typeof latestDescription !== "string") {
       console.error("Invalid description:", latestDescription);
