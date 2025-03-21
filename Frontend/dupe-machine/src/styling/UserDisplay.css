@@ -28,3 +28,15 @@
   .saved-heading h2{
     color: #311d11;
   }
+  @media (max-width: 800px) {
+    .custom-line {
+      width: 90%; /* Adjust width as needed */
+    }
+    .user-display-content {
+      margin-left: 20px;
+      gap: 100px; /* Space between the text elements */
+    }
+    .user-display-content h2 {
+      font-size: 16px;
+    }
+  }
