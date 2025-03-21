@@ -203,7 +203,7 @@ const handleGetSimilarProducts = async (latestDescription) => {
               if (typeof data.similar_products === "string") {
                   let parsedProducts = data.similar_products
                       .split("\n")
-                      .map(item => item.replace(/\*\*/g, "").trim()) // Remove ** and trim spaces
+                      .map(item => item.replace(/^\*\s*/g, "").trim()) // Remove leading * and spaces
                       .filter(item => 
                           !item.startsWith("Brand:") &&
                           !item.startsWith("Model:") &&
@@ -214,7 +214,7 @@ const handleGetSimilarProducts = async (latestDescription) => {
 
                   setSimilarProducts(parsedProducts);
               } else if (Array.isArray(data.similar_products)) {
-                  setSimilarProducts(data.similar_products);
+                  setSimilarProducts(data.similar_products.map(item => item.replace(/^\*\s*/g, "").trim()));
               } else {
                   console.error("Unexpected format:", data.similar_products);
                   setSimilarProducts([]);
@@ -229,6 +229,7 @@ const handleGetSimilarProducts = async (latestDescription) => {
       setLoading(false);
   }
 };
+
 
     const handleChange = (e) => {
       setText(e.target.value);
