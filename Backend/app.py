@@ -20,7 +20,8 @@ load_dotenv()
 app = Flask(__name__)
 
 # Get the origin URL from environment variables
-ORIGIN_URL = os.getenv('ORIGIN_URL')
+# ORIGIN_URL = os.getenv('ORIGIN_URL')
+ORIGIN_URL = 'https://seng-401-jewelry-app-git-full-s-093d74-alison-gartners-projects.vercel.app/'
 
 # Enable CORS for frontend (React app hosted on Vercel)
 CORS(app, origins=[ORIGIN_URL], supports_credentials=True,
