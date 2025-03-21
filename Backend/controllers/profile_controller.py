@@ -37,7 +37,6 @@ def get_user_images(username):
             chats_with_dates = [
                 {
                     "response": chat["response"],
-                    # Format the date as "Month Day, Year at Time"
                     "uploaded_at": chat["uploaded_at"].strftime("%B %d, %Y at %I:%M %p")
                 }
                 for chat in chats
@@ -46,6 +45,7 @@ def get_user_images(username):
         else:
             return jsonify({"error": "No chats found for this user"}), 404
     except Exception as e:
+        print(f"Error fetching user images: {str(e)}")  # Log the error
         return jsonify({"error": str(e)}), 500
     finally:
         cursor.close()
