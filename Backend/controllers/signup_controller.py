@@ -1,7 +1,12 @@
 from flask import Blueprint, request, jsonify, make_response
 from mysql.connector import Error, IntegrityError
 from werkzeug.security import generate_password_hash
+import sys
 import os
+
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
+from Gemini_Testing.database_connector import get_database
 
 signup_bp = Blueprint('signup', __name__)
 
