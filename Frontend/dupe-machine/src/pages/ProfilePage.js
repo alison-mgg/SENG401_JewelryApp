@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 function ProfilePage() {
   const [userData, setUserData] = useState({ username: "", email: "" });
-  const { isAuthenticated, username, logout } = useAuth(); 
+  const { isAuthenticated, username, logout } = useAuth();
   const navigate = useNavigate(); 
 
   useEffect(() => {

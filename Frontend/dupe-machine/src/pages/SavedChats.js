@@ -22,6 +22,7 @@ const SavedChats = () => {
         console.error("Error fetching user chats:", error);
       }
     };
+    
 
     if (username) {
       fetchUserChats();
