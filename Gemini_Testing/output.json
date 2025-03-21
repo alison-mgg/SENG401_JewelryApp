@@ -1,5 +1,17 @@
 {
-    "jewelry_type": "Bracelet",
-    "description": "- What material is the bracelet made of?\n  That's a tri-color gold bracelet.  It appears to be made of yellow gold, rose gold, and white gold.\n\n- Does it have any charms or special attachments?\n  The bracelet appears to be made of three-toned gold (yellow, rose, and white) and features small, round accents between the linked oval shapes.  There are no other visible charms or special attachments beyond the clasp.\n\n- Is the bracelet rigid (bangle) or flexible (chain, cord)?\n  The bracelet is flexible.  It's a chain bracelet, not a rigid bangle.\n",
-    "timestamp": "2025-03-20T23:57:41.992489"
+    "jewelry_type": "Watch",
+    "description": "- Choose the most accurate type of watch dial for this image: Analogue, Digital, Chronograph, or Hybrid?\n  The most accurate description of the watch face in the image is **Analogue**.  While it has a rectangular shape, it uses hands to tell the time, which is the defining characteristic of an analogue watch.\n\n- In one or two words, describe the watch's style.\n  Classic, elegant.",
+    "product_suggestions": [
+        {
+            "title": "best watch for sale - Option 1",
+            "price": "$100-$200",
+            "source": "Example Store"
+        },
+        {
+            "title": "best watch for sale - Option 2",
+            "price": "$200-$300",
+            "source": "Example Store"
+        }
+    ],
+    "timestamp": "2025-03-21T00:22:36.918264"
 }
