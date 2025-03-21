@@ -1,5 +1,4 @@
 from flask import Blueprint, request, jsonify, make_response
-from database_connector import get_database
 from mysql.connector import Error, IntegrityError
 from werkzeug.security import generate_password_hash
 import os
