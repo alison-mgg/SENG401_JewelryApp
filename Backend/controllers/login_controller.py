@@ -16,7 +16,7 @@ login_bp = Blueprint('login', __name__)
 def login():
     if request.method == 'OPTIONS':
         response = jsonify({"message": "Preflight request successful"})
-        response.headers.add('Access-Control-Allow-Origin', "*")
+        response.headers.add('Access-Control-Allow-Origin', ORIGIN_URL)
         response.headers.add('Access-Control-Allow-Methods', 'POST')
         response.headers.add('Access-Control-Allow-Headers', 'Content-Type, X-Requested-With, Authorization')
         response.headers.add('Access-Control-Allow-Credentials', 'true')
