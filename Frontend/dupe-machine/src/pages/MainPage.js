@@ -175,7 +175,7 @@ const handleGetSimilarProducts = async (latestDescription) => {
   return (
     <div className="container">
       <NavBar />
-      <h1>Start By Uploading an Image</h1>
+      <h1>Start by uploading an image of a product you wish to find an alternative for </h1>
   
       {/* Login message popup */}
       {showLoginMessage && (
@@ -193,70 +193,63 @@ const handleGetSimilarProducts = async (latestDescription) => {
         </div>
       )}
   
-      {/* Image selection section */}
-      <div className="upload-container">
-        <div className="image-upload-wrapper">
-          <div className="image-upload-box">
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleFileChange}
-              id="file-input"
-            />
-            {imagePreview && <img src={imagePreview} alt="Selected" className="uploaded-image" />}
+      <div className="content-wrapper">
+        {/* Left Column */}
+        <div className="left-column">
+          <div className="upload-container">
+            <div className="image-upload-wrapper">
+              <div className="image-upload-box">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                  id="file-input"
+                />
+                {imagePreview && <img src={imagePreview} alt="Selected" className="uploaded-image" />}
+              </div>
+              <button
+                onClick={() => document.getElementById('file-input').click()}
+                className="choose-image-button"
+              >
+                Choose an image
+              </button>
+              <button onClick={handleGetSimilarProducts} className="similar-products-button">
+            Get Similar Products
+          </button>
+            </div>
           </div>
-          {/* Button below the image */}
-          <button
-            onClick={() => document.getElementById('file-input').click()}
-            className="choose-image-button"
-          >
-            Choose an image
-          </button>
+  
         </div>
-        <div className="input-txt">
-          <textarea
-            className="text-input"
-            value={text}
-            onChange={handleChange}
-            placeholder="Enter your text here..."
-          />
-          {/* Submit text to AI button */}
-          <button
-            className="submit-text-button"
-          >
-            Submit Text
-          </button>
+  
+        {/* Right Column */}
+        <div className="right-column">
+          <div className="similar-products-box">
+            <h2 style={{ color: "#2f1c10"}}>Similar Products</h2>
+  
+            {similarProducts.length > 0 ? (
+              <ul>
+                {similarProducts.map((product, index) => (
+                  <li key={index}>{product}</li>
+                ))}
+              </ul>
+            ) : (
+              <p>No similar products found.</p>
+            )}
+  
+            {/* Heart Icon */}
+            <span
+              className="heart-icon"
+              onClick={handleHeartClick}
+              style={{ color: isHeartClicked ? 'red' : '#ccd4c2', cursor: 'pointer' }}
+            >
+              &#9829; {/* Heart icon */}
+            </span>
+          </div>
         </div>
-      </div>
-  
-      <button onClick={handleGetSimilarProducts} className="similar-products-button">
-        Get Similar Products
-      </button>
-  
-      <div className="similar-products-box">
-  <h2>Similar Products</h2>
-  
-  {similarProducts.length > 0 ? (
-    <ul>
-      {similarProducts.map((product, index) => (
-        <li key={index}>{product}</li>
-      ))}
-    </ul>
-  ) : (
-    <p>No similar products found.</p>
-  )}
-  
-        {/* Heart Icon */}
-        <span
-          className="heart-icon"
-          onClick={handleHeartClick}
-          style={{ color: isHeartClicked ? 'red' : '#d2bfc7', cursor: 'pointer' }}
-        >
-          &#9829; {/* Heart icon */}
-        </span>
       </div>
     </div>
   );
+  
 }
 
 export default ImageDescription;
