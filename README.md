@@ -52,7 +52,7 @@ Before you begin, ensure you have the following software installed:
 
 -   Python 3.x
 -   React (You'll need Node.js and npm or yarn to set up a React development environment)
--   MySQL Server
+-   MySQL Server (for example: MySQLWorkbench)
 
 **Note:** React applications require Node.js and npm (or yarn) for development and build processes.
 
