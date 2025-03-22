@@ -103,7 +103,7 @@ Before you begin, ensure you have the following software installed:
 5.  **Set up the MySQL database:**
 
     * Create a database named `401_sql_database`.
-    * Import the `401_sql_database.sql` file into your MySQL database using a tool like phpMyAdmin or the MySQL command-line client.
+    * Import the `401_sql_database.sql` file into your running MySQL server.
     * Configure the database connection details in your `Gemini/.env` file.
 
         ```
