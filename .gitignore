@@ -8,3 +8,4 @@ Backend/.ebignore
 /Gemini_Testing/gemini_config/__pycache__
 /Gemini_Testing/routes/__pycache__
 /Gemini_Testing/services/__pycache__
+/Gemini_Testing/venv
