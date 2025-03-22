@@ -7,27 +7,27 @@ This repository contains the source code for the SENG 401 project assignment, a 
 ## Authors
 
 -   Chantal del Carmen
-    -   GitHub: chantal-delcarmen
+    -   GitHub: [chantal-delcarmen](https://github.com/chantal-delcarmen)
 
 -   Maryam Al Sayed
-    -   GitHub: malsayed03
+    -   GitHub: [malsayed03](https://github.com/malsayed03)
 
 -   Svara Patel
-    -   GitHub: svaraP
+    -   GitHub: [svaraP](https://github.com/svaraP)
 
 -   Zaira Ramji
-    -   GitHub: zaira-ra
+    -   GitHub: [zaira-ra](https://github.com/zaira-ra)
 
 -   Alison Gartner
-    -   GitHub: alison-mgg
+    -   GitHub: [alison-mgg](https://github.com/alison-mgg)
 
 ## Table of Contents
 
 - [Features](#features)
 - [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-  - [Running the Application](#running-the-application)
+    - [Prerequisites](#prerequisites)
+    - [Installation](#installation)
+    - [Running the Application](#running-the-application)
 - [Project Structure](#project-structure)
 - [Contributing](#contributing)
 - [License](#license)
@@ -50,10 +50,6 @@ Follow these instructions to set up and run the application on your local machin
 
 Before you begin, ensure you have the following software installed:
 
-### Prerequisites
-
-Before you begin, ensure you have the following software installed:
-
 -   Python 3.x
 -   React (You'll need Node.js and npm or yarn to set up a React development environment)
 -   MySQL Server
@@ -65,7 +61,7 @@ Before you begin, ensure you have the following software installed:
 1.  **Clone the repository:**
 
     ```bash
-    git clone [https://github.com/alison-mgg/SENG401_JewelryApp](https://github.com/alison-mgg/SENG401_JewelryApp)
+    git clone (https://github.com/alison-mgg/SENG401_JewelryApp)
     cd SENG401_JewelryApp
     ```
 
@@ -110,10 +106,12 @@ Before you begin, ensure you have the following software installed:
     * Import the `401_sql_database.sql` file into your MySQL database using a tool like phpMyAdmin or the MySQL command-line client.
     * Configure the database connection details in your `Gemini/.env` file.
 
-      MYSQL_DB=401_sql_database
-      MYSQL_HOST=localhost
-      MYSQL_PASSWORD=seng401
-      MYSQL_USER=seng401
+        ```
+        MYSQL_DB=401_sql_database
+        MYSQL_HOST=localhost
+        MYSQL_PASSWORD=seng401
+        MYSQL_USER=seng401
+        ```
 
 ### Running the Application
 
