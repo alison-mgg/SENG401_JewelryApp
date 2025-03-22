@@ -1,10 +1,10 @@
 # SENG401 Jewelry Dupe App
-# Group 3 W2025
+# Group 3, W2025
 # Written using Gemini LLM
 
 This repository contains the source code for the SENG 401 project assignment, a jewelry dupe application. The app allows users to upload photos of jewelry and leverages the Gemini LLM to find and suggest similar products. It is built using a **Python Flask backend** and a **MySQL database** for data storage. The application includes user authentication, profile pages to store saved searches, and a **React-based frontend** for a seamless user experience.
 
-**Final Due Date: March 21st**
+**Final Due Date: March 21st, 2025**
 
 ## Authors
 
@@ -22,7 +22,7 @@ This repository contains the source code for the SENG 401 project assignment, a 
 
 -   Alison Gartner
     -   GitHub: alison-mgg
-    
+
 ## Table of Contents
 
 - [Features](#features)
@@ -43,6 +43,7 @@ This repository contains the source code for the SENG 401 project assignment, a 
 -   **Gemini API Integration:** Seamless integration with the Gemini LLM for image processing and product matching.
 -   **MySQL Database:** Utilizes a MySQL database to store user data and product information.
 -   **Python Flask Backend:** Powered by a Python Flask backend for API endpoints and server-side logic.
+
 ## Getting Started
 
 Follow these instructions to set up and run the application on your local machine.
@@ -142,36 +143,36 @@ Before you begin, ensure you have the following software installed:
     This will launch the frontend in your default browser at `http://localhost:3000`.
 
 ## Project Structure
-  SENG401_JewelryApp/
-  ├── Backend/              # Python Flask backend
-  │   ├── controllers/
-  │   │   ├── chat_controller.py
-  │   │   ├── login_controller.py
-  │   │   ├── profile_controller.py
-  │   │   └── signup_controller.py
-  │   ├── database_connector.py
-  │   ├── requirements.txt
-  │   └── ...
-  ├── Database/             # MySQL database files
-  │   ├── Images/
-  │   │   └── ...
-  │   ├── 401_sql_database.sql
-  │   └── README.md
-  ├── Frontend/dupe-machine/  # React frontend
-  │   ├── public/
-  │   ├── src/
-  │   │   ├── components/
-  │   │   ├── pages/
-  │   │   ├── ...
-  │   ├── package.json
-  │   ├── package-lock.json
-  │   └── README.md
-  ├── Gemini/               # Gemini API integration and Backend
-  │   ├── app.py           # Backend application
-  │   ├── .env             # Environment variables
-  │   └── ...
-  ├── .gitignore
-  └── README.md
+SENG401_JewelryApp/
+├── Backend/              # Python Flask backend
+│   ├── controllers/
+│   │   ├── chat_controller.py
+│   │   ├── login_controller.py
+│   │   ├── profile_controller.py
+│   │   └── signup_controller.py
+│   ├── database_connector.py
+│   ├── requirements.txt
+│   └── ...
+├── Database/             # MySQL database files
+│   ├── Images/
+│   │   └── ...
+│   ├── 401_sql_database.sql
+│   └── README.md
+├── Frontend/dupe-machine/  # React frontend
+│   ├── public/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── ...
+│   ├── package.json
+│   ├── package-lock.json
+│   └── README.md
+├── Gemini/               # Gemini API integration and Backend
+│   ├── app.py           # Backend application
+│   ├── .env             # Environment variables
+│   └── ...
+├── .gitignore
+└── README.md
 
 
 ---
