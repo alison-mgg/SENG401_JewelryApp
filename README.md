@@ -142,37 +142,4 @@ Before you begin, ensure you have the following software installed:
 
     This will launch the frontend in your default browser at `http://localhost:3000`.
 
-## Project Structure
-SENG401_JewelryApp/
-├── Backend/              # Python Flask backend
-│   ├── controllers/
-│   │   ├── chat_controller.py
-│   │   ├── login_controller.py
-│   │   ├── profile_controller.py
-│   │   └── signup_controller.py
-│   ├── database_connector.py
-│   ├── requirements.txt
-│   └── ...
-├── Database/             # MySQL database files
-│   ├── Images/
-│   │   └── ...
-│   ├── 401_sql_database.sql
-│   └── README.md
-├── Frontend/dupe-machine/  # React frontend
-│   ├── public/
-│   ├── src/
-│   │   ├── components/
-│   │   ├── pages/
-│   │   ├── ...
-│   ├── package.json
-│   ├── package-lock.json
-│   └── README.md
-├── Gemini/               # Gemini API integration and Backend
-│   ├── app.py           # Backend application
-│   ├── .env             # Environment variables
-│   └── ...
-├── .gitignore
-└── README.md
-
-
 ---
