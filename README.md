@@ -61,7 +61,7 @@ Before you begin, ensure you have the following software installed:
 1.  **Clone the repository:**
 
     ```bash
-    git clone (https://github.com/alison-mgg/SENG401_JewelryApp)
+    git clone [https://github.com/alison-mgg/SENG401_JewelryApp](https://github.com/alison-mgg/SENG401_JewelryApp)
     cd SENG401_JewelryApp
     ```
 
