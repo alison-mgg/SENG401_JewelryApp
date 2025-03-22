@@ -5,6 +5,8 @@ Frontend/dupe-machine/package-lock.json
 Backend/.env
 /Backend/.venv
 Backend/.ebignore
-/Gemini_Testing/gemini_config/__pycache__
-/Gemini_Testing/routes/__pycache__
-/Gemini_Testing/services/__pycache__
+/Gemini/gemini_config/__pycache__
+/Gemini/routes/__pycache__
+/Gemini/services/__pycache__
+/Gemini/node_modules
+/Gemini/__pycache__

@@ -1,0 +1,17 @@
+{
+    "jewelry_type": "Necklace",
+    "description": "- What is the material of this necklace's chain?\n  That's a necklace from the brand Kate Spade.  While the image doesn't explicitly state the chain material,  Kate Spade necklaces in this style are typically made with **stainless steel** with a rose gold plating.  The plating is what gives it the rose gold color.\n\n- What type of chain does this necklace have?\n  That's a **cable chain**.  It's characterized by its interwoven, cylindrical links that create a smooth, slightly rounded appearance.\n\n- What type or style of necklace is this?\n  That's a **four-leaf clover pendant necklace**.  More specifically, the clover is composed of four hearts and the metal appears to be rose gold.  The hearts are likely inlaid with mother-of-pearl or a similar material.\n\n- What type of pendant does this necklace have, if any?\n  That necklace has a **quatrefoil pendant**.  More specifically, it's a quatrefoil pendant made of four heart shapes, each filled with what appears to be mother-of-pearl or a similar material.\n\n- Choose the most accurate possible necklace length for this image: Tight fit (collar/choker), Exact fit (princess), or Loose fit (matinee, opera, rope).\n  That necklace length would best be described as an **Exact fit (princess)**.  Princess necklaces typically fall at the collarbone, which is where this one appears to sit.\n\n- If any, what is the visible brand logo?\n  That's a necklace featuring the **Kate Spade New York** logo.  While not a traditional wordmark logo, the four-heart design is instantly recognizable as their brand symbol.\n",
+    "product_suggestions": [
+        {
+            "title": "That's a necklace featuring the **Kate Spade New York** logo.  While not a traditional wordmark logo, the four-heart design is instantly recognizable as their brand symbol.\n necklace - Option 1",
+            "price": "$100-$200",
+            "source": "Example Store"
+        },
+        {
+            "title": "That's a necklace featuring the **Kate Spade New York** logo.  While not a traditional wordmark logo, the four-heart design is instantly recognizable as their brand symbol.\n necklace - Option 2",
+            "price": "$200-$300",
+            "source": "Example Store"
+        }
+    ],
+    "timestamp": "2025-03-22T03:34:52.238766"
+}
