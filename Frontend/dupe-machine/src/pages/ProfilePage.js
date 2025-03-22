@@ -17,43 +17,54 @@ function ProfilePage() {
     }
   }, [isAuthenticated, navigate]);
 
-  useEffect(() => {
-    if (isAuthenticated && username) {
-      const fetchUserData = async () => {
-        try {
-          const response = await fetch(`http://localhost:5000/api/user/${username}`);
-          if (response.ok) {
-            const data = await response.json();
-            setUserData({ username: data.username, email: data.email });
-          } else {
-            console.error("Failed to fetch user data");
-          }
-        } catch (error) {
-          console.error("Error fetching user data:", error);
+// useEffect hook to fetch user data when authenticated and username is available
+useEffect(() => {
+  if (isAuthenticated && username) {
+    // Async function to fetch user data from the server
+    const fetchUserData = async () => {
+      try {
+        // Send GET request to fetch user data using the username
+        const response = await fetch(`http://localhost:5000/api/user/${username}`);
+        
+        // Check if the response is successful
+        if (response.ok) {
+          const data = await response.json();  // Parse the response data
+          
+          // Update the state with the user data (username and email)
+          setUserData({ username: data.username, email: data.email });
+        } else {
+          console.error("Failed to fetch user data");  // Log error if the fetch failed
         }
-      };
-
-      fetchUserData();
-    }
-  }, [isAuthenticated, username]);
-
-  const handleLogout = async () => {
-    try {
-      const response = await fetch('http://localhost:5000/api/logout', {
-        method: 'POST',
-        credentials: 'include', // Include cookies in the request
-      });
-
-      if (response.ok) {
-        logout(); // Call the logout function from AuthContext
-        navigate('/'); // Redirect to the login page
-      } else {
-        console.error("Failed to logout");
+      } catch (error) {
+        console.error("Error fetching user data:", error);  // Log any network or other errors
       }
-    } catch (error) {
-      console.error("Error logging out:", error);
+    };
+
+    fetchUserData();  // Call the function to fetch user data
+  }
+}, [isAuthenticated, username]);  // Dependency array: Runs whenever isAuthenticated or username changes
+
+// handleLogout function to log the user out and redirect them to the login page
+const handleLogout = async () => {
+  try {
+    // Send POST request to logout the user (using cookies for session management)
+    const response = await fetch('http://localhost:5000/api/logout', {
+      method: 'POST',
+      credentials: 'include',  // Include cookies (session) in the request
+    });
+
+    // Check if the logout request was successful
+    if (response.ok) {
+      logout();  // Call logout function from AuthContext to clear user session
+      navigate('/');  // Redirect to the login page after successful logout
+    } else {
+      console.error("Failed to logout");  // Log error if the logout failed
     }
-  };
+  } catch (error) {
+    console.error("Error logging out:", error);  // Log any network or other errors during logout
+  }
+};
+
 
   return isAuthenticated ? (
     <div className="profilepage-container">

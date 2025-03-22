@@ -15,162 +15,159 @@ function ImageDescription() {
   const [showLoginMessage, setShowLoginMessage] = useState(false); // State for login message popup
   const [showNoFileMessage, setShowNoFileMessage] = useState(false); // State for no file message popup
   const { isAuthenticated, username } = useAuth(); // Use isAuthenticated and username from AuthContext
-  //const [imageName, setImageName] = useState("");
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      setSelectedFile(file);
-      setImagePreview(URL.createObjectURL(file)); // Show preview of uploaded image
-      uploadAndAnalyzeImage(file); // Automatically trigger analysis after file is selected
-      setIsHeartClicked(false);
-    }
-  };
-
-  const handleHeartClick = async () => {
-    if (!isAuthenticated) {
-      setShowLoginMessage(true);
-      return;
-    }
-  
-    if (!selectedFile) {
-      setShowNoFileMessage(true);
-      return;
-    }
-  
-    setIsHeartClicked(true);
-  
-    try {
-      const response = await fetch("http://localhost:5000/save-to-database", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: username,
-          imagePath: selectedFile, // Use the filename returned from the backend
-          similarProducts: Array.isArray(similarProducts) ? similarProducts.join(", ") : similarProducts,
-        }),
-      });
-  
-      const data = await response.json();
-  
-      if (data.error) {
-        console.error("Error saving to database:", data.error);
-      } else {
-        console.log("Successfully saved to database:", data.message);
-      }
-    } catch (error) {
-      console.error("Failed to save to database:", error.message);
-    }
-  };
-  
-  
-  const uploadAndAnalyzeImage = async (file) => {
-    if (!file) {
-        setDescription("Please select an image first.");
-        return;
-    }
-
-    setLoading(true); // Show loading state
-    const formData = new FormData();
-    formData.append("image", file);
-
-    try {
-        const response = await fetch("http://localhost:5000/upload", {
-            method: "POST",
-            body: formData,
-        });
-
-        const data = await response.json();
-
-        if (data.error) {
-          setDescription("Error: " + data.error);
-      } else {
-          setDescription(data.description); // Set the extracted description
-          setSelectedFile(data.filename);  // Store the renamed filename from backend
-      
-          // Ensure `data.description` is valid before calling `handleGetSimilarProducts`
-          if (typeof data.description === "string" && data.description.trim() !== "") {
-              handleGetSimilarProducts(data.description);
-          } else {
-              console.error("Invalid description received:", data.description);
-          }
-      }
-    } catch (error) {
-        setDescription("Failed to upload image. Error: " + error.message);
-    } finally {
-        setLoading(false); // Hide loading state
-    }
+// Handles the file selection event
+const handleFileChange = (event) => {
+  const file = event.target.files[0];  // Get the selected file
+  if (file) {
+    setSelectedFile(file);  // Store the selected file
+    setImagePreview(URL.createObjectURL(file));  // Show preview of uploaded image
+    uploadAndAnalyzeImage(file);  // Automatically trigger image upload and analysis after file selection
+    setIsHeartClicked(false);  // Reset heart click state when a new file is selected
+  }
 };
 
-const handleGetSimilarProducts = async (latestDescription) => {  
-  if (typeof latestDescription !== "string") {
-      console.error("Invalid description:", latestDescription);
-      return;
+// Handles the heart button click event (to save image to the database)
+const handleHeartClick = async () => {
+  if (!isAuthenticated) {
+    setShowLoginMessage(true);  // Show login message if the user is not authenticated
+    return;
   }
 
-  setLoading(true);
+  if (!selectedFile) {
+    setShowNoFileMessage(true);  // Show message if no file has been selected
+    return;
+  }
+
+  setIsHeartClicked(true);  // Set heart click state to true to prevent multiple submissions
 
   try {
-      const response = await fetch("http://localhost:5000/similar-products", {
-          method: "POST",
-          headers: {
-              "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-              description: latestDescription.trim(),
-          }),
-      });
+    // Send POST request to save image data to the database
+    const response = await fetch("http://localhost:5000/save-to-database", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: username,  // Include the username
+        imagePath: selectedFile,  // Include the filename of the selected image
+        similarProducts: Array.isArray(similarProducts) ? similarProducts.join(", ") : similarProducts,  // Include the similar products as a comma-separated string
+      }),
+    });
 
-      const data = await response.json();
-      console.log("Similar Products Response:", data);
+    const data = await response.json();
 
-      if (data.error) {
-          setSimilarProducts(["Error: " + data.error]);
-      } else {
-          if (data.similar_products) {
-              if (typeof data.similar_products === "string") {
-                  let parsedProducts = data.similar_products
-                      .split("\n")
-                      .map(item => item.replace(/^\*\s*/g, "").trim()) // Remove leading * and spaces
-                      .filter(item => 
-                          !item.startsWith("Brand:") &&
-                          !item.startsWith("Model:") &&
-                          !item.startsWith("Similar Products") &&
-                          !item.startsWith("Note:")
-                      ) // Remove unwanted lines
-                      .filter(item => item !== ""); // Remove empty lines
-
-                  setSimilarProducts(parsedProducts);
-              } else if (Array.isArray(data.similar_products)) {
-                  setSimilarProducts(data.similar_products.map(item => item.replace(/^\*\s*/g, "").trim()));
-              } else {
-                  console.error("Unexpected format:", data.similar_products);
-                  setSimilarProducts([]);
-              }
-          } else {
-              setSimilarProducts([]);
-          }
-      }
+    if (data.error) {
+      console.error("Error saving to database:", data.error);
+    } else {
+      console.log("Successfully saved to database:", data.message);
+    }
   } catch (error) {
-      setSimilarProducts(["Failed to get similar products. Error: " + error.message]);
+    console.error("Failed to save to database:", error.message);  // Handle errors during database save
+  }
+};
+
+// Function to upload the image and analyze it
+const uploadAndAnalyzeImage = async (file) => {
+  if (!file) {
+    setDescription("Please select an image first.");  // Display message if no file is selected
+    return;
+  }
+
+  setLoading(true);  // Show loading state while the image is being uploaded
+  const formData = new FormData();
+  formData.append("image", file);  // Append the selected image to FormData
+
+  try {
+    // Send POST request to upload the image and analyze it
+    const response = await fetch("http://localhost:5000/upload", {
+      method: "POST",
+      body: formData,  // Send the image file as FormData
+    });
+
+    const data = await response.json();
+
+    if (data.error) {
+      setDescription("Error: " + data.error);  // Display error message if the analysis fails
+    } else {
+      setDescription(data.description);  // Set the description from the analysis response
+      setSelectedFile(data.filename);  // Store the renamed filename returned from the backend
+
+      // Ensure the description is valid before fetching similar products
+      if (typeof data.description === "string" && data.description.trim() !== "") {
+        handleGetSimilarProducts(data.description);  // Fetch similar products based on the description
+      } else {
+        console.error("Invalid description received:", data.description);
+      }
+    }
+  } catch (error) {
+    setDescription("Failed to upload image. Error: " + error.message);  // Handle errors during image upload
   } finally {
-      setLoading(false);
+    setLoading(false);  // Hide loading state after the process is finished
+  }
+};
+
+// Function to fetch similar products based on the image description
+const handleGetSimilarProducts = async (latestDescription) => {  
+  if (typeof latestDescription !== "string") {
+    console.error("Invalid description:", latestDescription);  // Log error if description is invalid
+    return;
+  }
+
+  setLoading(true);  // Show loading state while fetching similar products
+
+  try {
+    // Send POST request to get similar products based on the description
+    const response = await fetch("http://localhost:5000/similar-products", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        description: latestDescription.trim(),  // Send the trimmed description in the request body
+      }),
+    });
+
+    const data = await response.json();
+    console.log("Similar Products Response:", data);
+
+    if (data.error) {
+      setSimilarProducts(["Error: " + data.error]);  // Display error if fetching similar products fails
+    } else {
+      // Parse and display the similar products returned from the server
+      if (data.similar_products) {
+        if (typeof data.similar_products === "string") {
+          let parsedProducts = data.similar_products
+            .split("\n")
+            .map(item => item.replace(/^\*\s*/g, "").trim())  // Clean up product names
+            .filter(item => 
+              !item.startsWith("Brand:") &&
+              !item.startsWith("Model:") &&
+              !item.startsWith("Similar Products") &&
+              !item.startsWith("Note:")
+            )  // Remove unnecessary lines
+            .filter(item => item !== "");  // Remove empty lines
+
+          setSimilarProducts(parsedProducts);  // Set the cleaned list of similar products
+        } else if (Array.isArray(data.similar_products)) {
+          setSimilarProducts(data.similar_products.map(item => item.replace(/^\*\s*/g, "").trim()));  // Clean up product names if the result is an array
+        } else {
+          console.error("Unexpected format:", data.similar_products);
+          setSimilarProducts([]);
+        }
+      } else {
+        setSimilarProducts([]);  // Handle case where no similar products are returned
+      }
+    }
+  } catch (error) {
+    setSimilarProducts(["Failed to get similar products. Error: " + error.message]);  // Handle error while fetching similar products
+  } finally {
+    setLoading(false);  // Hide loading state after fetching similar products
   }
 };
 
 
-    const handleChange = (e) => {
-      setText(e.target.value);
-    };
   
-
-  const handleRegenerateClick = () => {
-    setLoading(true);  // Set loading to true when regenerating description
-    uploadAndAnalyzeImage(selectedFile); // Trigger analysis again for regeneration
-    setIsHeartClicked(false);
-  };
 
   return (
     <div>

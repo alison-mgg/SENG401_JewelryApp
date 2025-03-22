@@ -1,17 +1,17 @@
 {
     "jewelry_type": "Bracelet",
-    "description": "- What material is the bracelet made of?\n  That's a lovely bracelet!  The image shows a gold-toned bracelet.  However, the image doesn't specify *what kind* of gold (10k, 14k, 18k, etc.) or if it's gold-plated over another metal (like sterling silver or brass).  The stones appear to be cubic zirconia.\n\nTo know for sure what material the bracelet is made of, you'd need to check the product description where you saw the image.\n\n- Does it have any charms or special attachments?\n  That's a pretty bracelet!  It has several charms or attachments:\n\n* **Cubic Zirconia Stones:** The most prominent are the four larger, square-cut cubic zirconia stones set along the chain.  These are the main decorative elements.\n\n* **Small Beads:**  Smaller beads are interspersed between the larger stones along the length of the chain.  These add detail and visual interest.\n\n* **Lobster Clasp:** The clasp itself could be considered a functional attachment.\n\nSo, while it doesn't have dangling charms, it does have the cubic zirconia stones and beads that function as decorative attachments.\n\n- Is the bracelet rigid (bangle) or flexible (chain, cord)?\n  That's a flexible bracelet.  It's a chain bracelet with small beads and larger stones.  It's not a rigid bangle.\n\n- If any, what is the visible brand logo?\n  That's a bracelet from **Zales**.  The small logo is visible on the clasp.\n",
+    "description": "- What material is the bracelet made of?\n  The bracelets in the image appear to be made of gold.  There is a gold chain bracelet and several gold bangle bracelets.\n- Does it have any charms or special attachments?\n  Yes, the wooden jewelry box contains a variety of gold charms and attachments including:\n\n* **Hoop earrings:** Several pairs in different sizes.\n* **Studs:** Pearl, tiger eye, and black stone options.\n* **Drop earrings:**  With teardrop and square shapes.\n* **Bangles/bracelets:** Gold bangles, some with textured surfaces.\n* **Pendant:** A possible gold pendant shaped like a woven material (or possibly just a decorative piece).\n* **Necklace:** A gold chain necklace.\n\nThe charms vary in shape, size, and material (pearls, gemstones, and gold).\n- Is the bracelet rigid (bangle) or flexible (chain, cord)?\n  The bracelets in the image are both flexible.  One is a chain bracelet and the other appears to be a cord bracelet.  Neither is a rigid bangle.\n\n- If any, what is the visible brand logo?\n  There is no visible brand logo in the image provided.  The image shows a wooden jewelry box containing various gold and pearl jewelry pieces.  There are no brand markings or logos on any of the items.\n",
     "product_suggestions": [
         {
-            "title": "That's a bracelet from **Zales**.  The small logo is visible on the clasp.\n bracelet - Option 1",
+            "title": "There is no visible brand logo in the image provided.  The image shows a wooden jewelry box containing various gold and pearl jewelry pieces.  There are no brand markings or logos on any of the items.\n bracelet - Option 1",
             "price": "$100-$200",
             "source": "Example Store"
         },
         {
-            "title": "That's a bracelet from **Zales**.  The small logo is visible on the clasp.\n bracelet - Option 2",
+            "title": "There is no visible brand logo in the image provided.  The image shows a wooden jewelry box containing various gold and pearl jewelry pieces.  There are no brand markings or logos on any of the items.\n bracelet - Option 2",
             "price": "$200-$300",
             "source": "Example Store"
         }
     ],
-    "timestamp": "2025-03-21T10:39:50.896658"
+    "timestamp": "2025-03-22T02:46:09.458208"
 }
