@@ -9,7 +9,7 @@ This repository contains the source code for the SENG 401 project assignment, a 
 -   Chantal del Carmen
     -   GitHub: [chantal-delcarmen](https://github.com/chantal-delcarmen)
 
--   Maryam Al Sayed
+-   Maryam Alsayed
     -   GitHub: [malsayed03](https://github.com/malsayed03)
 
 -   Svara Patel
