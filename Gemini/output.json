@@ -1,17 +1,17 @@
 {
     "jewelry_type": "Necklace",
-    "description": "- What is the material of this necklace's chain?\n  That's a necklace from the brand Kate Spade.  While the image doesn't explicitly state the chain material,  Kate Spade necklaces in this style are typically made with **stainless steel** with a rose gold plating.  The plating is what gives it the rose gold color.\n\n- What type of chain does this necklace have?\n  That's a **cable chain**.  It's characterized by its interwoven, cylindrical links that create a smooth, slightly rounded appearance.\n\n- What type or style of necklace is this?\n  That's a **four-leaf clover pendant necklace**.  More specifically, the clover is composed of four hearts and the metal appears to be rose gold.  The hearts are likely inlaid with mother-of-pearl or a similar material.\n\n- What type of pendant does this necklace have, if any?\n  That necklace has a **quatrefoil pendant**.  More specifically, it's a quatrefoil pendant made of four heart shapes, each filled with what appears to be mother-of-pearl or a similar material.\n\n- Choose the most accurate possible necklace length for this image: Tight fit (collar/choker), Exact fit (princess), or Loose fit (matinee, opera, rope).\n  That necklace length would best be described as an **Exact fit (princess)**.  Princess necklaces typically fall at the collarbone, which is where this one appears to sit.\n\n- If any, what is the visible brand logo?\n  That's a necklace featuring the **Kate Spade New York** logo.  While not a traditional wordmark logo, the four-heart design is instantly recognizable as their brand symbol.\n",
+    "description": "- What is the material of this necklace's chain?\n  That's a necklace from Kate Spade.  While the image doesn't explicitly state the chain material,  Kate Spade necklaces in this style are typically made with **stainless steel** that has a rose gold plating.\n\n- What type of chain does this necklace have?\n  That's a **cable chain**.  It's a common type of chain necklace made of a series of interconnected oval or round links.\n\n- What type or style of necklace is this?\n  That's a **pendant necklace**.  More specifically, the pendant features a **quatrefoil** design (four-leaf clover shape) with inlaid hearts.  The metal appears to be rose gold tone.\n\n- What type of pendant does this necklace have, if any?\n  That necklace has a **quatrefoil pendant**.  More specifically, it's a quatrefoil pendant composed of four heart shapes, each inlaid with what appears to be mother-of-pearl.\n\n- Choose the most accurate possible necklace length for this image: Tight fit (collar/choker), Exact fit (princess), or Loose fit (matinee, opera, rope).\n  That necklace appears to be an **Exact fit (princess)** length.  Princess necklaces typically fall at the collarbone.\n\n- If any, what is the visible brand logo?\n  That's a necklace with a four-leaf clover design.  There is **no visible brand logo** on the necklace itself in the provided image.  The image only shows the necklace's design.\n",
     "product_suggestions": [
         {
-            "title": "That's a necklace featuring the **Kate Spade New York** logo.  While not a traditional wordmark logo, the four-heart design is instantly recognizable as their brand symbol.\n necklace - Option 1",
+            "title": "That's a necklace with a four-leaf clover design.  There is **no visible brand logo** on the necklace itself in the provided image.  The image only shows the necklace's design.\n necklace - Option 1",
             "price": "$100-$200",
             "source": "Example Store"
         },
         {
-            "title": "That's a necklace featuring the **Kate Spade New York** logo.  While not a traditional wordmark logo, the four-heart design is instantly recognizable as their brand symbol.\n necklace - Option 2",
+            "title": "That's a necklace with a four-leaf clover design.  There is **no visible brand logo** on the necklace itself in the provided image.  The image only shows the necklace's design.\n necklace - Option 2",
             "price": "$200-$300",
             "source": "Example Store"
         }
     ],
-    "timestamp": "2025-03-22T03:34:52.238766"
+    "timestamp": "2025-03-22T03:43:21.176515"
 }

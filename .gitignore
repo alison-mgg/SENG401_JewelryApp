@@ -10,3 +10,4 @@ Backend/.ebignore
 /Gemini/services/__pycache__
 /Gemini/node_modules
 /Gemini/__pycache__
+/Gemini/package-lock.json
