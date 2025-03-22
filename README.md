@@ -1,6 +1,6 @@
 # SENG401 Jewelry Dupe App
 ## L01 Group 3, Winter 2025 | March 21, 2025
-### Written using Gemini LLM
+### README written using Gemini LLM
 
 This repository contains the source code for the SENG 401 project assignment, a jewelry dupe application. The app allows users to upload photos of jewelry and leverages the Gemini LLM to find and suggest similar products. It is built using a **Python Flask backend** and a **MySQL database** for data storage. The application includes user authentication, profile pages to store saved searches, and a **React-based frontend** for a seamless user experience.
 
@@ -143,5 +143,14 @@ Before you begin, ensure you have the following software installed:
     ```
 
     This will launch the frontend in your default browser at `http://localhost:3000`.
+
+## Generative AI Disclaimer
+
+This project utilized generative AI models, specifically Large Language Models (LLMs), to assist in the following areas:
+
+* **Code Commenting:** LLMs were used to generate comments for various sections of the codebase to improve readability and understanding.
+* **Debugging Assistance:** LLMs were used to analyze code and error messages, suggesting potential solutions and debugging strategies.
+
+While these tools provided valuable assistance, the code and its functionality remain the primary responsibility of the project authors. All generated comments and debugging suggestions were reviewed and modified as needed to ensure accuracy and consistency with the project's requirements.
 
 ---
